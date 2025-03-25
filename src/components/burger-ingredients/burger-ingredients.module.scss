@@ -1,0 +1,31 @@
+.section {
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	margin: 0;
+  padding: 0;
+	height: calc(100vh - 22 * var(--offset-base-size));
+	// border: 1px blue solid;
+	overflow-y: scroll;
+}
+
+.ingrediets {
+	composes: section;
+	height: calc(100vh - 71 * var(--offset-base-size));
+	min-height: calc(62 * var(--offset-base-size));
+	margin-top: calc(10 * var(--offset-base-size));
+	overflow-y: scroll;
+}
+
+.scroll {
+	display: block;
+	box-sizing: border-box;
+	position: absolute;
+	width: calc(2 * var(--offset-base-size));
+	height: calc(100vh - 71 * var(--offset-base-size));
+	min-height: calc(62 * var(--offset-base-size));
+	top: calc(49 * var(--offset-base-size));;
+	left: calc(100% - 2 * var(--offset-base-size));;
+	background-color: var(--background-element);
+	z-index: 1;
+}

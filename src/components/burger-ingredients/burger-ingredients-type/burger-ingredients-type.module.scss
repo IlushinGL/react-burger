@@ -1,0 +1,30 @@
+.group {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	box-sizing: border-box;
+
+	composes: pb-10 from global;
+	// border: 1px red solid;
+}
+
+.title {
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	margin: 0;
+	composes: text text_type_main-medium from global;
+	// border: 1px red solid;
+}
+
+.list {
+  display: grid;
+	position: relative;
+  grid-template-columns: repeat(2, 1fr);
+  box-sizing: border-box;
+	composes: pl-4 pr-4 pt-6 from global;
+  row-gap: calc(8 * var(--offset-base-size));
+	column-gap: calc(6 * var(--offset-base-size));
+  grid-auto-flow: row;
+  grid-auto-rows: calc(52 * var(--offset-base-size));
+}
