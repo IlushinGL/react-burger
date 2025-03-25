@@ -3,9 +3,9 @@
 	position: relative;
 	box-sizing: border-box;
 	margin: 0;
-  padding: 0;
+	padding: 0;
 	min-height: calc(22 * var(--offset-base-size));
-  min-width: calc(320 * var(--offset-base-size));
+	min-width: calc(320 * var(--offset-base-size));
 	justify-items: center;
 	align-content: center;
 	background-color: var(--background);
@@ -16,7 +16,7 @@
 	display: grid;
 	box-sizing: border-box;
 	margin: 0;
-  padding: 0;
+	padding: 0;
 	height: calc(14 * var(--offset-base-size));
 	width: calc(320 * var(--offset-base-size));
 	align-items: center;

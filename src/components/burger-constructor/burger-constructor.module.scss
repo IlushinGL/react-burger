@@ -1,8 +1,57 @@
-.constructor {
+.section {
 	display: block;
 	position: relative;
 	box-sizing: border-box;
+	composes: pt-25 pl-4 pr-4 from global;
+	height: calc(100vh - 22 * var(--offset-base-size));
+	// border: 1px blue solid;
+	overflow-y: scroll;
+}
+
+.components {
+	display: block;
 	margin: 0;
-  padding: 0;
-	border: 1px red solid;
+	padding: 0;
+	position: relative;
+	box-sizing: border-box;
+	height: calc(164 * var(--offset-base-size));
+	// min-height: calc(28 * var(--offset-base-size));
+	// border: 1px blue solid;
+	overflow-y: hidden;
+}
+
+.info {
+	display: flex;
+	flex-direction: row;
+	composes: mt-10 from global;
+	position: relative;
+	box-sizing: border-box;
+	column-gap: calc(10 * var(--offset-base-size));;
+	height: calc(16 * var(--offset-base-size));
+	// border: 1px blue solid;
+	justify-content: right;
+	align-items: center;
+}
+
+.total {
+	display: flex;
+	flex-direction: row;
+	composes: text text_type_digits-medium from global;
+	column-gap: calc(2 * var(--offset-base-size));
+	box-sizing: border-box;
+	// height: calc(16 * var(--offset-base-size));
+	align-items: center;
+}
+
+.scroll {
+	display: block;
+	box-sizing: border-box;
+	position: absolute;
+	width: calc(2 * var(--offset-base-size));
+	height: calc(116 * var(--offset-base-size));
+	// min-height: calc(62 * var(--offset-base-size));
+	top: calc(49 * var(--offset-base-size));
+	left: calc(100% - 2 * var(--offset-base-size));
+	background-color: var(--background-element);
+	z-index: 12;
 }

@@ -212,7 +212,3 @@ export const INGREDIENTS_DATA = [
 		__v: 0,
 	},
 ];
-
-// export default function getIngredietsData() {
-// 	return require('./ingredients-data.json');
-// }

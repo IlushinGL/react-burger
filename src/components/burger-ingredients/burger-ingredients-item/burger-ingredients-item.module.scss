@@ -19,7 +19,7 @@
 .image {
 	composes: pl-4 pr-4 from global;
 	box-sizing: border-box;
-  object-fit:contain;
+	object-fit: contain;
 }
 
 .price {
