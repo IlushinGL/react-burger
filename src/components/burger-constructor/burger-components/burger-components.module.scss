@@ -1,7 +1,7 @@
 .section {
-	 display: flex;
-	 flex-direction: column;
-	 row-gap: calc(4 * var(--offset-base-size));
+	display: flex;
+	flex-direction: column;
+	row-gap: calc(4 * var(--offset-base-size));
 }
 .bun {
 	padding-left: calc(8 * var(--offset-base-size));

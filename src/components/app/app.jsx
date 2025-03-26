@@ -13,14 +13,14 @@ export const App = () => {
 		return { ...item, count: 1 };
 	});
 	return (
-		<main className={main.main}>
+		<div className={main.main}>
 			<div className={main.conteiner}>
 				<AppHeader />
-				<div className={main.data}>
+				<main className={main.data}>
 					<BurgerIngredients data={ingedientsData} />
 					<BurgerConstructor ingredients={ingedientsData} data={BURGER_DATA} />
-				</div>
+				</main>
 			</div>
-		</main>
+		</div>
 	);
 };

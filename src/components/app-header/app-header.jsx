@@ -6,11 +6,7 @@ export function AppHeader() {
 	return (
 		<header className={header.panel}>
 			<div className={header.content}>
-				<nav
-					className={header.navigation}
-					style={{
-						justifySelf: 'left',
-					}}>
+				<nav className={header.navigation}>
 					<HeaderItem
 						name='burger'
 						text='Конструктор'
@@ -25,10 +21,7 @@ export function AppHeader() {
 					/>
 				</nav>
 				<Logo />
-				<div
-					style={{
-						justifySelf: 'right',
-					}}>
+				<div className={header.right}>
 					<HeaderItem
 						name='profile'
 						text='Личный кабинет'

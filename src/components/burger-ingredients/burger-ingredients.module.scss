@@ -6,7 +6,7 @@
 	padding: 0;
 	height: calc(100vh - 22 * var(--offset-base-size));
 	// border: 1px blue solid;
-	overflow-y: scroll;
+	overflow-y: hidden; // включить если нужна прокрутка на маленьком окне
 }
 
 .ingrediets {
@@ -14,7 +14,11 @@
 	height: calc(100vh - 71 * var(--offset-base-size));
 	min-height: calc(62 * var(--offset-base-size));
 	margin-top: calc(10 * var(--offset-base-size));
-	overflow-y: scroll;
+	overflow-y: hidden; // включить если нужна прокрутка на маленьком окне
+}
+
+.tab {
+	display: flex;
 }
 
 .scroll {

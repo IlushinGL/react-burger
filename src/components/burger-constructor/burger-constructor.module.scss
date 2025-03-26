@@ -5,7 +5,7 @@
 	composes: pt-25 pl-4 pr-4 from global;
 	height: calc(100vh - 22 * var(--offset-base-size));
 	// border: 1px blue solid;
-	overflow-y: scroll;
+	overflow-y: hidden;  // включить если нужна прокрутка на маленьком окне
 }
 
 .components {
@@ -26,7 +26,7 @@
 	composes: mt-10 from global;
 	position: relative;
 	box-sizing: border-box;
-	column-gap: calc(10 * var(--offset-base-size));;
+	column-gap: calc(10 * var(--offset-base-size));
 	height: calc(16 * var(--offset-base-size));
 	// border: 1px blue solid;
 	justify-content: right;
@@ -53,5 +53,5 @@
 	top: calc(49 * var(--offset-base-size));
 	left: calc(100% - 2 * var(--offset-base-size));
 	background-color: var(--background-element);
-	z-index: 12;
+	z-index: 1;
 }

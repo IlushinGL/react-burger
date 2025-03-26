@@ -35,9 +35,14 @@
 	height: calc(14 * var(--offset-base-size));
 	box-sizing: border-box;
 	border: 1px transparent solid;
+	justify-self: left;
 	// border: 1px red solid;
 	column-gap: calc(2 * var(--offset-base-size));
 	align-items: center;
+}
+
+.right {
+	justify-self: right;
 }
 
 .link {

@@ -7,7 +7,7 @@ export function BurgerIngredients({ data }) {
 	const GoTo = () => {
 		const [current, setCurrent] = useState('Булки');
 		return (
-			<div style={{ display: 'flex' }}>
+			<div className={conteiner.tab}>
 				<Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>
 					Булки
 				</Tab>
