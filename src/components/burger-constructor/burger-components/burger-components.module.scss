@@ -1,0 +1,21 @@
+.section {
+	display: flex;
+	flex-direction: column;
+	row-gap: calc(4 * var(--offset-base-size));
+}
+.bun {
+	padding-left: calc(8 * var(--offset-base-size));
+}
+.filling {
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	justify-content: space-between;
+	align-items: center;
+	// border: 1px transparent solid;
+	// border-radius: calc(10 * var(--offset-base-size));
+}
+
+// .filling:hover {
+// 	border: 1px var(--colors-interface-accent) solid;
+// }

@@ -341,6 +341,7 @@
 			"fill-rule",
 			"clip-rule",
 			"stroke",
+			"composes",
 			"stroke-width"
 		]
 	}

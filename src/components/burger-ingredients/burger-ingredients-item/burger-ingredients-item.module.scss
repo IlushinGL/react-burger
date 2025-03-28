@@ -1,0 +1,51 @@
+.item {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: calc(68 * var(--offset-base-size));
+	align-items: center;
+	row-gap: calc(1 * var(--offset-base-size));
+	border: 1px transparent solid;
+	border-radius: calc(4 * var(--offset-base-size));
+}
+
+.item:hover {
+	border: 1px var(--colors-interface-accent) solid;
+}
+
+.image {
+	composes: pl-4 pr-4 from global;
+	box-sizing: border-box;
+	object-fit: contain;
+}
+
+.price {
+	display: flex;
+	flex-direction: row;
+	composes: text text_type_digits-default from global;
+	column-gap: calc(1 * var(--offset-base-size));
+	box-sizing: border-box;
+	height: calc(6 * var(--offset-base-size));
+	align-items: center;
+}
+
+.name {
+	display: block;
+	composes: text text_type_main-default from global;
+	height: calc(12 * var(--offset-base-size));
+	box-sizing: border-box;
+	text-align: start;
+}
+
+.count {
+	display: block;
+	box-sizing: border-box;
+	position: absolute;
+	width: calc(8 * var(--offset-base-size));
+	top: 0;
+	left: calc(100% - 8 * var(--offset-base-size));
+	z-index: 1;
+}
