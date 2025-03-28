@@ -14,7 +14,7 @@
 	height: calc(100vh - 71 * var(--offset-base-size));
 	min-height: calc(62 * var(--offset-base-size));
 	margin-top: calc(10 * var(--offset-base-size));
-	overflow-y: hidden; // включить если нужна прокрутка на маленьком окне
+	overflow-y: scroll; // включить если нужна прокрутка на маленьком окне
 }
 
 .tab {
