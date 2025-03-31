@@ -37,7 +37,7 @@
 	composes: text text_type_main-default from global;
 	height: calc(12 * var(--offset-base-size));
 	box-sizing: border-box;
-	text-align: start;
+	text-align: center;
 }
 
 .count {

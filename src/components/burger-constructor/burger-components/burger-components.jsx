@@ -4,11 +4,15 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerComponents({ ingredients, data }) {
+export function BurgerComponents({ ingredients, data, onTotal }) {
 	const bun = ingredients.find((element) => element._id === data.bun);
 	const filling = ingredients.filter((element) =>
 		data.filling.includes(element._id)
 	);
+	const total = filling.reduce((sum, item) => {
+		return sum + item.price;
+	}, 2 * bun.price);
+	onTotal(total);
 	return (
 		<section className={conteiner.section}>
 			<div className={conteiner.bun}>

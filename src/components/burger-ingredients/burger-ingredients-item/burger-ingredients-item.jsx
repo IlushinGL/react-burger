@@ -1,12 +1,17 @@
+// import { useEffect } from 'react';
 import block from './burger-ingredients-item.module.scss';
 import {
 	CurrencyIcon,
 	Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerIngredientsItem({ item }) {
+export function BurgerIngredientsItem({ item, onClick }) {
+	function handleOnClick() {
+		onClick(item);
+	}
 	return (
-		<section className={block.item}>
+		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+		<section className={block.item} onClick={handleOnClick}>
 			<img className={block.image} src={item.image} alt={item.name} />
 			<div className={block.price}>
 				{item.price}
