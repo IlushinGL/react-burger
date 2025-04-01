@@ -1,24 +1,23 @@
 .overlay {
-  display: block;
-  box-sizing: border-box;
-  position: fixed;
-  // flex-direction: column;
-  align-content: center;
-  justify-items: center;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgb(0 0 0 / 0.6);
-  // transition: opacity 0.5s , visibility 0.5s;
+	display: block;
+	box-sizing: border-box;
+	position: fixed;
+	// flex-direction: column;
+	align-content: center;
+	justify-items: center;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgb(0 0 0 / 0.6);
 	overflow: hidden; // включить если нужна прокрутка на маленьком окне
 	z-index: 2;
 }
-.overlay_visible {
-  visibility: visible;
-  // opacity: 1;
-}
-.overlay_hidden {
-  visibility: hidden;
-  // opacity: 0;
-}
+// .overlay_visible {
+// 	visibility: visible;
+// 	opacity: 1;
+// }
+// .overlay_hidden {
+// 	visibility: hidden;
+// 	opacity: 0;
+// }

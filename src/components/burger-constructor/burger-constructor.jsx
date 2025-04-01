@@ -1,3 +1,4 @@
+import { array, object, func } from 'prop-types';
 import { useState } from 'react';
 import conteiner from './burger-constructor.module.scss';
 import { BurgerComponents } from './burger-components/burger-components';
@@ -37,3 +38,9 @@ export function BurgerConstructor({ ingredients, data, onClick }) {
 		</div>
 	);
 }
+
+BurgerConstructor.propTypes = {
+	ingredients: array,
+	data: object,
+	onClick: func,
+};

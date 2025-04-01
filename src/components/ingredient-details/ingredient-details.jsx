@@ -1,3 +1,4 @@
+import { object } from 'prop-types';
 import conteiner from './ingredient-details.module.scss';
 
 export function IngredientDetailes({ item }) {
@@ -29,3 +30,7 @@ export function IngredientDetailes({ item }) {
 		</section>
 	);
 }
+
+IngredientDetailes.propTypes = {
+	item: object,
+};

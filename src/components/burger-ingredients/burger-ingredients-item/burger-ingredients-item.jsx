@@ -1,4 +1,4 @@
-// import { useEffect } from 'react';
+import { object, func } from 'prop-types';
 import block from './burger-ingredients-item.module.scss';
 import {
 	CurrencyIcon,
@@ -24,3 +24,8 @@ export function BurgerIngredientsItem({ item, onClick }) {
 		</section>
 	);
 }
+
+BurgerIngredientsItem.propTypes = {
+	item: object,
+	onClick: func,
+};

@@ -1,3 +1,4 @@
+import { number, bool } from 'prop-types';
 import view from './preloader.module.scss';
 
 function Preloader({ box, visible }) {
@@ -25,5 +26,10 @@ function Preloader({ box, visible }) {
 		</div>
 	);
 }
+
+Preloader.propTypes = {
+	box: number,
+	visible: bool,
+};
 
 export default Preloader;

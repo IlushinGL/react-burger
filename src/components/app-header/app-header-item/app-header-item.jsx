@@ -1,3 +1,4 @@
+import { string, bool } from 'prop-types';
 import conteiner from './app-header-item.module.scss';
 import { clsx } from 'clsx';
 import {
@@ -35,3 +36,10 @@ export function HeaderItem({
 		</div>
 	);
 }
+
+HeaderItem.propTypes = {
+	name: string,
+	text: string,
+	link: string,
+	enabled: bool,
+};

@@ -1,3 +1,4 @@
+import { string, array, func } from 'prop-types';
 import block from './burger-ingredients-type.module.scss';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 
@@ -20,3 +21,10 @@ export function BurgerIngredientsType({ type, name, data, onClick }) {
 		</section>
 	);
 }
+
+BurgerIngredientsType.propTypes = {
+	type: string,
+	name: string,
+	data: array,
+	onClick: func,
+};

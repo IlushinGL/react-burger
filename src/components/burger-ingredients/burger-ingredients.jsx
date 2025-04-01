@@ -1,3 +1,4 @@
+import { array, func } from 'prop-types';
 import { useState } from 'react';
 import conteiner from './burger-ingredients.module.scss';
 import { BurgerIngredientsType } from './burger-ingredients-type/burger-ingredients-type';
@@ -51,3 +52,8 @@ export function BurgerIngredients({ data, onClick }) {
 		</section>
 	);
 }
+
+BurgerIngredients.propTypes = {
+	data: array,
+	onClick: func,
+};

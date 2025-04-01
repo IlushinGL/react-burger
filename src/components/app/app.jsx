@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import main from './app.module.scss';
-// import { INGREDIENTS_DATA } from '@utils/ingredients-data';
+
+import { BURGER_DATA } from '@utils/burger-data';
+
 import Preloader from '@components/preloader/preloader';
 import { getIngredients } from '../../api/get-ingredients';
-import { BURGER_DATA } from '@utils/burger-data';
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
@@ -64,16 +65,13 @@ export const App = () => {
 	}
 
 	if (ingredientsState.loading) {
-		return <Preloader box='160' visible={ingredientsState.loading} />;
+		return <Preloader box={160} visible={ingredientsState.loading} />;
 	}
 
 	if (modalErrVisible) {
 		return (
-			<Modal
-				text={'Ошибка при запросе данных'}
-				onClose={handleOnCloseErr}
-				visible={true}>
-				<ErrDetailes text={ingredientsState.data.message} />
+			<Modal text={'Ошибка при запросе данных'} onClose={handleOnCloseErr}>
+				<ErrDetailes item={ingredientsState.data.message} />
 			</Modal>
 		);
 	}
@@ -94,17 +92,11 @@ export const App = () => {
 					/>
 				</main>
 			</div>
-			<Modal
-				text={'Детали ингредиента'}
-				onClose={handleOnCloseIngredient}
-				visible={selectedIngredient ? true : false}>
+			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>
 				<IngredientDetailes item={selectedIngredient} />
 			</Modal>
-			<Modal
-				text={' '}
-				onClose={handleOnCloseOrder}
-				visible={selectedOrder ? true : false}>
-				<OrderDetailes order={selectedOrder} />
+			<Modal text={' '} onClose={handleOnCloseOrder}>
+				<OrderDetailes item={selectedOrder} />
 			</Modal>
 		</div>
 	);

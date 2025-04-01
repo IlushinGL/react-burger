@@ -20,5 +20,5 @@ export function useEscapeAndClick(onClose) {
 			document.removeEventListener('keyup', handleEscKey);
 			document.removeEventListener('mouseup', handleEscKey);
 		};
-	});
+	}, [handleEscKey]);
 }
