@@ -1,0 +1,32 @@
+.number {
+	composes: text text_type_digits-large from global;
+	composes: mt-4 from global;
+	text-align: center;
+}
+
+.title {
+	composes: text text_type_main-medium from global;
+	composes: mt-8 mb-15 from global;
+	text-align: center;
+}
+
+.image {
+	display: flex;
+	margin: 0 auto;
+	width: calc(30 * var(--offset-base-size));
+	height: calc(30 * var(--offset-base-size));
+	align-items: center;
+	justify-content: center;
+}
+
+.status {
+	composes: text text_type_main-default from global;
+	composes: mt-15 mb-2 from global;
+	text-align: center;
+}
+
+.comment {
+	composes: text text_type_main-default text_color_inactive from global;
+	composes: mb-30 from global;
+	text-align: center;
+}

@@ -1,11 +1,11 @@
 export const BURGER_DATA = {
-	_id: '1',
-	bun: '60666c42cc7b410027a1a9b2',
+	_id: '034536',
+	bun: '643d69a5c3f7b9001cfa093d',
 	filling: [
-		'60666c42cc7b410027a1a9b9',
-		'60666c42cc7b410027a1a9b4',
-		'60666c42cc7b410027a1a9bc',
-		'60666c42cc7b410027a1a9bb',
-		'60666c42cc7b410027a1a9be',
+		'643d69a5c3f7b9001cfa0944',
+		'643d69a5c3f7b9001cfa0946',
+		'643d69a5c3f7b9001cfa0947',
+		'643d69a5c3f7b9001cfa094a',
+		'643d69a5c3f7b9001cfa0949',
 	],
 };

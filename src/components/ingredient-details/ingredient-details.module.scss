@@ -1,0 +1,41 @@
+.image {
+	box-sizing: border-box;
+	object-fit: contain;
+}
+
+.name {
+	display: block;
+	composes: text text_type_main-medium from global;
+	composes: mt-4 from global;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.nutrition {
+	composes: mt-8 mb-15 from global;
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+	flex-direction: row;
+	justify-content: space-between;
+	// column-gap: calc(5 * var(--offset-base-size));
+	height: calc(14 * var(--offset-base-size));
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.value {
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.value_header {
+	composes: text text_type_main-default text_color_inactive from global;
+}
+
+.value_digit {
+	composes: text text_type_digits-default text_color_inactive from global;
+}

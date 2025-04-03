@@ -1,14 +1,24 @@
+import { array, object, func } from 'prop-types';
+import { useEffect } from 'react';
 import conteiner from './burger-components.module.scss';
 import {
 	ConstructorElement,
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerComponents({ ingredients, data }) {
+export function BurgerComponents({ ingredients, data, onTotal }) {
 	const bun = ingredients.find((element) => element._id === data.bun);
 	const filling = ingredients.filter((element) =>
 		data.filling.includes(element._id)
 	);
+
+	useEffect(() => {
+		const total = filling.reduce((sum, item) => {
+			return sum + item.price;
+		}, 2 * bun.price);
+		onTotal(total);
+	}, [bun.price, filling, onTotal]);
+
 	return (
 		<section className={conteiner.section}>
 			<div className={conteiner.bun}>
@@ -44,3 +54,9 @@ export function BurgerComponents({ ingredients, data }) {
 		</section>
 	);
 }
+
+BurgerComponents.propTypes = {
+	ingredients: array,
+	data: object,
+	onTotal: func,
+};
