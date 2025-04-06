@@ -6,16 +6,26 @@ export function OrderDetailes({ item }) {
 	if (!item) {
 		return null;
 	}
+	if (!item.success) {
+		return (
+			<section>
+				<div className={conteiner.status}>Пока не можем принять заказ 😓</div>
+				<div className={conteiner.comment}>
+					Уже начали разбираться. Попробуйте чуть позже.
+				</div>
+			</section>
+		);
+	}
 	return (
 		<section>
-			<div className={conteiner.number}>{item._id}</div>
-			<div className={conteiner.title}>идентификатор заказа</div>
+			<div className={conteiner.number}>{item.order.number}</div>
+			<div className={conteiner.title}>{item.name}</div>
 			<div className={conteiner.image}>
 				<Preloader box={120} visible={true} />
 			</div>
 			<div className={conteiner.status}>Ваш заказ начали готовить</div>
 			<div className={conteiner.comment}>
-				Дождитесь готовности на орбитальной станции
+				{/* Дождитесь готовности на орбитальной станции */}
 			</div>
 		</section>
 	);

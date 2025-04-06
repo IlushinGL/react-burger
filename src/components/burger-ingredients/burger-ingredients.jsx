@@ -48,7 +48,6 @@ export function BurgerIngredients({ data, onClick }) {
 					onClick={onClick}
 				/>
 			</div>
-			<div className={conteiner.scroll}></div>
 		</section>
 	);
 }

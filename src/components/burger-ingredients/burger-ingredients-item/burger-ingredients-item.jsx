@@ -19,7 +19,7 @@ export function BurgerIngredientsItem({ item, onClick }) {
 			</div>
 			<div className={block.name}>{item.name}</div>
 			<div className={block.count}>
-				<Counter count={item.count} size='default' />
+				{item.count > 0 && <Counter count={item.count} size='default' />}
 			</div>
 		</section>
 	);

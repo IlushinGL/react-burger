@@ -1,5 +1,5 @@
-import { array, object, func } from 'prop-types';
 import { useState } from 'react';
+import { array, object, func } from 'prop-types';
 import conteiner from './burger-constructor.module.scss';
 import { BurgerComponents } from './burger-components/burger-components';
 import {
@@ -7,7 +7,7 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerConstructor({ ingredients, data, onClick }) {
+export function BurgerConstructor({ onClick }) {
 	const [total, setTotal] = useState(0);
 	function handlerOnTotal(val) {
 		setTotal(val);
@@ -15,11 +15,7 @@ export function BurgerConstructor({ ingredients, data, onClick }) {
 	return (
 		<div className={conteiner.section}>
 			<section className={conteiner.components}>
-				<BurgerComponents
-					ingredients={ingredients}
-					data={data}
-					onTotal={handlerOnTotal}
-				/>
+				<BurgerComponents onTotal={handlerOnTotal} />
 			</section>
 			<section className={conteiner.info}>
 				<div className={conteiner.total}>
@@ -34,7 +30,6 @@ export function BurgerConstructor({ ingredients, data, onClick }) {
 					Оформить заказ
 				</Button>
 			</section>
-			<div className={conteiner.scroll}></div>
 		</div>
 	);
 }
