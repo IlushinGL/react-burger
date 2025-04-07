@@ -1,25 +1,45 @@
 import { array, func } from 'prop-types';
-import { useState } from 'react';
+
+import { useState, useRef } from 'react';
 import conteiner from './burger-ingredients.module.scss';
 import { BurgerIngredientsType } from './burger-ingredients-type/burger-ingredients-type';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function BurgerIngredients({ data, onClick }) {
-	const GoTo = () => {
-		const [current, setCurrent] = useState('Булки');
+	const [typeId, setTypeId] = useState(0);
+	const val = ['Булки', 'Соусы', 'Начинки'];
+	const refList = useRef(null);
+	const refBun = useRef(null);
+	const refSause = useRef(null);
+	const refMain = useRef(null);
+
+	function handlerScroll() {
+		const top = refList.current.getBoundingClientRect().top + 88;
+		const bun = refBun.current.getBoundingClientRect();
+		const sause = refSause.current.getBoundingClientRect();
+
+		let index = -1;
+		if (bun.top + bun.height - top > 0) {
+			index = 0;
+		} else if (sause.top + sause.height - top > 0) {
+			index = 1;
+		} else {
+			index = 2;
+		}
+		setTypeId(index);
+	}
+	const GoTo = ({ id }) => {
+		const [current, setCurrent] = useState(val[id]);
 		return (
 			<div className={conteiner.tab}>
-				<Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>
-					Булки
+				<Tab value={val[0]} active={current === val[0]} onClick={setCurrent}>
+					{val[0]}
 				</Tab>
-				<Tab value='Соусы' active={current === 'Соусы'} onClick={setCurrent}>
-					Соусы
+				<Tab value={val[1]} active={current === val[1]} onClick={setCurrent}>
+					{val[1]}
 				</Tab>
-				<Tab
-					value='Начинка'
-					active={current === 'Начинка'}
-					onClick={setCurrent}>
-					Начинка
+				<Tab value={val[2]} active={current === val[2]} onClick={setCurrent}>
+					{val[2]}
 				</Tab>
 			</div>
 		);
@@ -27,26 +47,35 @@ export function BurgerIngredients({ data, onClick }) {
 	return (
 		<section className={conteiner.section}>
 			<p className='text text_type_main-large mt-10 mb-5'>Соберите бургер</p>
-			<GoTo />
-			<div className={conteiner.ingrediets}>
-				<BurgerIngredientsType
-					type='bun'
-					name='Булки'
-					data={data}
-					onClick={onClick}
-				/>
-				<BurgerIngredientsType
-					type='sauce'
-					name='Соусы'
-					data={data}
-					onClick={onClick}
-				/>
-				<BurgerIngredientsType
-					type='main'
-					name='Начинки'
-					data={data}
-					onClick={onClick}
-				/>
+			<GoTo id={typeId} />
+			<div
+				className={conteiner.ingrediets}
+				onScroll={handlerScroll}
+				ref={refList}>
+				<div ref={refBun}>
+					<BurgerIngredientsType
+						type='bun'
+						name={val[0]}
+						data={data}
+						onClick={onClick}
+					/>
+				</div>
+				<div ref={refSause}>
+					<BurgerIngredientsType
+						type='sauce'
+						name={val[1]}
+						data={data}
+						onClick={onClick}
+					/>
+				</div>
+				<div ref={refMain}>
+					<BurgerIngredientsType
+						type='main'
+						name={val[2]}
+						data={data}
+						onClick={onClick}
+					/>
+				</div>
 			</div>
 		</section>
 	);

@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
 
-import { array, object, func } from 'prop-types';
 import { useEffect } from 'react';
 import conteiner from './burger-components.module.scss';
 import {
@@ -10,7 +9,7 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerComponents({ onTotal }) {
+export function BurgerComponents() {
 	const dispatch = useDispatch();
 	const order = useSelector(selectors.burgerConstructor.get);
 	const ingredients = useSelector(selectors.burgerIngredients.get_all);
@@ -22,13 +21,6 @@ export function BurgerComponents({ onTotal }) {
 			data: ingredients.find((element) => element._id === item.id),
 		};
 	});
-
-	useEffect(() => {
-		const total = filling.reduce((sum, item) => {
-			return sum + item.data.price;
-		}, 2 * bun.price);
-		onTotal(total);
-	}, [bun.price, dispatch, filling, onTotal]);
 
 	useEffect(() => {
 		dispatch(actions.burgerIngredients.set_count(order.arr));
@@ -76,9 +68,3 @@ export function BurgerComponents({ onTotal }) {
 		</section>
 	);
 }
-
-BurgerComponents.propTypes = {
-	ingredients: array,
-	data: object,
-	onTotal: func,
-};

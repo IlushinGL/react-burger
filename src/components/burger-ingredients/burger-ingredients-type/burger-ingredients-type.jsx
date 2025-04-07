@@ -1,4 +1,5 @@
 import { string, array, func } from 'prop-types';
+
 import block from './burger-ingredients-type.module.scss';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 

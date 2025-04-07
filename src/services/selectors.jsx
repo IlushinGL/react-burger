@@ -4,7 +4,10 @@ import {
 	all as getBurgerIngredientsAll,
 	byType as getBurgerIngredientsByType,
 } from './burgerIngredients/burgerIngredientsSelectors';
-import { all as getBurgerConstructorData } from './burgerConsructor/burgerConsructorSelectors';
+import {
+	all as getBurgerConstructorData,
+	total as getBurgerConstructorTotal,
+} from './burgerConsructor/burgerConsructorSelectors';
 
 export const selectors = {
 	loading: {
@@ -19,5 +22,6 @@ export const selectors = {
 	},
 	burgerConstructor: {
 		get: getBurgerConstructorData,
+		total: getBurgerConstructorTotal,
 	},
 };

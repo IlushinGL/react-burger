@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { array, object, func } from 'prop-types';
+import { useSelector } from 'react-redux';
+import { func } from 'prop-types';
+import { selectors } from '@services/selectors';
 import conteiner from './burger-constructor.module.scss';
 import { BurgerComponents } from './burger-components/burger-components';
 import {
@@ -8,18 +9,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function BurgerConstructor({ onClick }) {
-	const [total, setTotal] = useState(0);
-	function handlerOnTotal(val) {
-		setTotal(val);
-	}
+	const orderTotal = useSelector(selectors.burgerConstructor.total);
 	return (
 		<div className={conteiner.section}>
 			<section className={conteiner.components}>
-				<BurgerComponents onTotal={handlerOnTotal} />
+				<BurgerComponents />
 			</section>
 			<section className={conteiner.info}>
 				<div className={conteiner.total}>
-					{total}
+					{orderTotal}
 					<CurrencyIcon type='primary' />
 				</div>
 				<Button
@@ -35,7 +33,5 @@ export function BurgerConstructor({ onClick }) {
 }
 
 BurgerConstructor.propTypes = {
-	ingredients: array,
-	data: object,
 	onClick: func,
 };
