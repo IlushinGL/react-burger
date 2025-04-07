@@ -1,11 +1,11 @@
-import { array, func } from 'prop-types';
+import { func } from 'prop-types';
 
 import { useState, useRef } from 'react';
 import conteiner from './burger-ingredients.module.scss';
 import { BurgerIngredientsType } from './burger-ingredients-type/burger-ingredients-type';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerIngredients({ data, onClick }) {
+export function BurgerIngredients({ onClick }) {
 	const [typeId, setTypeId] = useState(0);
 	const val = ['Булки', 'Соусы', 'Начинки'];
 	const refList = useRef(null);
@@ -53,28 +53,13 @@ export function BurgerIngredients({ data, onClick }) {
 				onScroll={handlerScroll}
 				ref={refList}>
 				<div ref={refBun}>
-					<BurgerIngredientsType
-						type='bun'
-						name={val[0]}
-						data={data}
-						onClick={onClick}
-					/>
+					<BurgerIngredientsType type='bun' name={val[0]} onClick={onClick} />
 				</div>
 				<div ref={refSause}>
-					<BurgerIngredientsType
-						type='sauce'
-						name={val[1]}
-						data={data}
-						onClick={onClick}
-					/>
+					<BurgerIngredientsType type='sauce' name={val[1]} onClick={onClick} />
 				</div>
 				<div ref={refMain}>
-					<BurgerIngredientsType
-						type='main'
-						name={val[2]}
-						data={data}
-						onClick={onClick}
-					/>
+					<BurgerIngredientsType type='main' name={val[2]} onClick={onClick} />
 				</div>
 			</div>
 		</section>
@@ -82,6 +67,5 @@ export function BurgerIngredients({ data, onClick }) {
 }
 
 BurgerIngredients.propTypes = {
-	data: array,
 	onClick: func,
 };

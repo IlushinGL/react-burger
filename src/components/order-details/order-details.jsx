@@ -9,6 +9,9 @@ export function OrderDetailes({ item }) {
 	if (!item.success) {
 		return (
 			<section>
+				<div className={conteiner.image}>
+					<Preloader box={120} visible={true} />
+				</div>
 				<div className={conteiner.status}>Пока не можем принять заказ 😓</div>
 				<div className={conteiner.comment}>
 					Уже начали разбираться. Попробуйте чуть позже.
@@ -25,7 +28,7 @@ export function OrderDetailes({ item }) {
 			</div>
 			<div className={conteiner.status}>Ваш заказ начали готовить</div>
 			<div className={conteiner.comment}>
-				{/* Дождитесь готовности на орбитальной станции */}
+				Дождитесь готовности на орбитальной станции
 			</div>
 		</section>
 	);

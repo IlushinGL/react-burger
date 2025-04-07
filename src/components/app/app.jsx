@@ -21,7 +21,6 @@ export const App = () => {
 	const dispatch = useDispatch();
 	const loadingState = useSelector(selectors.loading.get);
 	const errorState = useSelector(selectors.error.get);
-	const burgerIngrediensData = useSelector(selectors.burgerIngredients.get_all);
 	const burgerConstructorData = useSelector(selectors.burgerConstructor.get);
 	const [selectedIngredient, setSelectedIngredient] = useState(null);
 	const [selectedOrder, setSelectedOrder] = useState(null);
@@ -73,7 +72,6 @@ export const App = () => {
 	}
 
 	if (loadingState) {
-		// console.log(loadingState, errorState);
 		return <Preloader box={160} visible={loadingState} />;
 	}
 
@@ -90,10 +88,7 @@ export const App = () => {
 			<div className={main.conteiner}>
 				<AppHeader />
 				<main className={main.data}>
-					<BurgerIngredients
-						data={burgerIngrediensData}
-						onClick={handleOnClickIngredient}
-					/>
+					<BurgerIngredients onClick={handleOnClickIngredient} />
 					<BurgerConstructor onClick={handleOnClickOrder} />
 				</main>
 			</div>
