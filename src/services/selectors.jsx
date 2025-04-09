@@ -7,6 +7,7 @@ import {
 import {
 	all as getBurgerConstructorData,
 	total as getBurgerConstructorTotal,
+	get_byId as getBurgerConstructorById,
 } from './burgerConsructor/burgerConsructorSelectors';
 
 export const selectors = {
@@ -22,6 +23,7 @@ export const selectors = {
 	},
 	burgerConstructor: {
 		get: getBurgerConstructorData,
+		get_byId: getBurgerConstructorById,
 		total: getBurgerConstructorTotal,
 	},
 };

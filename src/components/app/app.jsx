@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 // import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import main from './app.module.scss';
 
 import { BURGER_DATA } from '@utils/burger-data';
@@ -88,8 +91,10 @@ export const App = () => {
 			<div className={main.conteiner}>
 				<AppHeader />
 				<main className={main.data}>
-					<BurgerIngredients onClick={handleOnClickIngredient} />
-					<BurgerConstructor onClick={handleOnClickOrder} />
+					<DndProvider backend={HTML5Backend}>
+						<BurgerIngredients onClick={handleOnClickIngredient} />
+						<BurgerConstructor onClick={handleOnClickOrder} />
+					</DndProvider>
 				</main>
 			</div>
 			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>

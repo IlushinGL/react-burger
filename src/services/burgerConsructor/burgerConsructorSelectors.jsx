@@ -8,6 +8,14 @@ export const all = createSelector(
 	}
 );
 
+export const get_byId = createSelector(
+	(state) => state.burgerIngredients.data,
+	(state, id) => id,
+	(data, id) => {
+		return data.find((item) => item._id === id);
+	}
+);
+
 export const total = createSelector(
 	all,
 	(state) => state.burgerIngredients.data,
