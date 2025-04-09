@@ -6,6 +6,7 @@
 	margin: 0;
 	padding: 0;
 	width: calc(68 * var(--offset-base-size));
+	background-color: transparent;
 	align-items: center;
 	row-gap: calc(1 * var(--offset-base-size));
 	border: 1px transparent solid;
@@ -14,12 +15,26 @@
 
 .item:hover {
 	border: 1px var(--colors-interface-accent) solid;
+	cursor: pointer;
 }
 
 .image {
-	composes: pl-4 pr-4 from global;
+	display: block;
+	height: calc(30 * var(--offset-base-size));
+	composes: ml-4 mr-4 from global;
+	background-color: transparent;
 	box-sizing: border-box;
-	object-fit: contain;
+	border: 1px transparent solid;
+	align-content: center;
+	justify-items: center;
+}
+.image_peview {
+	display: block;
+	width: calc(100% - 8 * var(--offset-base-size));
+	background-color: transparent;
+	box-sizing: border-box;
+	object-fit: cover;
+	border: 1px transparent solid;
 }
 
 .price {

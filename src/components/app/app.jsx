@@ -1,9 +1,16 @@
+import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import main from './app.module.scss';
 
 import { BURGER_DATA } from '@utils/burger-data';
 
 import Preloader from '@components/preloader/preloader';
+import { actions } from '@services/actions';
+import { selectors } from '@services/selectors';
 import { getIngredients } from '../../api/get-ingredients';
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
@@ -14,34 +21,37 @@ import { IngredientDetailes } from '@components/ingredient-details/ingredient-de
 import { OrderDetailes } from '@components/order-details/order-details';
 
 export const App = () => {
-	const [ingredientsState, setIngredientsState] = useState({
-		data: null,
-		loading: true,
-	});
-	const [modalErrVisible, setModalErrVisible] = useState(false);
+	const dispatch = useDispatch();
+	const loadingState = useSelector(selectors.loading.get);
+	const errorState = useSelector(selectors.error.get);
+	const burgerConstructorData = useSelector(selectors.burgerConstructor.get);
 	const [selectedIngredient, setSelectedIngredient] = useState(null);
 	const [selectedOrder, setSelectedOrder] = useState(null);
 
 	useEffect(() => {
+		dispatch(actions.loading.set(true));
+		dispatch(actions.error.set(''));
 		getIngredients(handleIgredientsLoading);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	function handleIgredientsLoading({ ingredients, loading }) {
-		if (ingredients instanceof Error) {
-			// console.log(loading, ingredients);
-			setModalErrVisible(true);
-			setIngredientsState({ data: ingredients, loading: false });
-		} else if (!loading && ingredients) {
-			const newData = ingredients.map((item) => {
-				return { ...item, count: 1 };
-			});
-			// console.log(loading, newData);
-			setModalErrVisible(false);
-			setIngredientsState({ data: newData, loading: false });
-		} else {
-			// console.log(loading, newData);
-			setIngredientsState({ data: ingredients, loading: loading });
+	function handleIgredientsLoading(ingredients) {
+		if (!ingredients) {
+			dispatch(actions.loading.set(true));
+			dispatch(actions.error.set(''));
+			return;
 		}
+		if (ingredients instanceof Error) {
+			dispatch(actions.error.set(ingredients.message));
+			dispatch(actions.loading.set(false));
+			dispatch(actions.burgerIngredients.set([]));
+			return;
+		}
+
+		dispatch(actions.error.set(''));
+		dispatch(actions.loading.set(false));
+		dispatch(actions.burgerIngredients.set(ingredients));
+		dispatch(actions.burgerConstructor.set(BURGER_DATA));
 	}
 
 	function handleOnCloseErr() {
@@ -61,17 +71,17 @@ export const App = () => {
 	}
 
 	function handleOnClickOrder() {
-		setSelectedOrder(BURGER_DATA);
+		setSelectedOrder(burgerConstructorData.data);
 	}
 
-	if (ingredientsState.loading) {
-		return <Preloader box={160} visible={ingredientsState.loading} />;
+	if (loadingState) {
+		return <Preloader box={160} visible={loadingState} />;
 	}
 
-	if (modalErrVisible) {
+	if (errorState) {
 		return (
 			<Modal text={'Ошибка при запросе данных'} onClose={handleOnCloseErr}>
-				<ErrDetailes item={ingredientsState.data.message} />
+				<ErrDetailes item={errorState} />
 			</Modal>
 		);
 	}
@@ -81,15 +91,10 @@ export const App = () => {
 			<div className={main.conteiner}>
 				<AppHeader />
 				<main className={main.data}>
-					<BurgerIngredients
-						data={ingredientsState.data}
-						onClick={handleOnClickIngredient}
-					/>
-					<BurgerConstructor
-						ingredients={ingredientsState.data}
-						data={BURGER_DATA}
-						onClick={handleOnClickOrder}
-					/>
+					<DndProvider backend={HTML5Backend}>
+						<BurgerIngredients onClick={handleOnClickIngredient} />
+						<BurgerConstructor onClick={handleOnClickOrder} />
+					</DndProvider>
 				</main>
 			</div>
 			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>
