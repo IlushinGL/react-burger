@@ -6,12 +6,14 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import main from './app.module.scss';
 
-import { BURGER_DATA } from '@utils/burger-data';
+// import { BURGER_DATA } from '@utils/burger-data';
 
 import Preloader from '@components/preloader/preloader';
-import { actions } from '@services/actions';
+
+import { fetchAllIngedients } from '@services/burgerIngredients/burgerIngredientsSlice';
+
+// import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
-import { getIngredients } from '../../api/get-ingredients';
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
@@ -22,40 +24,23 @@ import { OrderDetailes } from '@components/order-details/order-details';
 
 export const App = () => {
 	const dispatch = useDispatch();
-	const loadingState = useSelector(selectors.loading.get);
-	const errorState = useSelector(selectors.error.get);
-	const burgerConstructorData = useSelector(selectors.burgerConstructor.get);
+	const loadingState = useSelector(selectors.burgerIngredients.get_status);
+	const errorState = useSelector(selectors.burgerIngredients.get_error);
+	const burgerConstructorData = useSelector(
+		selectors.burgerConstructor.get_data
+	);
 	const [selectedIngredient, setSelectedIngredient] = useState(null);
 	const [selectedOrder, setSelectedOrder] = useState(null);
 
 	useEffect(() => {
-		dispatch(actions.loading.set(true));
-		dispatch(actions.error.set(''));
-		getIngredients(handleIgredientsLoading);
+		// if (loadingState === 'idle') {
+		// }
+		dispatch(fetchAllIngedients());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	function handleIgredientsLoading(ingredients) {
-		if (!ingredients) {
-			dispatch(actions.loading.set(true));
-			dispatch(actions.error.set(''));
-			return;
-		}
-		if (ingredients instanceof Error) {
-			dispatch(actions.error.set(ingredients.message));
-			dispatch(actions.loading.set(false));
-			dispatch(actions.burgerIngredients.set([]));
-			return;
-		}
-
-		dispatch(actions.error.set(''));
-		dispatch(actions.loading.set(false));
-		dispatch(actions.burgerIngredients.set(ingredients));
-		dispatch(actions.burgerConstructor.set(BURGER_DATA));
-	}
-
 	function handleOnCloseErr() {
-		getIngredients(handleIgredientsLoading);
+		dispatch(fetchAllIngedients());
 	}
 
 	function handleOnCloseIngredient() {
@@ -74,11 +59,9 @@ export const App = () => {
 		setSelectedOrder(burgerConstructorData.data);
 	}
 
-	if (loadingState) {
-		return <Preloader box={160} visible={loadingState} />;
-	}
-
-	if (errorState) {
+	if (loadingState === 'loading') {
+		return <Preloader box={160} visible={true} />;
+	} else if (loadingState === 'error') {
 		return (
 			<Modal text={'Ошибка при запросе данных'} onClose={handleOnCloseErr}>
 				<ErrDetailes item={errorState} />

@@ -3,33 +3,22 @@ import { createSlice, nanoid } from '@reduxjs/toolkit';
 const burgerConsructorSlice = createSlice({
 	name: 'burgerConsructor',
 	initialState: {
-		data: {
-			order: { number: '' },
-			name: '',
-			bun: '',
-			success: false,
-			filling: [],
-		},
+		bun: '',
+		filling: [],
 	},
 	reducers: {
-		set(state, action) {
-			const filling = action.payload.filling.map((item) => {
-				return { key: 'igl_' + nanoid(), id: item };
-			});
-			state.data = { ...action.payload, filling: filling };
-		},
 		set_bun(state, action) {
-			state.data.bun = action.payload;
+			state.bun = action.payload;
 		},
 		add_ingredient(state, action) {
 			// payload = {source: id ингредиента, resiver: key строки заказа }
 			// помещает над ресивером
-			const currentFilling = state.data.filling;
-			const index = currentFilling.findIndex(
+			const currentFilling = state.filling;
+			let index = currentFilling.findIndex(
 				(item) => item.key === action.payload.resiver
 			);
 			if (index === -1) {
-				return;
+				index = 0;
 			}
 			currentFilling.splice(index, 0, {
 				key: 'igl_' + nanoid(),
@@ -39,7 +28,7 @@ const burgerConsructorSlice = createSlice({
 		move_ingredient(state, action) {
 			// payload = {source: key перемещаемой строки заказа, resiver: key строки заказа }
 			// помещает под ресивером
-			const currentFilling = state.data.filling;
+			const currentFilling = state.filling;
 			const indexFrom = currentFilling.findIndex(
 				(item) => item.key === action.payload.source
 			);
@@ -63,7 +52,7 @@ const burgerConsructorSlice = createSlice({
 			}
 		},
 		del_ingredient(state, action) {
-			const currentFilling = state.data.filling;
+			const currentFilling = state.filling;
 			const index = currentFilling.findIndex(
 				(item) => item.key === action.payload
 			);
@@ -71,11 +60,10 @@ const burgerConsructorSlice = createSlice({
 				return;
 			}
 			currentFilling.splice(index, 1);
-			// state.data.filling = currentFilling;
 		},
 	},
 });
 
-export const { set, set_bun, add_ingredient, del_ingredient, move_ingredient } =
+export const { set_bun, add_ingredient, del_ingredient, move_ingredient } =
 	burgerConsructorSlice.actions; // генераторы действий
 export default burgerConsructorSlice.reducer;

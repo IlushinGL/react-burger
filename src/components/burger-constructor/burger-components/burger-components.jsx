@@ -4,18 +4,19 @@ import { selectors } from '@services/selectors';
 
 import { useDrop } from 'react-dnd';
 // import { useDrop, useDrag } from 'react-dnd';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 import conteiner from './burger-components.module.scss';
 import { BurgerDraggableComponent } from './burger-component-draggable';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerComponentPlaceholder } from './burger-component-placeholder';
 
 export function BurgerComponents() {
 	const [{ isHoverFilling }, dropFillingsTag] = useDrop({
 		accept: 'filling',
-		// drop(itemId) {
-		// 	onDropFillingHandler(itemId);
-		// },
+		drop(itemId) {
+			onDropFillingHandler(itemId);
+		},
 		collect: (monitor) => ({
 			isHoverFilling: monitor.isOver(),
 		}),
@@ -39,27 +40,39 @@ export function BurgerComponents() {
 		}),
 	});
 	const dispatch = useDispatch();
-	const order = useSelector(selectors.burgerConstructor.get);
-	const ingredients = useSelector(selectors.burgerIngredients.get_all);
+	const order = useSelector(selectors.burgerConstructor.get_data);
+	const order_list = useSelector(selectors.burgerConstructor.get_list);
+	const bunId = order[0];
+	const bun = useSelector((state) =>
+		selectors.burgerConstructor.get_byId(state, bunId)
+	);
+	const order_list_empty = order_list.length === 0;
 
-	const bun = ingredients.find((element) => element._id === order.data.bun);
 	const fillingBorderColor = isHoverFilling ? 'accept' : 'transparent';
 	const bunTopBorderColor = isHoverBunTop ? 'accept' : 'transparent';
 	const bunBottomBorderColor = isHoverBunBottom ? 'accept' : 'transparent';
 
-	// function onDropFillingHandler(data) {
-	// 	console.log(id);
-	// 	dispatch(actions.burgerConstructor.add_ingredient(data.id));
-	// }
+	// console.log(order_list_empty);
+	function onDropFillingHandler(item) {
+		if (order_list_empty) {
+			const data = { resiver: '', source: item.id };
+			dispatch(actions.burgerConstructor.add_ingredient(data));
+			dispatch(actions.burgerIngredients.set_count({ id: item.id, shift: 1 }));
+		}
+	}
 
 	function onDropBunHandler(data) {
-		// console.log(id);
+		if (bunId) {
+			dispatch(actions.burgerIngredients.set_count({ id: bunId, shift: -2 }));
+		}
+		dispatch(actions.burgerIngredients.set_count({ id: data.id, shift: 2 }));
 		dispatch(actions.burgerConstructor.set_bun(data.id));
 	}
 
 	function handlerOnDel(data) {
 		// console.log(currentItem);
 		dispatch(actions.burgerConstructor.del_ingredient(data.key));
+		dispatch(actions.burgerIngredients.set_count({ id: data.id, shift: -1 }));
 	}
 
 	function handlerOnDrop(data) {
@@ -69,52 +82,77 @@ export function BurgerComponents() {
 			return;
 		}
 		if (isKey) {
-			console.log('сортируем');
+			// console.log('сортируем');
 			dispatch(actions.burgerConstructor.move_ingredient(data));
 		} else {
-			console.log('добавляем');
+			// console.log('добавляем');
 			dispatch(actions.burgerConstructor.add_ingredient(data));
+			dispatch(
+				actions.burgerIngredients.set_count({ id: data.source, shift: 1 })
+			);
 		}
 	}
 
-	useEffect(() => {
-		dispatch(actions.burgerIngredients.set_count(order.arr));
-	}, [dispatch, order.arr]);
+	// useEffect(() => {
+	// 	dispatch(actions.burgerIngredients.set_count(order.arr));
+	// }, [dispatch, order.arr]);
 
 	return (
 		<section className={conteiner.section}>
 			<div ref={dropBunTagTop}>
-				<ConstructorElement
-					type='top'
-					isLocked={true}
-					text={`${bun.name} (верх)`}
-					price={bun.price}
-					thumbnail={bun.image}
-					extraClass={conteiner.bun + ' ' + conteiner[bunTopBorderColor]}
-				/>
+				{bunId === '' ? (
+					<BurgerComponentPlaceholder
+						text='сюда перетащите булку...'
+						type={1}
+						dropColor={bunTopBorderColor}
+					/>
+				) : (
+					<ConstructorElement
+						type='top'
+						isLocked={true}
+						text={`${bun.name} (верх)`}
+						price={bun.price}
+						thumbnail={bun.image}
+						extraClass={conteiner.bun + ' ' + conteiner[bunTopBorderColor]}
+					/>
+				)}
 			</div>
-			<div
-				className={conteiner.filling + ' ' + conteiner[fillingBorderColor]}
-				ref={dropFillingsTag}>
-				{order.data.filling.map((item) => (
-					<div key={item.key}>
-						<BurgerDraggableComponent
-							item={item}
-							onDelete={handlerOnDel}
-							onDrop={handlerOnDrop}
-						/>
-					</div>
-				))}
+			<div className={conteiner.filling} ref={dropFillingsTag}>
+				{order_list_empty ? (
+					<BurgerComponentPlaceholder
+						text='сюда тащите ингредиенты...'
+						type={0}
+						dropColor={fillingBorderColor}
+					/>
+				) : (
+					order_list.map((item) => (
+						<div key={item.key}>
+							<BurgerDraggableComponent
+								item={item}
+								onDelete={handlerOnDel}
+								onDrop={handlerOnDrop}
+							/>
+						</div>
+					))
+				)}
 			</div>
 			<div ref={dropBunTagBottom}>
-				<ConstructorElement
-					type='bottom'
-					isLocked={true}
-					text={`${bun.name} (низ)`}
-					price={bun.price}
-					thumbnail={bun.image}
-					extraClass={conteiner.bun + ' ' + conteiner[bunBottomBorderColor]}
-				/>
+				{bunId === '' ? (
+					<BurgerComponentPlaceholder
+						text='булку можно перетащить и сюда...'
+						type={-1}
+						dropColor={bunBottomBorderColor}
+					/>
+				) : (
+					<ConstructorElement
+						type='bottom'
+						isLocked={true}
+						text={`${bun.name} (низ)`}
+						price={bun.price}
+						thumbnail={bun.image}
+						extraClass={conteiner.bun + ' ' + conteiner[bunBottomBorderColor]}
+					/>
+				)}
 			</div>
 		</section>
 	);

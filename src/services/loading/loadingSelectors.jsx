@@ -1,1 +1,1 @@
-export const getLoadingData = (state) => state.loading.loading;
+export const getLoadingData = (state) => state.loading.status;

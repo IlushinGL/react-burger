@@ -10,7 +10,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function BurgerConstructor({ onClick }) {
-	const orderTotal = useSelector(selectors.burgerConstructor.total);
+	const orderTotal = useSelector(selectors.burgerIngredients.get_total);
 	return (
 		<div className={conteiner.section}>
 			<section className={conteiner.components}>

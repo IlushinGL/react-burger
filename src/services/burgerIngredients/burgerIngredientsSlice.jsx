@@ -1,29 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getIngredients } from '../../api/get-ingredients';
+
+export const fetchAllIngedients = createAsyncThunk(
+	'ingrediens/getAll',
+	async () => {
+		return getIngredients();
+	}
+);
 
 const burgerIngredientsSlice = createSlice({
 	name: 'burgerIngredients',
-	initialState: { data: [] },
+	initialState: { data: [], status: 'loading', error: '' },
 	reducers: {
-		set(state, action) {
-			state.data = action.payload.map((element) => {
-				return { ...element, count: 0 };
-			});
-		},
 		set_count(state, action) {
-			const newData = state.data.map((element) => {
-				return { ...element, count: 0 };
-			});
-			let index = -1;
-			action.payload.forEach((item) => {
-				index = newData.findIndex((element) => element._id === item);
-				if (index >= 0) {
-					newData[index].count += 1;
-				}
-			});
-			state.data = newData;
+			const index = state.data.findIndex(
+				(element) => element._id === action.payload.id
+			);
+			if (index >= 0) {
+				state.data[index].count += action.payload.shift;
+			}
 		},
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchAllIngedients.pending, (state) => {
+				state.status = 'loading';
+				state.error = '';
+			})
+			.addCase(fetchAllIngedients.fulfilled, (state, action) => {
+				if (action.payload.success) {
+					state.status = 'idle';
+					state.error = '';
+					state.data = action.payload.data.map((element) => {
+						return { ...element, count: 0 };
+					});
+				} else {
+					state.status = 'error';
+					state.error = 'Что-то пошло не так. Сервер вернул success=false.';
+				}
+			})
+			.addCase(fetchAllIngedients.rejected, (state, action) => {
+				// console.log(action.error);
+				state.status = 'error';
+				state.error = action.error.message;
+			});
 	},
 });
 
-export const { set, set_count } = burgerIngredientsSlice.actions; // генераторы действий
+export const { set_count } = burgerIngredientsSlice.actions; // генераторы действий
 export default burgerIngredientsSlice.reducer;

@@ -9,13 +9,14 @@
 }
 
 .bun:hover {
-	border: 1px var(--colors-interface-accent) solid;
+	// border: 1px var(--colors-interface-accent) solid;
 	cursor: pointer;
 }
 
 .filling {
 	composes: section;
 	max-height: calc(116.5 * var(--offset-base-size));
+	min-height: calc(20 * var(--offset-base-size));
 	scrollbar-color: var(--text-inactive-color) var(--background-element);
 	border: 1px transparent solid;
 	border-radius: calc(10 * var(--offset-base-size));
@@ -43,6 +44,30 @@
 }
 
 .ingredient:hover {
-	border: 1px var(--colors-interface-accent) solid;
+	// border: 1px var(--colors-interface-accent) solid;
 	cursor: pointer;
+}
+
+.holder {
+	composes: ml-8 from global;
+	composes: text text_type_main-default from global;
+	display: block;
+	box-sizing: border-box;
+	height: calc(20 * var(--offset-base-size));
+	width: calc(134 * var(--offset-base-size));
+	background-color: var(--background-element);
+	border-radius: calc(10 * var(--offset-base-size));
+	// border: 1px transparent solid;
+	align-content: center;
+	text-align: center;
+}
+
+.holder_top {
+	border-top-left-radius: calc(22 * var(--offset-base-size));
+	border-top-right-radius: 	calc(22 * var(--offset-base-size));
+}
+
+.holder_botton {
+	border-bottom-left-radius: calc(22 * var(--offset-base-size));
+	border-bottom-right-radius: calc(22 * var(--offset-base-size));
 }
