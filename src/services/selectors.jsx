@@ -1,5 +1,4 @@
-import { getLoadingData } from './loading/loadingSelectors';
-import { getErrData } from './err/errSelectors';
+import { all as getIngredienDetailesData } from './ingredientDetails/ingredientDetailsSelectors';
 import {
 	all as getBurgerIngredientsAll,
 	byType as getBurgerIngredientsByType,
@@ -12,13 +11,24 @@ import {
 	list as getBurgerConstructorlist,
 	get_byId as getBurgerConstructorById,
 } from './burgerConsructor/burgerConsructorSelectors';
+import {
+	name as getOrderDetailsName,
+	number as getOrderDetailsNumber,
+	status as getOrderDetailsStatus,
+	error as getOrderDetailsError,
+	visible as getOrderDetailsVisible,
+} from './orderDetails/orderDetailsSelectors';
 
 export const selectors = {
-	loading: {
-		get: getLoadingData,
+	ingredientDetails: {
+		get_data: getIngredienDetailesData,
 	},
-	error: {
-		get: getErrData,
+	orderDetails: {
+		get_name: getOrderDetailsName,
+		get_number: getOrderDetailsNumber,
+		get_status: getOrderDetailsStatus,
+		get_error: getOrderDetailsError,
+		get_visible: getOrderDetailsVisible,
 	},
 	burgerIngredients: {
 		get_all: getBurgerIngredientsAll,

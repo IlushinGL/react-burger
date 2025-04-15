@@ -11,6 +11,7 @@ import {
 
 export function BurgerConstructor({ onClick }) {
 	const orderTotal = useSelector(selectors.burgerIngredients.get_total);
+	const isValid = useSelector(selectors.burgerConstructor.get_data)[0] !== '';
 	return (
 		<div className={conteiner.section}>
 			<section className={conteiner.components}>
@@ -25,6 +26,7 @@ export function BurgerConstructor({ onClick }) {
 					htmlType='button'
 					type='primary'
 					size='medium'
+					disabled={!isValid}
 					onClick={onClick}>
 					Оформить заказ
 				</Button>

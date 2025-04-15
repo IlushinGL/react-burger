@@ -54,6 +54,7 @@ export function BurgerComponents() {
 
 	// console.log(order_list_empty);
 	function onDropFillingHandler(item) {
+		// добавляем в пустой список
 		if (order_list_empty) {
 			const data = { resiver: '', source: item.id };
 			dispatch(actions.burgerConstructor.add_ingredient(data));
@@ -62,6 +63,7 @@ export function BurgerComponents() {
 	}
 
 	function onDropBunHandler(data) {
+		// изменяем булку
 		if (bunId) {
 			dispatch(actions.burgerIngredients.set_count({ id: bunId, shift: -2 }));
 		}
@@ -70,7 +72,7 @@ export function BurgerComponents() {
 	}
 
 	function handlerOnDel(data) {
-		// console.log(currentItem);
+		// удаляем из списка
 		dispatch(actions.burgerConstructor.del_ingredient(data.key));
 		dispatch(actions.burgerIngredients.set_count({ id: data.id, shift: -1 }));
 	}
@@ -78,24 +80,20 @@ export function BurgerComponents() {
 	function handlerOnDrop(data) {
 		const isKey = data.source.slice(0, 4) === 'igl_';
 		if (data.source === data.resiver) {
-			console.log('ничего не делаем');
+			// ничего не делаем
 			return;
 		}
 		if (isKey) {
-			// console.log('сортируем');
+			// сортируем
 			dispatch(actions.burgerConstructor.move_ingredient(data));
 		} else {
-			// console.log('добавляем');
+			// добавляем
 			dispatch(actions.burgerConstructor.add_ingredient(data));
 			dispatch(
 				actions.burgerIngredients.set_count({ id: data.source, shift: 1 })
 			);
 		}
 	}
-
-	// useEffect(() => {
-	// 	dispatch(actions.burgerIngredients.set_count(order.arr));
-	// }, [dispatch, order.arr]);
 
 	return (
 		<section className={conteiner.section}>

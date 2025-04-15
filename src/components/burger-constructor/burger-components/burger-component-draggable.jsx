@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectors } from '@services/selectors';
 
 // import { useDrag } from 'react-dnd';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 
 import conteiner from './burger-components.module.scss';
 import {
@@ -16,7 +16,7 @@ export function BurgerDraggableComponent({ item, onDelete, onDrop }) {
 	const itemData = useSelector((state) =>
 		selectors.burgerConstructor.get_byId(state, item.id)
 	);
-	const [, dragItemRef] = useDrag({
+	const [{ isDrag }, dragItemRef, dragPreviewItemRef] = useDrag({
 		type: 'filling',
 		item: { id: item.key },
 		collect: (monitor) => ({
@@ -45,6 +45,12 @@ export function BurgerDraggableComponent({ item, onDelete, onDrop }) {
 
 	return (
 		<div ref={dropItemRef}>
+			{isDrag ? null : (
+				<DragPreviewImage
+					connect={dragPreviewItemRef}
+					src={itemData.image_mobile}
+				/>
+			)}
 			<div
 				className={conteiner.ingredient + ' ' + conteiner[meBorderColor]}
 				ref={dragItemRef}>

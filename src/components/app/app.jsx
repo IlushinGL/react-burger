@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { useState, useEffect } from 'react';
+
+import { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import main from './app.module.scss';
 
-// import { BURGER_DATA } from '@utils/burger-data';
-
 import Preloader from '@components/preloader/preloader';
 
 import { fetchAllIngedients } from '@services/burgerIngredients/burgerIngredientsSlice';
+import { fetchAddOrder } from '@services/orderDetails/orderDetailsSlice';
 
-// import { actions } from '@services/actions';
+import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
+
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
@@ -26,15 +26,12 @@ export const App = () => {
 	const dispatch = useDispatch();
 	const loadingState = useSelector(selectors.burgerIngredients.get_status);
 	const errorState = useSelector(selectors.burgerIngredients.get_error);
-	const burgerConstructorData = useSelector(
-		selectors.burgerConstructor.get_data
-	);
-	const [selectedIngredient, setSelectedIngredient] = useState(null);
-	const [selectedOrder, setSelectedOrder] = useState(null);
+	const orderDetails = useSelector(selectors.burgerConstructor.get_data);
+	const orderDetailsStatus = useSelector(selectors.orderDetails.get_status);
+	const selectedIngredient = useSelector(selectors.ingredientDetails.get_data);
+	const orderDetailsVisible = useSelector(selectors.orderDetails.get_visible);
 
 	useEffect(() => {
-		// if (loadingState === 'idle') {
-		// }
 		dispatch(fetchAllIngedients());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -44,19 +41,18 @@ export const App = () => {
 	}
 
 	function handleOnCloseIngredient() {
-		setSelectedIngredient(null);
+		dispatch(actions.ingredientDetails.set(null));
 	}
 
 	function handleOnCloseOrder() {
-		setSelectedOrder(null);
-	}
-
-	function handleOnClickIngredient(item) {
-		setSelectedIngredient(item);
+		dispatch(actions.orderDetails.visible(false));
 	}
 
 	function handleOnClickOrder() {
-		setSelectedOrder(burgerConstructorData.data);
+		if (orderDetailsStatus !== 'loading') {
+			dispatch(fetchAddOrder(orderDetails));
+		}
+		dispatch(actions.orderDetails.visible(true));
 	}
 
 	if (loadingState === 'loading') {
@@ -75,7 +71,7 @@ export const App = () => {
 				<AppHeader />
 				<main className={main.data}>
 					<DndProvider backend={HTML5Backend}>
-						<BurgerIngredients onClick={handleOnClickIngredient} />
+						<BurgerIngredients />
 						<BurgerConstructor onClick={handleOnClickOrder} />
 					</DndProvider>
 				</main>
@@ -84,7 +80,7 @@ export const App = () => {
 				<IngredientDetailes item={selectedIngredient} />
 			</Modal>
 			<Modal text={' '} onClose={handleOnCloseOrder}>
-				<OrderDetailes item={selectedOrder} />
+				<OrderDetailes item={orderDetailsVisible} />
 			</Modal>
 		</div>
 	);

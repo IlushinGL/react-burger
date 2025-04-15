@@ -1,5 +1,5 @@
-import { set as loadingSet } from './loading/loadingSlice';
-import { set as errorSet } from './err/errSlice';
+import { set as ingredientDetailsDataSet } from './ingredientDetails/ingredientDetailsSlice';
+import { set_visible as orderDetailsSetVisible } from './orderDetails/orderDetailsSlice';
 import { set_count as burgerIngredientsSetCount } from './burgerIngredients/burgerIngredientsSlice';
 import {
 	set_bun as burgerConstructorSetBun,
@@ -9,11 +9,11 @@ import {
 } from './burgerConsructor/burgerConsructorSlice';
 
 export const actions = {
-	loading: {
-		set: loadingSet,
+	ingredientDetails: {
+		set: ingredientDetailsDataSet,
 	},
-	error: {
-		set: errorSet,
+	orderDetails: {
+		visible: orderDetailsSetVisible,
 	},
 	burgerIngredients: {
 		set_count: burgerIngredientsSetCount,

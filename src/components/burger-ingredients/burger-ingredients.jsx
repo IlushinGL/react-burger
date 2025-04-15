@@ -5,7 +5,7 @@ import conteiner from './burger-ingredients.module.scss';
 import { BurgerIngredientsType } from './burger-ingredients-type/burger-ingredients-type';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerIngredients({ onClick }) {
+export function BurgerIngredients() {
 	const [typeId, setTypeId] = useState(0);
 	const val = ['Булки', 'Соусы', 'Начинки'];
 	const refList = useRef(null);
@@ -53,13 +53,13 @@ export function BurgerIngredients({ onClick }) {
 				onScroll={handlerScroll}
 				ref={refList}>
 				<div ref={refBun}>
-					<BurgerIngredientsType type='bun' name={val[0]} onClick={onClick} />
+					<BurgerIngredientsType type='bun' name={val[0]} />
 				</div>
 				<div ref={refSause}>
-					<BurgerIngredientsType type='sauce' name={val[1]} onClick={onClick} />
+					<BurgerIngredientsType type='sauce' name={val[1]} />
 				</div>
 				<div ref={refMain}>
-					<BurgerIngredientsType type='main' name={val[2]} onClick={onClick} />
+					<BurgerIngredientsType type='main' name={val[2]} />
 				</div>
 			</div>
 		</section>

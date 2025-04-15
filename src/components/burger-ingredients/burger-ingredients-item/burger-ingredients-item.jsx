@@ -1,13 +1,16 @@
-import { object, func } from 'prop-types';
+import { object } from 'prop-types';
 import block from './burger-ingredients-item.module.scss';
-import { useDrag } from 'react-dnd';
+import { useDrag, DragPreviewImage } from 'react-dnd';
+import { actions } from '@services/actions';
+import { useDispatch } from 'react-redux';
 import {
 	CurrencyIcon,
 	Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerIngredientsItem({ item, onClick }) {
-	const [, dragRef, dragPreviewRef] = useDrag({
+export function BurgerIngredientsItem({ item }) {
+	const dispatch = useDispatch();
+	const [{ isDrag }, dragRef, dragPreviewRef] = useDrag({
 		type: item.type === 'bun' ? 'bun' : 'filling',
 		item: { id: item._id },
 		collect: (monitor) => ({
@@ -16,18 +19,22 @@ export function BurgerIngredientsItem({ item, onClick }) {
 	});
 
 	function handleOnClick() {
-		onClick(item);
+		// console.log(item);
+		dispatch(actions.ingredientDetails.set(item));
 	}
 
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-		<section className={block.item} onClick={handleOnClick} ref={dragRef}>
+		<section className={block.item} onClick={handleOnClick}>
+			{isDrag ? null : (
+				<DragPreviewImage connect={dragPreviewRef} src={item.image} />
+			)}
 			<div className={block.image}>
 				<img
 					className={block.image_peview}
 					src={item.image}
 					alt={item.name}
-					ref={dragPreviewRef}
+					ref={dragRef}
 				/>
 			</div>
 			<div className={block.price}>
@@ -44,5 +51,4 @@ export function BurgerIngredientsItem({ item, onClick }) {
 
 BurgerIngredientsItem.propTypes = {
 	item: object,
-	onClick: func,
 };
