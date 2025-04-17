@@ -1,4 +1,5 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { C_PREFIX } from '@utils/customConfig';
 
 const burgerConsructorSlice = createSlice({
 	name: 'burgerConsructor',
@@ -7,24 +8,34 @@ const burgerConsructorSlice = createSlice({
 		filling: [],
 	},
 	reducers: {
+		clear(state) {
+			state.bun = '';
+			state.filling = [];
+		},
 		set_bun(state, action) {
 			state.bun = action.payload;
 		},
-		add_ingredient(state, action) {
-			// payload = {source: id ингредиента, resiver: key строки заказа }
-			// помещает над ресивером
-			const currentFilling = state.filling;
-			let index = currentFilling.findIndex(
-				(item) => item.key === action.payload.resiver
-			);
-			if (index === -1) {
-				index = 0;
-			}
-			currentFilling.splice(index, 0, {
-				key: 'igl_' + nanoid(),
-				id: action.payload.source,
-			});
+		add_ingredient: {
+			reducer: (state, action) => {
+				// payload = {key: уникальное значение, source: id ингредиента, resiver: key строки заказа }
+				// помещает над ресивером
+				const currentFilling = state.filling;
+				let index = currentFilling.findIndex(
+					(item) => item.key === action.payload.resiver
+				);
+				if (index === -1) {
+					index = 0;
+				}
+				currentFilling.splice(index, 0, {
+					key: action.payload.uniqueId,
+					id: action.payload.source,
+				});
+			},
+			prepare: (data) => {
+				return { payload: { ...data, uniqueId: C_PREFIX + nanoid() } };
+			},
 		},
+
 		move_ingredient(state, action) {
 			// payload = {source: key перемещаемой строки заказа, resiver: key строки заказа }
 			// помещает под ресивером
@@ -64,6 +75,11 @@ const burgerConsructorSlice = createSlice({
 	},
 });
 
-export const { set_bun, add_ingredient, del_ingredient, move_ingredient } =
-	burgerConsructorSlice.actions; // генераторы действий
+export const {
+	clear,
+	set_bun,
+	add_ingredient,
+	del_ingredient,
+	move_ingredient,
+} = burgerConsructorSlice.actions; // генераторы действий
 export default burgerConsructorSlice.reducer;

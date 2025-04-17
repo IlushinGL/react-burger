@@ -45,6 +45,11 @@ export const App = () => {
 	}
 
 	function handleOnCloseOrder() {
+		if (orderDetailsStatus === 'idle') {
+			dispatch(actions.burgerConstructor.reset());
+			dispatch(actions.burgerIngredients.reset());
+			dispatch(actions.orderDetails.reset());
+		}
 		dispatch(actions.orderDetails.visible(false));
 	}
 

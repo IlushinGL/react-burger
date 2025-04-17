@@ -3,8 +3,8 @@ import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
 
 import { useDrop } from 'react-dnd';
-// import { useDrop, useDrag } from 'react-dnd';
-// import { useEffect } from 'react';
+
+import { C_PREFIX } from '@utils/customConfig';
 
 import conteiner from './burger-components.module.scss';
 import { BurgerDraggableComponent } from './burger-component-draggable';
@@ -78,7 +78,7 @@ export function BurgerComponents() {
 	}
 
 	function handlerOnDrop(data) {
-		const isKey = data.source.slice(0, 4) === 'igl_';
+		const isKey = data.source.slice(0, C_PREFIX.length) === C_PREFIX;
 		if (data.source === data.resiver) {
 			// ничего не делаем
 			return;

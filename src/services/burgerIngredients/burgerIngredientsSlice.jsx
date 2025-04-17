@@ -12,6 +12,13 @@ const burgerIngredientsSlice = createSlice({
 	name: 'burgerIngredients',
 	initialState: { data: [], status: 'loading', error: '' },
 	reducers: {
+		clear_counts(state) {
+			state.data
+				.filter((item) => item.count > 0)
+				.forEach((element) => {
+					element.count = 0;
+				});
+		},
 		set_count(state, action) {
 			const index = state.data.findIndex(
 				(element) => element._id === action.payload.id
@@ -47,5 +54,5 @@ const burgerIngredientsSlice = createSlice({
 	},
 });
 
-export const { set_count } = burgerIngredientsSlice.actions; // генераторы действий
+export const { clear_counts, set_count } = burgerIngredientsSlice.actions; // генераторы действий
 export default burgerIngredientsSlice.reducer;

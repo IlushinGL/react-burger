@@ -1,6 +1,6 @@
-const INGREDIENTS_SERVER_URL =
-	'https://norma.nomoreparties.space/api/ingredients';
-const ORDER_SERVER_URL = 'https://norma.nomoreparties.space/api/orders';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
+const INGREDIENTS_EP = '/ingredients';
+const ORDERS_EP = '/orders';
 
 const getResponce = (res) => {
 	if (res.ok) {
@@ -10,11 +10,11 @@ const getResponce = (res) => {
 };
 
 export const getIngredients = () => {
-	return fetch(INGREDIENTS_SERVER_URL).then(getResponce);
+	return fetch(BASE_URL + INGREDIENTS_EP).then(getResponce);
 };
 
 export const addOrder = (ingredientsArr) => {
-	return fetch(ORDER_SERVER_URL, {
+	return fetch(BASE_URL + ORDERS_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ ingredients: ingredientsArr }),

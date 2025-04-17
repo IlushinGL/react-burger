@@ -1,4 +1,4 @@
-export function isDifferent(arrA, arrB) {
+export function isAreasDifferent(arrA, arrB) {
 	if (arrA === arrB) {
 		return false;
 	}

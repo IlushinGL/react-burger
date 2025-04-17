@@ -11,13 +11,17 @@ export const fetchAddOrder = createAsyncThunk(
 const orderDetailsSlice = createSlice({
 	name: 'orderDetails',
 	initialState: {
-		name: 'пустой заказ',
+		name: 'новый заказ',
 		number: '...',
 		status: 'idle',
 		error: '',
 		visible: false,
 	},
 	reducers: {
+		clear(state) {
+			state.name = 'новый заказ';
+			state.number = '...';
+		},
 		set_visible(state, action) {
 			state.visible = action.payload;
 		},
@@ -46,5 +50,5 @@ const orderDetailsSlice = createSlice({
 	},
 });
 
-export const { set_visible } = orderDetailsSlice.actions; // генераторы действий
+export const { clear, set_visible } = orderDetailsSlice.actions; // генераторы действий
 export default orderDetailsSlice.reducer;
