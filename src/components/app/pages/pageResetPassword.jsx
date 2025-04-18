@@ -1,5 +1,7 @@
 import conteiner from './pagesUserAuth.module.scss';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { APP_PATH } from '@utils/customConfig';
 import {
 	Input,
 	PasswordInput,
@@ -52,7 +54,9 @@ export function ResetPassword() {
 				<div className={conteiner.other}>
 					<div className={conteiner.content}>
 						<div className={conteiner.text}>Вспомнили пароль?</div>
-						<div className={conteiner.link}>Войти</div>
+						<NavLink to={APP_PATH.login} className={conteiner.link}>
+							Войти
+						</NavLink>
 					</div>
 				</div>
 			</div>

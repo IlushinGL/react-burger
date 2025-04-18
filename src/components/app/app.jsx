@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { APP_PATH } from '@utils/customConfig';
 
 import { useEffect } from 'react';
 
@@ -79,13 +80,16 @@ export const App = () => {
 			<div className={viewPort.app}>
 				<AppHeader />
 				<Routes>
-					<Route path='/' element={<Home onSubmit={handleOnClickOrder} />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/forgot-password' element={<ForgotPassword />} />
-					<Route path='/reset-password' element={<ResetPassword />} />
-					<Route path='/profile' element={<Login />} />
-					<Route path='/ingredients/:id' element={<Login />} />
+					<Route
+						path={APP_PATH.home}
+						element={<Home onSubmit={handleOnClickOrder} />}
+					/>
+					<Route path={APP_PATH.login} element={<Login />} />
+					<Route path={APP_PATH.register} element={<Register />} />
+					<Route path={APP_PATH.forgotPswd} element={<ForgotPassword />} />
+					<Route path={APP_PATH.resetPswd} element={<ResetPassword />} />
+					<Route path={APP_PATH.profile} element={<Login />} />
+					<Route path={APP_PATH.ingredients} element={<Login />} />
 				</Routes>
 			</div>
 			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>

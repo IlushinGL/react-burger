@@ -65,3 +65,7 @@
 	text-decoration: none;
 	box-sizing: border-box;
 }
+.link:hover {
+	cursor: pointer;
+	color: var(--text-primary-color);
+}

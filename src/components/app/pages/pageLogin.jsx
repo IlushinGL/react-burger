@@ -1,5 +1,7 @@
 import conteiner from './pagesUserAuth.module.scss';
 import { useState } from 'react';
+import { APP_PATH } from '@utils/customConfig';
+import { NavLink } from 'react-router-dom';
 import {
 	EmailInput,
 	PasswordInput,
@@ -44,11 +46,15 @@ export function Login() {
 				<div className={conteiner.other}>
 					<div className={conteiner.content}>
 						<div className={conteiner.text}>Вы — новый пользователь?</div>
-						<div className={conteiner.link}>Зарегистрироваться</div>
+						<NavLink to={APP_PATH.register} className={conteiner.link}>
+							Зарегистрироваться
+						</NavLink>
 					</div>
 					<div className={conteiner.content}>
 						<div className={conteiner.text}>Забыли пароль?</div>
-						<div className={conteiner.link}>Восстановить пароль</div>
+						<NavLink to={APP_PATH.forgotPswd} className={conteiner.link}>
+							Восстановить пароль
+						</NavLink>
 					</div>
 				</div>
 			</div>
