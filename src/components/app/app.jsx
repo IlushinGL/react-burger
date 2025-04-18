@@ -1,10 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import main from './app.module.scss';
 
-import { BURGER_DATA } from '@utils/burger-data';
-
 import Preloader from '@components/preloader/preloader';
-import { getIngredients } from '../../api/get-ingredients';
+
+import { fetchAllIngedients } from '@services/burgerIngredients/burgerIngredientsSlice';
+import { fetchAddOrder } from '@services/orderDetails/orderDetailsSlice';
+
+import { actions } from '@services/actions';
+import { selectors } from '@services/selectors';
+
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
@@ -14,64 +23,49 @@ import { IngredientDetailes } from '@components/ingredient-details/ingredient-de
 import { OrderDetailes } from '@components/order-details/order-details';
 
 export const App = () => {
-	const [ingredientsState, setIngredientsState] = useState({
-		data: null,
-		loading: true,
-	});
-	const [modalErrVisible, setModalErrVisible] = useState(false);
-	const [selectedIngredient, setSelectedIngredient] = useState(null);
-	const [selectedOrder, setSelectedOrder] = useState(null);
+	const dispatch = useDispatch();
+	const loadingState = useSelector(selectors.burgerIngredients.get_status);
+	const errorState = useSelector(selectors.burgerIngredients.get_error);
+	const orderDetails = useSelector(selectors.burgerConstructor.get_data);
+	const orderDetailsStatus = useSelector(selectors.orderDetails.get_status);
+	const selectedIngredient = useSelector(selectors.ingredientDetails.get_data);
+	const orderDetailsVisible = useSelector(selectors.orderDetails.get_visible);
 
 	useEffect(() => {
-		getIngredients(handleIgredientsLoading);
+		dispatch(fetchAllIngedients());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	function handleIgredientsLoading({ ingredients, loading }) {
-		if (ingredients instanceof Error) {
-			// console.log(loading, ingredients);
-			setModalErrVisible(true);
-			setIngredientsState({ data: ingredients, loading: false });
-		} else if (!loading && ingredients) {
-			const newData = ingredients.map((item) => {
-				return { ...item, count: 1 };
-			});
-			// console.log(loading, newData);
-			setModalErrVisible(false);
-			setIngredientsState({ data: newData, loading: false });
-		} else {
-			// console.log(loading, newData);
-			setIngredientsState({ data: ingredients, loading: loading });
-		}
-	}
-
 	function handleOnCloseErr() {
-		getIngredients(handleIgredientsLoading);
+		dispatch(fetchAllIngedients());
 	}
 
 	function handleOnCloseIngredient() {
-		setSelectedIngredient(null);
+		dispatch(actions.ingredientDetails.set(null));
 	}
 
 	function handleOnCloseOrder() {
-		setSelectedOrder(null);
-	}
-
-	function handleOnClickIngredient(item) {
-		setSelectedIngredient(item);
+		if (orderDetailsStatus === 'idle') {
+			dispatch(actions.burgerConstructor.reset());
+			dispatch(actions.burgerIngredients.reset());
+			dispatch(actions.orderDetails.reset());
+		}
+		dispatch(actions.orderDetails.visible(false));
 	}
 
 	function handleOnClickOrder() {
-		setSelectedOrder(BURGER_DATA);
+		if (orderDetailsStatus !== 'loading') {
+			dispatch(fetchAddOrder(orderDetails));
+		}
+		dispatch(actions.orderDetails.visible(true));
 	}
 
-	if (ingredientsState.loading) {
-		return <Preloader box={160} visible={ingredientsState.loading} />;
-	}
-
-	if (modalErrVisible) {
+	if (loadingState === 'loading') {
+		return <Preloader box={160} visible={true} />;
+	} else if (loadingState === 'error') {
 		return (
 			<Modal text={'Ошибка при запросе данных'} onClose={handleOnCloseErr}>
-				<ErrDetailes item={ingredientsState.data.message} />
+				<ErrDetailes item={errorState} />
 			</Modal>
 		);
 	}
@@ -81,22 +75,17 @@ export const App = () => {
 			<div className={main.conteiner}>
 				<AppHeader />
 				<main className={main.data}>
-					<BurgerIngredients
-						data={ingredientsState.data}
-						onClick={handleOnClickIngredient}
-					/>
-					<BurgerConstructor
-						ingredients={ingredientsState.data}
-						data={BURGER_DATA}
-						onClick={handleOnClickOrder}
-					/>
+					<DndProvider backend={HTML5Backend}>
+						<BurgerIngredients />
+						<BurgerConstructor onClick={handleOnClickOrder} />
+					</DndProvider>
 				</main>
 			</div>
 			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>
 				<IngredientDetailes item={selectedIngredient} />
 			</Modal>
 			<Modal text={' '} onClose={handleOnCloseOrder}>
-				<OrderDetailes item={selectedOrder} />
+				<OrderDetailes item={orderDetailsVisible} />
 			</Modal>
 		</div>
 	);

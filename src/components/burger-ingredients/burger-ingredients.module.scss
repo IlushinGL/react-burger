@@ -14,22 +14,24 @@
 	height: calc(100vh - 71 * var(--offset-base-size));
 	min-height: calc(62 * var(--offset-base-size));
 	margin-top: calc(10 * var(--offset-base-size));
-	overflow-y: scroll; // включить если нужна прокрутка на маленьком окне
+	scrollbar-color: var(--text-inactive-color) var(--background-element);
+	scrollbar-width: auto;
+	overflow-y: scroll;
 }
 
 .tab {
 	display: flex;
 }
 
-.scroll {
-	display: block;
-	box-sizing: border-box;
-	position: absolute;
-	width: calc(2 * var(--offset-base-size));
-	height: calc(100vh - 71 * var(--offset-base-size));
-	min-height: calc(62 * var(--offset-base-size));
-	top: calc(49 * var(--offset-base-size));
-	left: calc(100% - 2 * var(--offset-base-size));
-	background-color: var(--background-element);
-	z-index: 1;
-}
+// .scroll {
+// 	display: block;
+// 	box-sizing: border-box;
+// 	position: absolute;
+// 	width: calc(2 * var(--offset-base-size));
+// 	height: calc(100vh - 71 * var(--offset-base-size));
+// 	min-height: calc(62 * var(--offset-base-size));
+// 	top: calc(49 * var(--offset-base-size));
+// 	left: calc(100% - 2 * var(--offset-base-size));
+// 	background-color: var(--background-element);
+// 	z-index: 1;
+// }
