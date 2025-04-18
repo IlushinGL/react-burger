@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import main from './app.module.scss';
+import viewPort from './app.module.scss';
 
 import Preloader from '@components/preloader/preloader';
 
@@ -15,12 +14,17 @@ import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
 
 import { AppHeader } from '@components/app-header/app-header';
-import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
+
+import { Home } from './pages/home/home';
 import { Modal } from '@components/modal/modal';
 import { ErrDetailes } from '@components/err-details/err-details';
 import { IngredientDetailes } from '@components/ingredient-details/ingredient-details';
 import { OrderDetailes } from '@components/order-details/order-details';
+
+import { Login } from './pages/pageLogin';
+import { Register } from './pages/pageRegister';
+import { ForgotPassword } from './pages/pageForgotPassword';
+import { ResetPassword } from './pages/pageResetPassword';
 
 export const App = () => {
 	const dispatch = useDispatch();
@@ -71,15 +75,18 @@ export const App = () => {
 	}
 
 	return (
-		<div className={main.main}>
-			<div className={main.conteiner}>
+		<div className={viewPort.win}>
+			<div className={viewPort.app}>
 				<AppHeader />
-				<main className={main.data}>
-					<DndProvider backend={HTML5Backend}>
-						<BurgerIngredients />
-						<BurgerConstructor onClick={handleOnClickOrder} />
-					</DndProvider>
-				</main>
+				<Routes>
+					<Route path='/' element={<Home onSubmit={handleOnClickOrder} />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/register' element={<Register />} />
+					<Route path='/forgot-password' element={<ForgotPassword />} />
+					<Route path='/reset-password' element={<ResetPassword />} />
+					<Route path='/profile' element={<Login />} />
+					<Route path='/ingredients/:id' element={<Login />} />
+				</Routes>
 			</div>
 			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>
 				<IngredientDetailes item={selectedIngredient} />

@@ -1,0 +1,13 @@
+.data {
+	display: grid;
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding: 0;
+	max-height: calc(100vh - 22 * var(--offset-base-size));
+	width: calc(310 * var(--offset-base-size));
+	background-color: transparent;
+	// border: 1px red solid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	column-gap: calc(10 * var(--offset-base-size));
+}
