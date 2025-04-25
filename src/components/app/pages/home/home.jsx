@@ -1,5 +1,6 @@
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { func } from 'prop-types';
 
 import conteiner from './home.module.scss';
 
@@ -16,3 +17,7 @@ export function Home({ onSubmit }) {
 		</main>
 	);
 }
+
+Home.propTypes = {
+	onSubmit: func,
+};

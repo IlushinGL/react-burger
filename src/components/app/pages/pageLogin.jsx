@@ -1,7 +1,9 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { APP_PATH } from '@utils/customConfig';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 import {
 	EmailInput,
 	PasswordInput,
@@ -9,36 +11,54 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Login() {
-	const [emailValue, setEmailValue] = useState('bob@example.com');
-	const [pswdValue, setPswdlValue] = useState('12345');
-	const onEmailChange = (e) => {
-		setEmailValue(e.target.value);
-	};
-	const onPswdChange = (e) => {
-		setPswdlValue(e.target.value);
-	};
+	const navigate = useNavigate();
+	const { values, handleChange, errors, isValid, resetForm } =
+		useFormAndValidation();
+
+	useEffect(() => {
+		resetForm();
+	}, [resetForm]);
+
+	function handleOnSubmit(e) {
+		e.preventDefault();
+		if (isValid) {
+			navigate(APP_PATH.home);
+		}
+	}
+
 	return (
 		<main className={conteiner.page}>
 			<div className={conteiner.block}>
-				<form className={conteiner.form}>
+				<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
 					<div className={conteiner.title}>Вход</div>
 					<EmailInput
-						onChange={onEmailChange}
-						value={emailValue}
+						onChange={handleChange}
+						value={values.email || ''}
 						name={'email'}
 						isIcon={false}
+						required
+						minLength={5}
 						autoComplete='off'
-						errorText={'актуальный адрес вашей электронной почты'}
+						error={!!errors.email}
+						errorText={errors.email}
 					/>
 					<PasswordInput
-						onChange={onPswdChange}
-						value={pswdValue}
+						onChange={handleChange}
+						value={values.password || ''}
 						name={'password'}
 						autoComplete='off'
-						errorText={'здесь должно быть минимум 6 символов'}
+						minLength={6}
+						maxLength={8}
+						required
+						error={!!errors.password}
+						errorText={errors.password}
 					/>
 					<div className={conteiner.button}>
-						<Button htmlType='button' type='primary' size='medium'>
+						<Button
+							htmlType='submit'
+							type='primary'
+							size='medium'
+							disabled={!isValid}>
 							Войти
 						</Button>
 					</div>

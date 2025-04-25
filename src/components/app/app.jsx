@@ -10,6 +10,7 @@ import Preloader from '@components/preloader/preloader';
 
 import { fetchAllIngedients } from '@services/burgerIngredients/burgerIngredientsSlice';
 import { fetchAddOrder } from '@services/orderDetails/orderDetailsSlice';
+// import { fetchUserGet } from '@services/user/userSlice';
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
@@ -17,6 +18,8 @@ import { selectors } from '@services/selectors';
 import { AppHeader } from '@components/app-header/app-header';
 
 import { Home } from './pages/home/home';
+import { Profile } from './pages/profile/profile';
+import { NotFound } from './pages/404/404';
 import { Modal } from '@components/modal/modal';
 import { ErrDetailes } from '@components/err-details/err-details';
 import { IngredientDetailes } from '@components/ingredient-details/ingredient-details';
@@ -38,6 +41,7 @@ export const App = () => {
 
 	useEffect(() => {
 		dispatch(fetchAllIngedients());
+		// dispatch(fetchUserGet());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -88,8 +92,10 @@ export const App = () => {
 					<Route path={APP_PATH.register} element={<Register />} />
 					<Route path={APP_PATH.forgotPswd} element={<ForgotPassword />} />
 					<Route path={APP_PATH.resetPswd} element={<ResetPassword />} />
-					<Route path={APP_PATH.profile} element={<Login />} />
+					{/* <Route path={APP_PATH.profileOrders} element={<Profile />} /> */}
+					<Route path={APP_PATH.profile} element={<Profile />} />
 					<Route path={APP_PATH.ingredients} element={<Login />} />
+					<Route path='*' element={<NotFound />} />
 				</Routes>
 			</div>
 			<Modal text={'Детали ингредиента'} onClose={handleOnCloseIngredient}>

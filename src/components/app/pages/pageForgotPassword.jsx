@@ -1,33 +1,53 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
+
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 import {
 	EmailInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ForgotPassword() {
-	const [emailValue, setEmailValue] = useState('');
-	const onEmailChange = (e) => {
-		setEmailValue(e.target.value);
-	};
+	const navigate = useNavigate();
+	const { values, handleChange, errors, isValid, resetForm } =
+		useFormAndValidation();
+
+	useEffect(() => {
+		resetForm();
+	}, [resetForm]);
+
+	function handleOnSubmit(e) {
+		e.preventDefault();
+		if (isValid) {
+			navigate(APP_PATH.resetPswd);
+		}
+	}
+
 	return (
 		<main className={conteiner.page}>
 			<div className={conteiner.block}>
-				<form className={conteiner.form}>
+				<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
 					<div className={conteiner.title}>Восстановление пароля</div>
 					<EmailInput
-						onChange={onEmailChange}
+						onChange={handleChange}
 						placeholder='Укажите e-mail'
-						value={emailValue}
+						value={values.email || ''}
 						name={'email'}
 						isIcon={false}
 						autoComplete='off'
-						errorText={'актуальный адрес вашей электронной почты'}
+						required
+						minLength={5}
+						error={!!errors.email}
+						errorText={errors.email}
 					/>
 					<div className={conteiner.button}>
-						<Button htmlType='button' type='primary' size='medium'>
+						<Button
+							htmlType='submit'
+							type='primary'
+							size='medium'
+							disabled={!isValid}>
 							Восстановить
 						</Button>
 					</div>

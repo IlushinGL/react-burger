@@ -1,7 +1,11 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
+// import { fetchUserSet } from '@services/user/userSlice';
+// import { useDispatch } from 'react-redux';
+
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 import {
 	Input,
 	EmailInput,
@@ -10,52 +14,70 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Register() {
-	const [nameValue, setNameValue] = useState('');
-	const [emailValue, setEmailValue] = useState('');
-	const [pswdValue, setPswdlValue] = useState('');
-	const onNameChange = (e) => {
-		setNameValue(e.target.value);
-	};
-	const onEmailChange = (e) => {
-		setEmailValue(e.target.value);
-	};
-	const onPswdChange = (e) => {
-		setPswdlValue(e.target.value);
-	};
+	const navigate = useNavigate();
+	// const dispatch = useDispatch();
+	const { values, handleChange, errors, isValid, resetForm } =
+		useFormAndValidation();
+
+	useEffect(() => {
+		resetForm();
+	}, [resetForm]);
+
+	function handleOnSubmit(e) {
+		e.preventDefault();
+		if (isValid) {
+			// dispatch(fetchUserSet(values));
+			navigate(APP_PATH.home);
+		}
+	}
+
 	return (
 		<main className={conteiner.page}>
 			<div className={conteiner.block}>
-				<form className={conteiner.form}>
+				<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
 					<div className={conteiner.title}>Регистрация</div>
 					<Input
 						type={'text'}
 						placeholder={'Имя'}
-						onChange={onNameChange}
+						onChange={handleChange}
 						icon={undefined}
-						value={nameValue}
+						value={values.name || ''}
 						name={'name'}
 						autoComplete='off'
-						error={nameValue.length > 0 && nameValue.length < 3}
-						errorText={'здесь должно быть минимум 3 буквы'}
+						required
+						minLength={3}
+						error={!!errors.name}
+						errorText={errors.name}
 						size={'default'}
 					/>
 					<EmailInput
-						onChange={onEmailChange}
-						value={emailValue}
+						onChange={handleChange}
+						value={values.email || ''}
 						name={'email'}
 						isIcon={false}
+						required
+						minLength={5}
 						autoComplete='off'
-						errorText={'актуальный адрес вашей электронной почты'}
+						error={!!errors.email}
+						errorText={errors.email}
 					/>
 					<PasswordInput
-						onChange={onPswdChange}
-						value={pswdValue}
+						onChange={handleChange}
+						value={values.password || ''}
 						autoComplete='off'
 						name={'password'}
-						errorText={'здесь должно быть минимум 6 символов'}
+						required
+						minLength={6}
+						maxLength={8}
+						error={!!errors.password}
+						errorText={errors.password}
 					/>
 					<div className={conteiner.button}>
-						<Button htmlType='button' type='primary' size='medium'>
+						<Button
+							htmlType='submit'
+							type='primary'
+							size='medium'
+							disabled={!isValid}>
 							Зарегистрироваться
 						</Button>
 					</div>

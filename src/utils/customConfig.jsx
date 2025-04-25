@@ -5,6 +5,8 @@ export const APP_PATH = {
 	register: '/register',
 	forgotPswd: '/forgot-password',
 	resetPswd: '/reset-password',
+	list: '/list',
 	profile: '/profile',
+	profileOrders: '/profile/orders',
 	ingredients: '/ingredients',
 };

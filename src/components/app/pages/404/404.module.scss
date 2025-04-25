@@ -1,0 +1,36 @@
+.page {
+	display: block;
+	box-sizing: border-box;
+	margin: 0 auto;
+	height: calc(100vh - 22 * var(--offset-base-size));
+	width: calc(310 * var(--offset-base-size));
+	background-color: transparent;
+}
+
+.block {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	align-items: center;
+}
+
+.title {
+	composes: text text_type_main-medium from global;
+	composes: mt-10 from global;
+	display: block;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.link {
+	composes: text text_type_main-default from global;
+	composes: mt-10 from global;
+	display: block;
+	color: var(--colors-interface-accent);
+	text-decoration: none;
+	box-sizing: border-box;
+}
+.link:hover {
+	cursor: pointer;
+	color: var(--text-primary-color);
+}

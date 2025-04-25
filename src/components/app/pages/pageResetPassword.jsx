@@ -1,7 +1,9 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
+
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 import {
 	Input,
 	PasswordInput,
@@ -9,44 +11,57 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ResetPassword() {
-	const [emailCode, setEmailCode] = useState('');
-	const [pswdValue, setPswdlValue] = useState('');
-	const onEmaiCodelChange = (e) => {
-		setEmailCode(e.target.value);
-		// console.log(e.target.validationMessage);
-	};
-	const onPswdChange = (e) => {
-		setPswdlValue(e.target.value);
-	};
+	const navigate = useNavigate();
+	const { values, handleChange, errors, isValid, resetForm } =
+		useFormAndValidation();
+
+	useEffect(() => {
+		resetForm();
+	}, [resetForm]);
+
+	function handleOnSubmit(e) {
+		e.preventDefault();
+		if (isValid) {
+			navigate(APP_PATH.login);
+		}
+	}
+
 	return (
 		<main className={conteiner.page}>
 			<div className={conteiner.block}>
-				<form className={conteiner.form}>
+				<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
 					<div className={conteiner.title}>Восстановление пароля</div>
 					<PasswordInput
 						placeholder='Введите новый пароль'
-						onChange={onPswdChange}
-						value={pswdValue}
+						onChange={handleChange}
+						value={values.password || ''}
 						name={'password'}
 						autoComplete='off'
-						errorText={'здесь должно быть минимум 6 символов'}
+						minLength={6}
+						maxLength={8}
+						required
+						error={!!errors.password}
+						errorText={errors.password}
 					/>
 					<Input
 						type={'text'}
 						placeholder='Введите код из письма'
-						onChange={onEmaiCodelChange}
+						onChange={handleChange}
 						icon={undefined}
-						value={emailCode}
+						value={values.code || ''}
 						name={'code'}
 						autoComplete='off'
-						maxLength={4}
-						minLength={4}
-						error={emailCode.length > 0 && emailCode.length < 4}
-						errorText={'здесь должно быть ровно 4 цифры'}
+						required
+						error={!!errors.code}
+						errorText={errors.code}
 						size={'default'}
 					/>
 					<div className={conteiner.button}>
-						<Button htmlType='button' type='primary' size='medium'>
+						<Button
+							htmlType='submit'
+							type='primary'
+							size='medium'
+							disabled={!isValid}>
 							Сохранить
 						</Button>
 					</div>

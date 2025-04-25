@@ -47,7 +47,7 @@ const burgerIngredientsSlice = createSlice({
 				}
 			})
 			.addCase(fetchAllIngedients.rejected, (state, action) => {
-				// console.log(action.error);
+				console.log(action.error);
 				state.status = 'error';
 				state.error = action.error.message;
 			});
