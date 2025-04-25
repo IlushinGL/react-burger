@@ -13,11 +13,11 @@ const getResponce = (res) => {
 	return Promise.reject(`Ошибка ${res.status}`);
 };
 
-export const getIngredients = () => {
+const getIngredients = () => {
 	return fetch(BASE_URL + INGREDIENTS_EP).then(getResponce);
 };
 
-export const addOrder = (ingredientsArr) => {
+const addOrder = (ingredientsArr) => {
 	return fetch(BASE_URL + ORDERS_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -25,7 +25,7 @@ export const addOrder = (ingredientsArr) => {
 	}).then(getResponce);
 };
 
-export const getCurrentUser = () => {
+const getUser = () => {
 	return fetchWithRefresh(BASE_URL + AUTH_USER_EP, {
 		method: 'GET',
 		headers: {
@@ -35,7 +35,7 @@ export const getCurrentUser = () => {
 	}).then(getResponce);
 };
 
-export const setCurrentUser = (data) => {
+const setUser = (data) => {
 	return fetch(BASE_URL + AUTH_REGISTER_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -47,7 +47,7 @@ export const setCurrentUser = (data) => {
 	}).then(getResponce);
 };
 
-export const refreshToken = () => {
+const refreshToken = () => {
 	return fetch(BASE_URL + AUTH_TOKEN_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -64,7 +64,7 @@ export const refreshToken = () => {
 		});
 };
 
-export const fetchWithRefresh = async (url, options) => {
+const fetchWithRefresh = async (url, options) => {
 	try {
 		const res = await fetch(url, options);
 		return await getResponce(res);
@@ -78,4 +78,11 @@ export const fetchWithRefresh = async (url, options) => {
 			return Promise.reject(err);
 		}
 	}
+};
+
+export const api = {
+	getIngredients,
+	addOrder,
+	getUser,
+	setUser,
 };

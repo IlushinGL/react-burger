@@ -8,8 +8,7 @@ import viewPort from './app.module.scss';
 
 import Preloader from '@components/preloader/preloader';
 
-import { fetchAllIngedients } from '@services/burgerIngredients/burgerIngredientsSlice';
-import { fetchAddOrder } from '@services/orderDetails/orderDetailsSlice';
+import { fetchAllIngedients, fetchAddOrder } from '@services/actionsThunk';
 // import { fetchUserGet } from '@services/user/userSlice';
 
 import { actions } from '@services/actions';

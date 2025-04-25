@@ -35,7 +35,7 @@ export function ProfileForm() {
 				type={'text'}
 				placeholder={'Имя'}
 				onChange={handleChange}
-				icon={values.name === initValues.name ? 'CloseIcon' : 'EditIcon'}
+				icon={values.name === initValues.name ? 'CheckMarkIcon' : 'EditIcon'}
 				value={values.name || ''}
 				name={'name'}
 				autoComplete='off'
@@ -49,7 +49,7 @@ export function ProfileForm() {
 				type={'email'}
 				placeholder={'Логин'}
 				onChange={handleChange}
-				icon={values.email === initValues.email ? 'CloseIcon' : 'EditIcon'}
+				icon={values.email === initValues.email ? 'CheckMarkIcon' : 'EditIcon'}
 				value={values.email || ''}
 				name={'email'}
 				autoComplete='off'
@@ -64,7 +64,7 @@ export function ProfileForm() {
 				placeholder={'Пароль'}
 				onChange={handleChange}
 				icon={
-					values.password === initValues.password ? 'CloseIcon' : 'EditIcon'
+					values.password === initValues.password ? 'CheckMarkIcon' : 'EditIcon'
 				}
 				value={values.password || ''}
 				name={'password'}

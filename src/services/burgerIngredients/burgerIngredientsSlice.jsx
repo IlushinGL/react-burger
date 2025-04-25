@@ -1,12 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getIngredients } from '../../api/payloads';
-
-export const fetchAllIngedients = createAsyncThunk(
-	'ingrediens/getAll',
-	async () => {
-		return getIngredients();
-	}
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllIngedients } from '@services/actionsThunk';
 
 const burgerIngredientsSlice = createSlice({
 	name: 'burgerIngredients',

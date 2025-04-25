@@ -1,12 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addOrder } from '../../api/payloads';
-
-export const fetchAddOrder = createAsyncThunk(
-	'order/add',
-	async (ingredientsArr) => {
-		return addOrder(ingredientsArr);
-	}
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAddOrder } from '@services/actionsThunk';
 
 const orderDetailsSlice = createSlice({
 	name: 'orderDetails',

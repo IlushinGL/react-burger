@@ -1,9 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { setCurrentUser } from '../../api/payloads';
-
-export const fetchUserSet = createAsyncThunk('user/set', async (data) => {
-	return setCurrentUser(data);
-});
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchUserSet } from '@services/actionsThunk';
 
 const userSlice = createSlice({
 	name: 'user',
