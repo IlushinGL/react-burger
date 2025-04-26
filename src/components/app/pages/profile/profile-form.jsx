@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectors } from '@services/selectors';
+import { fetchUserUpdate } from '@services/actionsThunk';
 import conteiner from './profile.module.scss';
 import {
 	Input,
@@ -9,7 +10,9 @@ import {
 import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
 
 export function ProfileForm() {
+	const dispatch = useDispatch();
 	const userData = useSelector(selectors.currentUser.get_user);
+	// const userStatus = useSelector(selectors.currentUser.get_status);
 	const initValues = {
 		name: userData ? userData.name : '',
 		email: userData ? userData.email : '',
@@ -22,7 +25,7 @@ export function ProfileForm() {
 	useEffect(() => {
 		resetForm(initValues);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [userData]);
 
 	useEffect(() => {
 		let changed = false;
@@ -36,8 +39,15 @@ export function ProfileForm() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values]);
 
+	function handleOnSubmit(e) {
+		e.preventDefault();
+		if (isValid && isChanged) {
+			dispatch(fetchUserUpdate(values));
+		}
+	}
+
 	return (
-		<form className={conteiner.form}>
+		<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
 			<Input
 				type={'text'}
 				placeholder={'Имя'}

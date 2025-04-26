@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchUserSet } from '@services/actionsThunk';
+import { fetchUserUpdate } from '@services/actionsThunk';
 
 const userSlice = createSlice({
 	name: 'user',
@@ -21,33 +21,27 @@ const userSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchUserSet.pending, (state) => {
+			.addCase(fetchUserUpdate.pending, (state) => {
 				state.status = 'loading';
 				state.error = '';
 			})
-			.addCase(fetchUserSet.fulfilled, (state, action) => {
+			.addCase(fetchUserUpdate.fulfilled, (state, action) => {
 				if (action.payload.success) {
 					state.status = 'idle';
 					state.error = '';
-					state.name = action.payload.user.name;
-					state.email = action.payload.user.email;
-					state.auth = true;
-					localStorage.setItem('refreshToken', action.payload.refreshToken);
-					localStorage.setItem('accessToken', action.payload.accessToken);
+					state.user = action.payload.user;
+					// localStorage.setItem('refreshToken', action.payload.refreshToken);
+					// localStorage.setItem('accessToken', action.payload.accessToken);
 				} else {
 					state.status = 'error';
 					state.error = action.payload.message;
-					state.name = '';
-					state.email = '';
-					state.auth = false;
+					state.user = null;
 				}
 			})
-			.addCase(fetchUserSet.rejected, (state, action) => {
+			.addCase(fetchUserUpdate.rejected, (state, action) => {
 				state.status = 'error';
 				state.error = action.error.message;
-				state.name = '';
-				state.email = '';
-				state.auth = false;
+				state.user = null;
 			});
 	},
 });

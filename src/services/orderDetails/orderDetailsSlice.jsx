@@ -33,7 +33,7 @@ const orderDetailsSlice = createSlice({
 					state.number = action.payload.order.number;
 				} else {
 					state.status = 'error';
-					state.error = 'Что-то пошло не так. Сервер вернул success=false.';
+					state.error = action.payload.message;
 				}
 			})
 			.addCase(fetchAddOrder.rejected, (state, action) => {

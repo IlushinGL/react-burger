@@ -1,7 +1,9 @@
 import conteiner from './pagesUserAuth.module.scss';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { APP_PATH } from '@utils/customConfig';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { fetchLogIn } from '@services/actionsThunk';
 
 import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 import {
@@ -11,7 +13,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Login() {
-	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
 		useFormAndValidation();
 
@@ -22,7 +24,7 @@ export function Login() {
 	function handleOnSubmit(e) {
 		e.preventDefault();
 		if (isValid) {
-			navigate(APP_PATH.home);
+			dispatch(fetchLogIn(values));
 		}
 	}
 

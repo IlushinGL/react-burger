@@ -2,11 +2,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import conteiner from './profile.module.scss';
 import { ProfileForm } from './profile-form';
 import { ProfileOrders } from './profile-orders';
+import { fetchLogOut } from '@services/actionsThunk';
 
 export function Profile() {
+	const dispatch = useDispatch();
 	const captions = [
 		'В этом разделе вы можете изменить свои персональные данные',
 		'В этом разделе вы можете посмотреть свои заказы',
@@ -22,7 +25,7 @@ export function Profile() {
 	}
 
 	function handlerExitClick() {
-		console.log('выход из профиля');
+		dispatch(fetchLogOut());
 	}
 	return (
 		<main className={conteiner.data}>

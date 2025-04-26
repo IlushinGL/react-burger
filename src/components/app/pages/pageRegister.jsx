@@ -1,9 +1,9 @@
 import conteiner from './pagesUserAuth.module.scss';
 import { useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
-// import { fetchUserSet } from '@services/user/userSlice';
-// import { useDispatch } from 'react-redux';
+import { fetchUserSet } from '@services/actionsThunk';
 
 import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 import {
@@ -14,8 +14,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Register() {
-	const navigate = useNavigate();
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
 		useFormAndValidation();
 
@@ -26,8 +25,7 @@ export function Register() {
 	function handleOnSubmit(e) {
 		e.preventDefault();
 		if (isValid) {
-			// dispatch(fetchUserSet(values));
-			navigate(APP_PATH.home);
+			dispatch(fetchUserSet(values));
 		}
 	}
 

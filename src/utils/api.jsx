@@ -2,6 +2,8 @@ const BASE_URL = 'https://norma.nomoreparties.space/api';
 const INGREDIENTS_EP = '/ingredients';
 const ORDERS_EP = '/orders';
 const AUTH_USER_EP = '/auth/user';
+const AUTH_LOGIN_EP = '/auth/login';
+const AUTH_LOGOUT_EP = '/auth/logout';
 const AUTH_TOKEN_EP = '/auth/token';
 const AUTH_REGISTER_EP = '/auth/register';
 
@@ -19,10 +21,50 @@ const getIngredients = () => {
 	return fetch(BASE_URL + INGREDIENTS_EP).then((res) => getResponce(res));
 };
 
-const addOrder = (ingredientsArr) => {
-	return fetch(BASE_URL + ORDERS_EP, {
+const logOut = () => {
+	return fetch(BASE_URL + AUTH_LOGOUT_EP, {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+		body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
+	})
+		.then((res) => getResponce(res))
+		.then((answer) => {
+			if (!answer.success) {
+				return Promise.reject(answer);
+			}
+			localStorage.removeItem('refreshToken');
+			localStorage.removeItem('accessToken');
+			return answer;
+		});
+};
+
+const logIn = (data) => {
+	return fetch(BASE_URL + AUTH_LOGIN_EP, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+		body: JSON.stringify({
+			email: data.email,
+			password: data.password,
+		}),
+	})
+		.then((res) => getResponce(res))
+		.then((answer) => {
+			if (!answer.success) {
+				return Promise.reject(answer);
+			}
+			localStorage.setItem('refreshToken', answer.refreshToken);
+			localStorage.setItem('accessToken', answer.accessToken);
+			return answer;
+		});
+};
+
+const addOrder = (ingredientsArr) => {
+	return fetchWithRefresh(BASE_URL + ORDERS_EP, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json;charset=utf-8',
+			authorization: localStorage.getItem('accessToken'),
+		},
 		body: JSON.stringify({ ingredients: ingredientsArr }),
 	}).then((res) => getResponce(res));
 };
@@ -31,18 +73,18 @@ const getUser = () => {
 	return fetchWithRefresh(BASE_URL + AUTH_USER_EP, {
 		method: 'GET',
 		headers: {
-			'Content-Type': 'application/json',
-			Authorization: localStorage.getItem('accessToken'),
+			'Content-Type': 'application/json;charset=utf-8',
+			authorization: localStorage.getItem('accessToken'),
 		},
 	}).then((res) => getResponce(res));
 };
 
 const updateUser = (data) => {
 	return fetchWithRefresh(BASE_URL + AUTH_USER_EP, {
-		method: 'POST',
+		method: 'PATCH',
 		headers: {
-			'Content-Type': 'application/json',
-			Authorization: localStorage.getItem('accessToken'),
+			'Content-Type': 'application/json;charset=utf-8',
+			authorization: localStorage.getItem('accessToken'),
 		},
 		body: JSON.stringify({
 			email: data.email,
@@ -55,13 +97,22 @@ const updateUser = (data) => {
 const setUser = (data) => {
 	return fetch(BASE_URL + AUTH_REGISTER_EP, {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
 		body: JSON.stringify({
 			email: data.email,
 			password: data.password,
 			name: data.name,
 		}),
-	}).then((res) => getResponce(res));
+	})
+		.then((res) => getResponce(res))
+		.then((answer) => {
+			if (!answer.success) {
+				return Promise.reject(answer);
+			}
+			localStorage.setItem('refreshToken', answer.refreshToken);
+			localStorage.setItem('accessToken', answer.accessToken);
+			return answer;
+		});
 };
 
 const refreshToken = () => {
@@ -70,7 +121,7 @@ const refreshToken = () => {
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
 		body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
 	})
-		.then(getResponce)
+		.then((res) => getResponce(res))
 		.then((refreshData) => {
 			if (!refreshData.success) {
 				return Promise.reject(refreshData);
@@ -102,5 +153,7 @@ export const api = {
 	addOrder,
 	updateUser,
 	getUser,
+	logOut,
+	logIn,
 	setUser,
 };
