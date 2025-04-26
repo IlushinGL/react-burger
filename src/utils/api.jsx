@@ -6,15 +6,17 @@ const AUTH_TOKEN_EP = '/auth/token';
 const AUTH_REGISTER_EP = '/auth/register';
 
 const getResponce = (res) => {
-	if (res.ok) {
+	if (typeof res.ok === 'undefined') {
+		return res;
+	} else if (res.ok) {
 		return res.json();
 	}
-	// return res.json().then((err) => Promise.reject(err));
-	return Promise.reject(`Ошибка ${res.status}`);
+	return res.json().then((err) => Promise.reject(err));
+	// return Promise.reject(`Ошибка ${res.status}`);
 };
 
 const getIngredients = () => {
-	return fetch(BASE_URL + INGREDIENTS_EP).then(getResponce);
+	return fetch(BASE_URL + INGREDIENTS_EP).then((res) => getResponce(res));
 };
 
 const addOrder = (ingredientsArr) => {
@@ -22,7 +24,7 @@ const addOrder = (ingredientsArr) => {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ ingredients: ingredientsArr }),
-	}).then(getResponce);
+	}).then((res) => getResponce(res));
 };
 
 const getUser = () => {
@@ -32,7 +34,22 @@ const getUser = () => {
 			'Content-Type': 'application/json',
 			Authorization: localStorage.getItem('accessToken'),
 		},
-	}).then(getResponce);
+	}).then((res) => getResponce(res));
+};
+
+const updateUser = (data) => {
+	return fetchWithRefresh(BASE_URL + AUTH_USER_EP, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: localStorage.getItem('accessToken'),
+		},
+		body: JSON.stringify({
+			email: data.email,
+			password: data.password,
+			name: data.name,
+		}),
+	}).then((res) => getResponce(res));
 };
 
 const setUser = (data) => {
@@ -44,7 +61,7 @@ const setUser = (data) => {
 			password: data.password,
 			name: data.name,
 		}),
-	}).then(getResponce);
+	}).then((res) => getResponce(res));
 };
 
 const refreshToken = () => {
@@ -55,7 +72,7 @@ const refreshToken = () => {
 	})
 		.then(getResponce)
 		.then((refreshData) => {
-			if (!refreshData.succes) {
+			if (!refreshData.success) {
 				return Promise.reject(refreshData);
 			}
 			localStorage.setItem('refreshToken', refreshData.refreshToken);
@@ -71,7 +88,7 @@ const fetchWithRefresh = async (url, options) => {
 	} catch (err) {
 		if (err.message === 'jwt expired') {
 			const refreshData = await refreshToken();
-			options.hesders.authorization = refreshData.accessToken;
+			options.headers.authorization = refreshData.accessToken;
 			const res = await fetch(url, options);
 			return await getResponce(res);
 		} else {
@@ -83,6 +100,7 @@ const fetchWithRefresh = async (url, options) => {
 export const api = {
 	getIngredients,
 	addOrder,
+	updateUser,
 	getUser,
 	setUser,
 };

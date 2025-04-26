@@ -4,13 +4,21 @@ import { fetchUserSet } from '@services/actionsThunk';
 const userSlice = createSlice({
 	name: 'user',
 	initialState: {
-		name: '',
-		email: '',
+		user: null,
 		status: 'idle',
 		error: '',
-		auth: false,
+		isAuth: false,
 	},
-	reducers: {},
+	reducers: {
+		setUser(state, action) {
+			state.user = action.payload;
+			state.status = 'idle';
+			state.error = '';
+		},
+		setIsAuth(state, action) {
+			state.isAuth = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchUserSet.pending, (state) => {
@@ -44,4 +52,5 @@ const userSlice = createSlice({
 	},
 });
 
+export const { setUser, setIsAuth } = userSlice.actions; // генераторы действий
 export default userSlice.reducer;

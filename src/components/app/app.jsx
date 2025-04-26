@@ -8,11 +8,17 @@ import viewPort from './app.module.scss';
 
 import Preloader from '@components/preloader/preloader';
 
-import { fetchAllIngedients, fetchAddOrder } from '@services/actionsThunk';
+import {
+	fetchAllIngedients,
+	fetchAddOrder,
+	checkUserAuth,
+} from '@services/actionsThunk';
 // import { fetchUserGet } from '@services/user/userSlice';
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
+
+import { OnlyAuth, OnlyUnAuth } from '@components/protectedRout';
 
 import { AppHeader } from '@components/app-header/app-header';
 
@@ -40,6 +46,7 @@ export const App = () => {
 
 	useEffect(() => {
 		dispatch(fetchAllIngedients());
+		dispatch(checkUserAuth());
 		// dispatch(fetchUserGet());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -87,12 +94,26 @@ export const App = () => {
 						path={APP_PATH.home}
 						element={<Home onSubmit={handleOnClickOrder} />}
 					/>
-					<Route path={APP_PATH.login} element={<Login />} />
-					<Route path={APP_PATH.register} element={<Register />} />
-					<Route path={APP_PATH.forgotPswd} element={<ForgotPassword />} />
-					<Route path={APP_PATH.resetPswd} element={<ResetPassword />} />
-					{/* <Route path={APP_PATH.profileOrders} element={<Profile />} /> */}
-					<Route path={APP_PATH.profile} element={<Profile />} />
+					<Route
+						path={APP_PATH.login}
+						element={<OnlyUnAuth component={<Login />} />}
+					/>
+					<Route
+						path={APP_PATH.register}
+						element={<OnlyUnAuth component={<Register />} />}
+					/>
+					<Route
+						path={APP_PATH.forgotPswd}
+						element={<OnlyUnAuth component={<ForgotPassword />} />}
+					/>
+					<Route
+						path={APP_PATH.resetPswd}
+						element={<OnlyUnAuth component={<ResetPassword />} />}
+					/>
+					<Route
+						path={APP_PATH.profile}
+						element={<OnlyAuth component={<Profile />} />}
+					/>
 					<Route path={APP_PATH.ingredients} element={<Login />} />
 					<Route path='*' element={<NotFound />} />
 				</Routes>

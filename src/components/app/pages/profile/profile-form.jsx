@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from '@services/selectors';
 import conteiner from './profile.module.scss';
 import {
 	Input,
@@ -7,7 +9,12 @@ import {
 import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
 
 export function ProfileForm() {
-	const initValues = { name: 'yyy', email: 'dd@dd.d', password: '' };
+	const userData = useSelector(selectors.currentUser.get_user);
+	const initValues = {
+		name: userData ? userData.name : '',
+		email: userData ? userData.email : '',
+		password: '',
+	};
 	const [isChanged, setIsChanged] = useState(false);
 	const { values, handleChange, errors, isValid, resetForm } =
 		useFormAndValidation();

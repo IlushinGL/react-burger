@@ -19,11 +19,10 @@ import {
 	visible as getOrderDetailsVisible,
 } from './orderDetails/orderDetailsSelectors';
 import {
-	name as getUserName,
-	email as getUserEmail,
+	user as getUser,
 	status as getUserStatus,
 	error as getUserError,
-	auth as getUserAuth,
+	isAuth as getUserAuth,
 } from './user/userSelectors';
 
 export const selectors = {
@@ -38,11 +37,10 @@ export const selectors = {
 		get_visible: getOrderDetailsVisible,
 	},
 	currentUser: {
-		get_name: getUserName,
-		get_email: getUserEmail,
+		get_user: getUser,
 		get_status: getUserStatus,
 		get_error: getUserError,
-		get_auth: getUserAuth,
+		isAuth: getUserAuth,
 	},
 	burgerIngredients: {
 		get_all: getBurgerIngredientsAll,
