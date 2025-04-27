@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 
 import { useEffect } from 'react';
@@ -30,19 +30,21 @@ import { ErrDetailes } from '@components/err-details/err-details';
 import { IngredientDetailes } from '@components/ingredient-details/ingredient-details';
 import { OrderDetailes } from '@components/order-details/order-details';
 
-import { Login } from './pages/pageLogin';
-import { Register } from './pages/pageRegister';
-import { ForgotPassword } from './pages/pageForgotPassword';
-import { ResetPassword } from './pages/pageResetPassword';
+import { Login } from './pages/auth/pageLogin';
+import { Register } from './pages/auth/pageRegister';
+import { ForgotPassword } from './pages/auth/pageForgotPassword';
+import { ResetPassword } from './pages/auth/pageResetPassword';
 
 export const App = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const loadingState = useSelector(selectors.burgerIngredients.get_status);
 	const errorState = useSelector(selectors.burgerIngredients.get_error);
 	const orderDetails = useSelector(selectors.burgerConstructor.get_data);
 	const orderDetailsStatus = useSelector(selectors.orderDetails.get_status);
 	const selectedIngredient = useSelector(selectors.ingredientDetails.get_data);
 	const orderDetailsVisible = useSelector(selectors.orderDetails.get_visible);
+	const user = useSelector(selectors.currentUser.get_user);
 
 	useEffect(() => {
 		dispatch(fetchAllIngedients());
@@ -69,10 +71,14 @@ export const App = () => {
 	}
 
 	function handleOnClickOrder() {
-		if (orderDetailsStatus !== 'loading') {
-			dispatch(fetchAddOrder(orderDetails));
+		if (user) {
+			if (orderDetailsStatus !== 'loading') {
+				dispatch(fetchAddOrder(orderDetails));
+			}
+			dispatch(actions.orderDetails.visible(true));
+		} else {
+			navigate(APP_PATH.login);
 		}
-		dispatch(actions.orderDetails.visible(true));
 	}
 
 	if (loadingState === 'loading') {

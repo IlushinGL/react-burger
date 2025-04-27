@@ -22,10 +22,8 @@ export function OrderDetailes({ item }) {
 				<div className={conteiner.image}>
 					<Preloader box={120} visible={true} />
 				</div>
-				<div className={conteiner.status}>этот заказ еще обрабатывается...</div>
-				<div className={conteiner.comment}>
-					Попробуйте отправить новый чуть позже.
-				</div>
+				<div className={conteiner.status}>заказ обрабатывается...</div>
+				<div className={conteiner.comment}>Подождите несколько секунд.</div>
 			</section>
 		);
 	}

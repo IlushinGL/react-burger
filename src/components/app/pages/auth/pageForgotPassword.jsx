@@ -2,8 +2,9 @@ import conteiner from './pagesUserAuth.module.scss';
 import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
+import { setPswdForgot } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
 import {
 	EmailInput,
 	Button,
@@ -21,7 +22,10 @@ export function ForgotPassword() {
 	function handleOnSubmit(e) {
 		e.preventDefault();
 		if (isValid) {
-			navigate(APP_PATH.resetPswd);
+			const isForgot = setPswdForgot(values);
+			if (isForgot) {
+				navigate(APP_PATH.resetPswd);
+			}
 		}
 	}
 

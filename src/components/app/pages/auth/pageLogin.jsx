@@ -1,19 +1,18 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
 import { APP_PATH } from '@utils/customConfig';
-import { fetchUserSet } from '@services/actionsThunk';
+import { NavLink } from 'react-router-dom';
+import { fetchLogIn } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
 import {
-	Input,
 	EmailInput,
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function Register() {
+export function Login() {
 	const dispatch = useDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
 		useFormAndValidation();
@@ -25,7 +24,7 @@ export function Register() {
 	function handleOnSubmit(e) {
 		e.preventDefault();
 		if (isValid) {
-			dispatch(fetchUserSet(values));
+			dispatch(fetchLogIn(values));
 		}
 	}
 
@@ -33,21 +32,7 @@ export function Register() {
 		<main className={conteiner.page}>
 			<div className={conteiner.block}>
 				<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
-					<div className={conteiner.title}>Регистрация</div>
-					<Input
-						type={'text'}
-						placeholder={'Имя'}
-						onChange={handleChange}
-						icon={undefined}
-						value={values.name || ''}
-						name={'name'}
-						autoComplete='off'
-						required
-						minLength={3}
-						error={!!errors.name}
-						errorText={errors.name}
-						size={'default'}
-					/>
+					<div className={conteiner.title}>Вход</div>
 					<EmailInput
 						onChange={handleChange}
 						value={values.email || ''}
@@ -62,11 +47,11 @@ export function Register() {
 					<PasswordInput
 						onChange={handleChange}
 						value={values.password || ''}
-						autoComplete='off'
 						name={'password'}
-						required
+						autoComplete='off'
 						minLength={6}
 						maxLength={8}
+						required
 						error={!!errors.password}
 						errorText={errors.password}
 					/>
@@ -76,15 +61,21 @@ export function Register() {
 							type='primary'
 							size='medium'
 							disabled={!isValid}>
-							Зарегистрироваться
+							Войти
 						</Button>
 					</div>
 				</form>
 				<div className={conteiner.other}>
 					<div className={conteiner.content}>
-						<div className={conteiner.text}>Уже зарегистрированы?</div>
-						<NavLink to={APP_PATH.login} className={conteiner.link}>
-							Войти
+						<div className={conteiner.text}>Вы — новый пользователь?</div>
+						<NavLink to={APP_PATH.register} className={conteiner.link}>
+							Зарегистрироваться
+						</NavLink>
+					</div>
+					<div className={conteiner.content}>
+						<div className={conteiner.text}>Забыли пароль?</div>
+						<NavLink to={APP_PATH.forgotPswd} className={conteiner.link}>
+							Восстановить пароль
 						</NavLink>
 					</div>
 				</div>

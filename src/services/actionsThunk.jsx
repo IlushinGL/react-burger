@@ -33,6 +33,26 @@ export const fetchLogIn = createAsyncThunk(
 	}
 );
 
+export async function setPswdForgot(data) {
+	try {
+		const res = await api.pswdForgot(data);
+		return res;
+	} catch (err) {
+		console.log(err);
+		return false;
+	}
+}
+
+export async function resetPswd(data) {
+	try {
+		const res = await api.pswdReset(data);
+		return res;
+	} catch (err) {
+		console.log(err);
+		return false;
+	}
+}
+
 export const fetchAddOrder = createAsyncThunk(
 	'order/add',
 	async (ingredientsArr) => {

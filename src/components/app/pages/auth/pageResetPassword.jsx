@@ -2,8 +2,9 @@ import conteiner from './pagesUserAuth.module.scss';
 import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
+import { resetPswd } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
 import {
 	Input,
 	PasswordInput,
@@ -16,12 +17,17 @@ export function ResetPassword() {
 		useFormAndValidation();
 
 	useEffect(() => {
+		if (!localStorage.getItem('isForgot')) {
+			navigate(APP_PATH.forgotPswd);
+		}
 		resetForm();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [resetForm]);
 
 	function handleOnSubmit(e) {
 		e.preventDefault();
-		if (isValid) {
+		const isSettingSuccess = resetPswd(values);
+		if (isSettingSuccess) {
 			navigate(APP_PATH.login);
 		}
 	}

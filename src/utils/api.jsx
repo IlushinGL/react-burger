@@ -6,6 +6,8 @@ const AUTH_LOGIN_EP = '/auth/login';
 const AUTH_LOGOUT_EP = '/auth/logout';
 const AUTH_TOKEN_EP = '/auth/token';
 const AUTH_REGISTER_EP = '/auth/register';
+const AUTH_PSWDFORGOT_EP = '/password-reset';
+const AUTH_PSWDRESET_EP = '/password-reset/reset';
 
 const getResponce = (res) => {
 	if (typeof res.ok === 'undefined') {
@@ -22,6 +24,7 @@ const getIngredients = () => {
 };
 
 const logOut = () => {
+	localStorage.removeItem('isForgot');
 	return fetch(BASE_URL + AUTH_LOGOUT_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -39,6 +42,7 @@ const logOut = () => {
 };
 
 const logIn = (data) => {
+	localStorage.removeItem('isForgot');
 	return fetch(BASE_URL + AUTH_LOGIN_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -55,6 +59,44 @@ const logIn = (data) => {
 			localStorage.setItem('refreshToken', answer.refreshToken);
 			localStorage.setItem('accessToken', answer.accessToken);
 			return answer;
+		});
+};
+
+const pswdForgot = (data) => {
+	localStorage.removeItem('isForgot');
+	return fetch(BASE_URL + AUTH_PSWDFORGOT_EP, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+		body: JSON.stringify({
+			email: data.email,
+		}),
+	})
+		.then((res) => getResponce(res))
+		.then((answer) => {
+			if (!answer.success) {
+				return false;
+			}
+			localStorage.setItem('isForgot', true);
+			return true;
+		});
+};
+
+const pswdReset = (data) => {
+	return fetch(BASE_URL + AUTH_PSWDRESET_EP, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+		body: JSON.stringify({
+			password: data.password,
+			token: data.code,
+		}),
+	})
+		.then((res) => getResponce(res))
+		.then((answer) => {
+			if (!answer.success) {
+				return false;
+			}
+			localStorage.removeItem('isForgot');
+			return true;
 		});
 };
 
@@ -150,6 +192,8 @@ const fetchWithRefresh = async (url, options) => {
 
 export const api = {
 	getIngredients,
+	pswdForgot,
+	pswdReset,
 	addOrder,
 	updateUser,
 	getUser,
