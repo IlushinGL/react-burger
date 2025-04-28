@@ -1,3 +1,18 @@
+.content {
+	display: flex;
+	margin: auto;
+	height: auto;
+	box-sizing: border-box;
+	flex-direction: column;
+	width: calc(130 * var(--offset-base-size));
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	cursor: default;
+	border: none;
+	// border: 1px red solid;
+}
+
 .image {
 	box-sizing: border-box;
 	object-fit: contain;

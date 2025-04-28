@@ -2,6 +2,7 @@ import { all as getIngredienDetailesData } from './ingredientDetails/ingredientD
 import {
 	all as getBurgerIngredientsAll,
 	byType as getBurgerIngredientsByType,
+	byId as getBurgerIngredientsById,
 	total as getBurgerIngredientsTotal,
 	status as getBurgerIngredientsStatus,
 	error as getBurgerIngredientsError,
@@ -45,6 +46,7 @@ export const selectors = {
 	burgerIngredients: {
 		get_all: getBurgerIngredientsAll,
 		get_byType: getBurgerIngredientsByType,
+		get_byId: getBurgerIngredientsById,
 		get_status: getBurgerIngredientsStatus,
 		get_error: getBurgerIngredientsError,
 		get_total: getBurgerIngredientsTotal,

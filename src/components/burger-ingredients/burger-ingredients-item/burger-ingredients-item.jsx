@@ -3,6 +3,8 @@ import block from './burger-ingredients-item.module.scss';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import { actions } from '@services/actions';
 import { useDispatch } from 'react-redux';
+import { APP_PATH } from '@utils/customConfig';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
 	CurrencyIcon,
 	Counter,
@@ -10,6 +12,9 @@ import {
 
 export function BurgerIngredientsItem({ item }) {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	const [{ isDrag }, dragRef, dragPreviewRef] = useDrag({
 		type: item.type === 'bun' ? 'bun' : 'filling',
 		item: { id: item._id },
@@ -19,13 +24,15 @@ export function BurgerIngredientsItem({ item }) {
 	});
 
 	function handleOnClick() {
-		// console.log(item);
 		dispatch(actions.ingredientDetails.set(item));
+		navigate(`${APP_PATH.ingredientsPath}/${item._id}`, {
+			state: { background: location },
+		});
 	}
 
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-		<section className={block.item} onClick={handleOnClick}>
+		<section key={item._id} className={block.item} onClick={handleOnClick}>
 			{isDrag ? null : (
 				<DragPreviewImage connect={dragPreviewRef} src={item.image} />
 			)}

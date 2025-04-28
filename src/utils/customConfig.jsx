@@ -7,5 +7,6 @@ export const APP_PATH = {
 	resetPswd: '/reset-password',
 	list: '/list',
 	profile: '/profile',
-	ingredients: '/ingredients',
+	ingredientsPath: '/ingredients',
+	ingredientPattern: '/ingredients/:id',
 };

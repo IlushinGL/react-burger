@@ -1,18 +1,13 @@
 import { useSelector } from 'react-redux';
-import { bool } from 'prop-types';
 import conteiner from './order-details.module.scss';
 import Preloader from '@components/preloader/preloader';
 import { selectors } from '@services/selectors';
 
-export function OrderDetailes({ item }) {
+export function OrderDetailes() {
 	const name = useSelector(selectors.orderDetails.get_name);
 	const number = useSelector(selectors.orderDetails.get_number);
 	const status = useSelector(selectors.orderDetails.get_status);
 	const error = useSelector(selectors.orderDetails.get_error);
-
-	if (!item) {
-		return null;
-	}
 
 	if (status === 'loading') {
 		return (
@@ -58,7 +53,3 @@ export function OrderDetailes({ item }) {
 		);
 	}
 }
-
-OrderDetailes.propTypes = {
-	item: bool,
-};

@@ -14,6 +14,14 @@ export const byType = createSelector(
 	}
 );
 
+export const byId = createSelector(
+	all,
+	(state, id) => id,
+	(data, id) => {
+		return data.find((item) => item._id === id);
+	}
+);
+
 export const total = (state) => {
 	const order = state.burgerIngredients.data.filter((item) => item.count > 0);
 	return order.reduce((sum, item) => {

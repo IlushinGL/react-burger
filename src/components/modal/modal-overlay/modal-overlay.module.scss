@@ -2,7 +2,6 @@
 	display: block;
 	box-sizing: border-box;
 	position: fixed;
-	// flex-direction: column;
 	align-content: center;
 	justify-items: center;
 	top: 0;
@@ -13,11 +12,3 @@
 	overflow: hidden; // включить если нужна прокрутка на маленьком окне
 	z-index: 2;
 }
-// .overlay_visible {
-// 	visibility: visible;
-// 	opacity: 1;
-// }
-// .overlay_hidden {
-// 	visibility: hidden;
-// 	opacity: 0;
-// }
