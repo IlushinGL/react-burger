@@ -14,6 +14,10 @@ import {
 	move_ingredient as burgerConstructorMoveIngredient,
 	del_ingredient as burgerConstructorDelIngredient,
 } from './burgerConsructor/burgerConsructorSlice';
+import {
+	setUser as userSet,
+	setIsAuth as userSetIsAuth,
+} from './user/userSlice';
 
 export const actions = {
 	ingredientDetails: {
@@ -33,5 +37,9 @@ export const actions = {
 		add_ingredient: burgerConstructorAddIngredient,
 		move_ingredient: burgerConstructorMoveIngredient,
 		del_ingredient: burgerConstructorDelIngredient,
+	},
+	currentUser: {
+		setUser: userSet,
+		setIsAuth: userSetIsAuth,
 	},
 };

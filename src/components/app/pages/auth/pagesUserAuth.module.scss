@@ -1,0 +1,72 @@
+.page {
+	display: block;
+	box-sizing: border-box;
+	margin: 0 auto;
+	height: calc(100vh - 22 * var(--offset-base-size));
+	width: calc(310 * var(--offset-base-size));
+	background-color: transparent;
+	align-content: center;
+	overflow-y: scroll;
+}
+
+.block {
+	display: flex;
+	margin: auto;
+	flex-direction: column;
+	box-sizing: border-box;
+	width: calc(120 * var(--offset-base-size));
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	row-gap: calc(6 * var(--offset-base-size));
+}
+
+.title {
+	composes: text text_type_main-medium from global;
+	display: block;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.button {
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	margin: 0 auto calc(20 * var(--offset-base-size));
+}
+
+.other {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	row-gap: calc(4 * var(--offset-base-size));
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	column-gap: calc(2 * var(--offset-base-size));
+	justify-content: center;
+}
+
+.text {
+	composes: text text_type_main-default text_color_inactive from global;
+	display: block;
+	box-sizing: border-box;
+}
+
+.link {
+	composes: text text_type_main-default from global;
+	display: block;
+	color: var(--colors-interface-accent);
+	text-decoration: none;
+	box-sizing: border-box;
+}
+.link:hover {
+	cursor: pointer;
+	color: var(--text-primary-color);
+}

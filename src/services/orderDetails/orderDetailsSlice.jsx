@@ -1,12 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addOrder } from '../../api/payloads';
-
-export const fetchAddOrder = createAsyncThunk(
-	'order/add',
-	async (ingredientsArr) => {
-		return addOrder(ingredientsArr);
-	}
-);
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAddOrder } from '@services/actionsThunk';
 
 const orderDetailsSlice = createSlice({
 	name: 'orderDetails',
@@ -40,7 +33,7 @@ const orderDetailsSlice = createSlice({
 					state.number = action.payload.order.number;
 				} else {
 					state.status = 'error';
-					state.error = 'Что-то пошло не так. Сервер вернул success=false.';
+					state.error = action.payload.message;
 				}
 			})
 			.addCase(fetchAddOrder.rejected, (state, action) => {
