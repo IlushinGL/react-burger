@@ -1,39 +1,40 @@
-import { string, bool } from 'prop-types';
+import { string } from 'prop-types';
 import conteiner from './app-header-item.module.scss';
-import { clsx } from 'clsx';
+import { NavLink } from 'react-router-dom';
 import {
 	BurgerIcon,
 	ListIcon,
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function HeaderItem({
-	name = '',
-	text = '',
-	link = '',
-	enabled = true,
-}) {
-	if (!name) {
-		return null;
+export function HeaderItem({ name, text, link }) {
+	function Icon({ active }) {
+		const type = active ? 'primary' : 'secondary';
+		if (name === 'burger') {
+			return <BurgerIcon type={type} />;
+		} else if (name === 'list') {
+			return <ListIcon type={type} />;
+		}
+		return <ProfileIcon type={type} />;
 	}
 
-	const isActive = (link && enabled) || false;
-	const typeIcon = isActive ? 'primary' : 'secondary';
-	const clsName = isActive
-		? conteiner.item
-		: clsx(conteiner.item, conteiner.item_disabled);
-
 	return (
-		<div className={clsName}>
-			{name === 'burger' ? (
-				<BurgerIcon type={typeIcon} />
-			) : name === 'list' ? (
-				<ListIcon type={typeIcon} />
-			) : (
-				<ProfileIcon type={typeIcon} />
-			)}
-			{text}
-		</div>
+		<NavLink
+			to={link}
+			className={({ isActive }) =>
+				isActive
+					? conteiner.item + ' ' + conteiner.active
+					: conteiner.item + ' ' + conteiner.inactive
+			}>
+			{({ isActive }) => {
+				return (
+					<>
+						<Icon active={isActive} />
+						{text}
+					</>
+				);
+			}}
+		</NavLink>
 	);
 }
 
@@ -41,5 +42,4 @@ HeaderItem.propTypes = {
 	name: string,
 	text: string,
 	link: string,
-	enabled: bool,
 };

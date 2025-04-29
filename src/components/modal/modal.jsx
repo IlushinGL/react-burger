@@ -4,23 +4,19 @@ import conteiner from './modal.module.scss';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Modal({ text, onClose, children }) {
-	if (children.props.item) {
-		return (
-			<ModalOverlay onClose={onClose}>
-				<div className={conteiner.box}>
-					<div className={conteiner.header}>
-						<div className={conteiner.text}>{text}</div>
-						<button className={conteiner.close} onClick={onClose}>
-							<CloseIcon type='primary' />
-						</button>
-					</div>
-					<div className={conteiner.content}>{children}</div>
+	return (
+		<ModalOverlay onClose={onClose}>
+			<div className={conteiner.box}>
+				<div className={conteiner.header}>
+					<div className={conteiner.text}>{text}</div>
+					<button className={conteiner.close} onClick={onClose}>
+						<CloseIcon type='primary' />
+					</button>
 				</div>
-			</ModalOverlay>
-		);
-	} else {
-		return null;
-	}
+				<div className={conteiner.content}>{children}</div>
+			</div>
+		</ModalOverlay>
+	);
 }
 
 Modal.propTypes = {

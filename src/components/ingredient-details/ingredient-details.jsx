@@ -1,11 +1,19 @@
+import { useParams } from 'react-router-dom';
+import { selectors } from '@services/selectors';
+import { useSelector } from 'react-redux';
 import conteiner from './ingredient-details.module.scss';
 
-export function IngredientDetailes({ item }) {
+export function IngredientDetailes() {
+	const { id } = useParams();
+	const item = useSelector((state) =>
+		selectors.burgerIngredients.get_byId(state, id)
+	);
+
 	if (!item) {
 		return null;
 	}
 	return (
-		<section>
+		<section className={conteiner.content}>
 			<img className={conteiner.image} src={item.image_large} alt={item.name} />
 			<div className={conteiner.name}>{item.name}</div>
 			<div className={conteiner.nutrition}>
