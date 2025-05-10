@@ -7,7 +7,7 @@ import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '../../../../utils/hooks/useFormAndValidation';
 
 export function ProfileForm() {
 	const dispatch = useDispatch();

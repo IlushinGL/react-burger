@@ -1,28 +1,28 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 import { setPswdForgot } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '@utils/hooks/useFormAndValidation';
 import {
-	EmailInput,
+	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function ForgotPassword() {
 	const navigate = useNavigate();
 	const { values, handleChange, errors, isValid, resetForm } =
-		useFormAndValidation();
+		useFormAndValidation({ email: '' }, { email: '' });
 
 	useEffect(() => {
 		resetForm();
 	}, [resetForm]);
 
-	function handleOnSubmit(e) {
+	async function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid) {
-			const isForgot = setPswdForgot(values);
+			const isForgot = await setPswdForgot(values);
 			if (isForgot) {
 				navigate(APP_PATH.resetPswd);
 			}
@@ -34,12 +34,12 @@ export function ForgotPassword() {
 			<div className={conteiner.block}>
 				<form className={conteiner.form} onSubmit={handleOnSubmit} noValidate>
 					<div className={conteiner.title}>Восстановление пароля</div>
-					<EmailInput
+					<Input
+						type='email'
 						onChange={handleChange}
 						placeholder='Укажите e-mail'
-						value={values.email || ''}
+						value={values.email}
 						name={'email'}
-						isIcon={false}
 						autoComplete='off'
 						required
 						minLength={5}

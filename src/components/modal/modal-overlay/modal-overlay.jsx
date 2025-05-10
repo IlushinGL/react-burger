@@ -1,6 +1,6 @@
 import { func, object } from 'prop-types';
 import conteiner from './modal-overlay.module.scss';
-import { useEscapeAndClick } from '../../../hooks/useEscapeAndClick';
+import { useEscapeAndClick } from '../../../utils/hooks/useEscapeAndClick';
 
 export function ModalOverlay({ onClose, children }) {
 	useEscapeAndClick(onClose);

@@ -1,11 +1,11 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 import { fetchUserSet } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '@utils/hooks/useFormAndValidation';
 import {
 	Input,
 	EmailInput,
@@ -16,15 +16,19 @@ import {
 export function Register() {
 	const dispatch = useDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
-		useFormAndValidation();
+		useFormAndValidation(
+			{ name: '', email: '', password: '' },
+			{ name: '', email: '', password: '' }
+		);
 
 	useEffect(() => {
 		resetForm();
 	}, [resetForm]);
 
-	function handleOnSubmit(e) {
+	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid) {
+			// @ts-expect-error "sprint4"
 			dispatch(fetchUserSet(values));
 		}
 	}
@@ -56,7 +60,7 @@ export function Register() {
 						required
 						minLength={5}
 						autoComplete='off'
-						error={!!errors.email}
+						// error={!!errors.email}
 						errorText={errors.email}
 					/>
 					<PasswordInput
@@ -67,7 +71,7 @@ export function Register() {
 						required
 						minLength={6}
 						maxLength={8}
-						error={!!errors.password}
+						// error={!!errors.password}
 						errorText={errors.password}
 					/>
 					<div className={conteiner.button}>

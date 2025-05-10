@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { selectors } from '@services/selectors';
 import { useLocation, Navigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
-import Preloader from './preloader/preloader';
+import Preloader from './preloader/preloader.jsx';
 
 const Protected = ({ onlyUnAuth = false, component }) => {
 	const user = useSelector(selectors.currentUser.get_user);

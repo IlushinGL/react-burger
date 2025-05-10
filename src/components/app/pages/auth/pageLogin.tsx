@@ -1,11 +1,11 @@
 import conteiner from './pagesUserAuth.module.scss';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { APP_PATH } from '@utils/customConfig';
 import { NavLink } from 'react-router-dom';
 import { fetchLogIn } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '@utils/hooks/useFormAndValidation';
 import {
 	EmailInput,
 	PasswordInput,
@@ -15,15 +15,19 @@ import {
 export function Login() {
 	const dispatch = useDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
-		useFormAndValidation();
+		useFormAndValidation(
+			{ email: '', password: '' },
+			{ email: '', password: '' }
+		);
 
 	useEffect(() => {
 		resetForm();
 	}, [resetForm]);
 
-	function handleOnSubmit(e) {
+	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid) {
+			// @ts-expect-error "sprint4"
 			dispatch(fetchLogIn(values));
 		}
 	}
@@ -35,24 +39,24 @@ export function Login() {
 					<div className={conteiner.title}>Вход</div>
 					<EmailInput
 						onChange={handleChange}
-						value={values.email || ''}
+						value={values.email}
 						name={'email'}
 						isIcon={false}
 						required
 						minLength={5}
 						autoComplete='off'
-						error={!!errors.email}
+						// error={!!errors.email}
 						errorText={errors.email}
 					/>
 					<PasswordInput
 						onChange={handleChange}
-						value={values.password || ''}
+						value={values.password}
 						name={'password'}
 						autoComplete='off'
 						minLength={6}
 						maxLength={8}
 						required
-						error={!!errors.password}
+						// error={!!errors.password}
 						errorText={errors.password}
 					/>
 					<div className={conteiner.button}>
