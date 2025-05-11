@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors } from '@services/selectors';
 import { fetchUserUpdate } from '@services/actionsThunk';
@@ -7,30 +7,38 @@ import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useFormAndValidation } from '../../../../utils/hooks/useFormAndValidation';
+import { useFormAndValidation } from '@utils/hooks/useFormAndValidation';
+
+interface IuserData {
+	name: string;
+	email: string;
+	password: string;
+}
 
 export function ProfileForm() {
 	const dispatch = useDispatch();
 	const userData = useSelector(selectors.currentUser.get_user);
-	// const userStatus = useSelector(selectors.currentUser.get_status);
-	const initValues = {
+	const initValues: IuserData = {
 		name: userData ? userData.name : '',
 		email: userData ? userData.email : '',
 		password: '',
 	};
 	const [isChanged, setIsChanged] = useState(false);
 	const { values, handleChange, errors, isValid, resetForm } =
-		useFormAndValidation();
+		useFormAndValidation(initValues, { name: '', email: '', password: '' });
 
 	useEffect(() => {
-		resetForm(initValues);
+		resetForm();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userData]);
 
 	useEffect(() => {
 		let changed = false;
-		for (let key in values) {
-			if (values[key] !== initValues[key]) {
+		for (const key in values) {
+			if (
+				values[key as keyof typeof values] !==
+				initValues[key as keyof typeof initValues]
+			) {
 				changed = true;
 				break;
 			}
@@ -39,9 +47,10 @@ export function ProfileForm() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values]);
 
-	function handleOnSubmit(e) {
+	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid && isChanged) {
+			// @ts-expect-error "sprint4"
 			dispatch(fetchUserUpdate(values));
 		}
 	}
@@ -53,7 +62,7 @@ export function ProfileForm() {
 				placeholder={'Имя'}
 				onChange={handleChange}
 				icon={values.name === initValues.name ? 'CheckMarkIcon' : 'EditIcon'}
-				value={values.name || ''}
+				value={values.name}
 				name={'name'}
 				autoComplete='off'
 				required
@@ -67,7 +76,7 @@ export function ProfileForm() {
 				placeholder={'Логин'}
 				onChange={handleChange}
 				icon={values.email === initValues.email ? 'CheckMarkIcon' : 'EditIcon'}
-				value={values.email || ''}
+				value={values.email}
 				name={'email'}
 				autoComplete='off'
 				required
@@ -83,7 +92,7 @@ export function ProfileForm() {
 				icon={
 					values.password === initValues.password ? 'CheckMarkIcon' : 'EditIcon'
 				}
-				value={values.password || ''}
+				value={values.password}
 				name={'password'}
 				autoComplete='off'
 				minLength={6}
@@ -111,7 +120,3 @@ export function ProfileForm() {
 		</form>
 	);
 }
-
-// Home.propTypes = {
-// 	onSubmit: func,
-// };

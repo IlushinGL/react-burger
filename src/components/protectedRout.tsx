@@ -2,9 +2,15 @@ import { useSelector } from 'react-redux';
 import { selectors } from '@services/selectors';
 import { useLocation, Navigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
-import Preloader from './preloader/preloader.jsx';
+import Preloader from '@components/preloader/preloader';
 
-const Protected = ({ onlyUnAuth = false, component }) => {
+const Protected = ({
+	onlyUnAuth = false,
+	component,
+}: {
+	onlyUnAuth?: boolean;
+	component: any;
+}) => {
 	const user = useSelector(selectors.currentUser.get_user);
 	const isAuth = useSelector(selectors.currentUser.isAuth);
 	const location = useLocation();
@@ -26,6 +32,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }) => (
+export const OnlyUnAuth = ({ component }: { component: any }) => (
 	<Protected onlyUnAuth component={component} />
 );

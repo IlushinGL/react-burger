@@ -6,17 +6,17 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-interface IHiderItem {
+interface IHiderItemProps {
 	name: string;
 	text: string;
 	link: string;
 }
-interface Iactive {
+interface IactiveProps {
 	active: boolean;
 }
 
-export function HeaderItem({ name, text, link }: IHiderItem) {
-	function Icon({ active }: Iactive) {
+export function HeaderItem({ name, text, link }: IHiderItemProps) {
+	function Icon({ active }: IactiveProps) {
 		const type = active ? 'primary' : 'secondary';
 		if (name === 'burger') {
 			return <BurgerIcon type={type} />;

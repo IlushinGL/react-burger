@@ -1,5 +1,3 @@
-import { func } from 'prop-types';
-
 import { useState, useRef } from 'react';
 import conteiner from './burger-ingredients.module.scss';
 import { BurgerIngredientsType } from './burger-ingredients-type/burger-ingredients-type';
@@ -8,17 +6,26 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 export function BurgerIngredients() {
 	const [typeId, setTypeId] = useState(0);
 	const val = ['Булки', 'Соусы', 'Начинки'];
-	const refList = useRef(null);
-	const refBun = useRef(null);
-	const refSause = useRef(null);
-	const refMain = useRef(null);
+	const refList = useRef<HTMLDivElement>(null);
+	const refBun = useRef<HTMLDivElement>(null);
+	const refSause = useRef<HTMLDivElement>(null);
+	const refMain = useRef<HTMLDivElement>(null);
 
 	function handlerScroll() {
+		if (
+			!refList.current ||
+			!refBun.current ||
+			!refSause.current ||
+			!refMain.current
+		) {
+			setTypeId(0);
+			return;
+		}
 		const top = refList.current.getBoundingClientRect().top + 88;
 		const bun = refBun.current.getBoundingClientRect();
 		const sause = refSause.current.getBoundingClientRect();
+		let index: number;
 
-		let index = -1;
 		if (bun.top + bun.height - top > 0) {
 			index = 0;
 		} else if (sause.top + sause.height - top > 0) {
@@ -28,7 +35,8 @@ export function BurgerIngredients() {
 		}
 		setTypeId(index);
 	}
-	const GoTo = ({ id }) => {
+
+	const Tabs = ({ id }: { id: number }) => {
 		const [current, setCurrent] = useState(val[id]);
 		return (
 			<div className={conteiner.tab}>
@@ -44,10 +52,11 @@ export function BurgerIngredients() {
 			</div>
 		);
 	};
+
 	return (
 		<section className={conteiner.section}>
 			<p className='text text_type_main-large mt-10 mb-5'>Соберите бургер</p>
-			<GoTo id={typeId} />
+			<Tabs id={typeId} />
 			<div
 				className={conteiner.ingrediets}
 				onScroll={handlerScroll}
@@ -65,7 +74,3 @@ export function BurgerIngredients() {
 		</section>
 	);
 }
-
-BurgerIngredients.propTypes = {
-	onClick: func,
-};

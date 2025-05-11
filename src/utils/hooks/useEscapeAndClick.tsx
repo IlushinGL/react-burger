@@ -1,13 +1,10 @@
 import { useEffect, useCallback } from 'react';
 
-export function useEscapeAndClick(onClose) {
+export function useEscapeAndClick(onClose: () => void) {
 	const handleEscKey = useCallback(
-		(event) => {
-			if (
-				event.key === 'Escape' ||
-				event.target.classList.contains('overlay')
-			) {
-				onClose();
+		(evt: any) => {
+			if (evt.key === 'Escape' || evt.target.classList.contains('overlay')) {
+				onClose;
 			}
 		},
 		[onClose]
