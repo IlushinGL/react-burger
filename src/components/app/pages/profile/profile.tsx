@@ -25,6 +25,7 @@ export function Profile() {
 	}
 
 	function handlerExitClick() {
+		// @ts-expect-error "sprint4"
 		dispatch(fetchLogOut());
 	}
 	return (
@@ -53,7 +54,3 @@ export function Profile() {
 		</main>
 	);
 }
-
-// Home.propTypes = {
-// 	onSubmit: func,
-// };

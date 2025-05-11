@@ -1,7 +1,11 @@
-import { number, bool } from 'prop-types';
 import view from './preloader.module.scss';
 
-function Preloader({ box, visible }) {
+interface IPreloader {
+	box: number;
+	visible: boolean;
+}
+
+function Preloader({ box, visible }: IPreloader) {
 	const cssPreloader = {
 		transform: `scale(${box / 80})`,
 	};
@@ -26,10 +30,5 @@ function Preloader({ box, visible }) {
 		</div>
 	);
 }
-
-Preloader.propTypes = {
-	box: number,
-	visible: bool,
-};
 
 export default Preloader;

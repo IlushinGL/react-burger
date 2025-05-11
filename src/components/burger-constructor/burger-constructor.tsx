@@ -9,7 +9,11 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerConstructor({ onClick }) {
+interface IBurgerConstructorProps {
+	onClick: () => void;
+}
+
+export function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
 	const orderTotal = useSelector(selectors.burgerIngredients.get_total);
 	const isValid = useSelector(selectors.burgerConstructor.get_data)[0] !== '';
 	return (

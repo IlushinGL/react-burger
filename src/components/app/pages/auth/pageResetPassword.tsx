@@ -1,10 +1,10 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 import { resetPswd } from '@services/actionsThunk';
 
-import { useFormAndValidation } from '../../../../hooks/useFormAndValidation';
+import { useFormAndValidation } from '@utils/hooks/useFormAndValidation';
 import {
 	Input,
 	PasswordInput,
@@ -14,7 +14,10 @@ import {
 export function ResetPassword() {
 	const navigate = useNavigate();
 	const { values, handleChange, errors, isValid, resetForm } =
-		useFormAndValidation();
+		useFormAndValidation(
+			{ password: '', code: '' },
+			{ password: '', code: '' }
+		);
 
 	useEffect(() => {
 		if (!localStorage.getItem('isForgot')) {
@@ -24,9 +27,9 @@ export function ResetPassword() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [resetForm]);
 
-	function handleOnSubmit(e) {
+	async function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		const isSettingSuccess = resetPswd(values);
+		const isSettingSuccess = await resetPswd(values);
 		if (isSettingSuccess) {
 			navigate(APP_PATH.login);
 		}
@@ -40,13 +43,13 @@ export function ResetPassword() {
 					<PasswordInput
 						placeholder='Введите новый пароль'
 						onChange={handleChange}
-						value={values.password || ''}
+						value={values.password}
 						name={'password'}
 						autoComplete='off'
 						minLength={6}
 						maxLength={8}
 						required
-						error={!!errors.password}
+						// error={!!errors.password}
 						errorText={errors.password}
 					/>
 					<Input

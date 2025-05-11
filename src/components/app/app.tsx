@@ -13,7 +13,6 @@ import {
 	fetchAddOrder,
 	checkUserAuth,
 } from '@services/actionsThunk';
-// import { fetchUserGet } from '@services/user/userSlice';
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
@@ -22,9 +21,9 @@ import { OnlyAuth, OnlyUnAuth } from '@components/protectedRout';
 
 import { AppHeader } from '@components/app-header/app-header';
 
-import { Home } from './pages/home/home';
+import { Home } from '@components/app/pages/home/home';
 import { Profile } from './pages/profile/profile';
-import { NotFound } from './pages/404/404';
+import { NotFound } from '@components/app/pages/404/404';
 import { Modal } from '@components/modal/modal';
 import { ErrDetailes } from '@components/err-details/err-details';
 import { IngredientDetailes } from '@components/ingredient-details/ingredient-details';
@@ -32,7 +31,7 @@ import { OrderDetailes } from '@components/order-details/order-details';
 
 import { Login } from './pages/auth/pageLogin';
 import { Register } from './pages/auth/pageRegister';
-import { ForgotPassword } from './pages/auth/pageForgotPassword';
+import { ForgotPassword } from '@components/app/pages/auth/pageForgotPassword';
 import { ResetPassword } from './pages/auth/pageResetPassword';
 
 export const App = () => {
@@ -48,12 +47,15 @@ export const App = () => {
 	const user = useSelector(selectors.currentUser.get_user);
 
 	useEffect(() => {
+		// @ts-expect-error "sprint4"
 		dispatch(fetchAllIngedients());
+		// @ts-expect-error "sprint4"
 		dispatch(checkUserAuth());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	function handleOnCloseErr() {
+		// @ts-expect-error "sprint4"
 		dispatch(fetchAllIngedients());
 	}
 
@@ -64,6 +66,7 @@ export const App = () => {
 
 	function handleOnCloseOrder() {
 		if (orderDetailsStatus === 'idle') {
+			// @ts-expect-error "sprint4"
 			dispatch(actions.burgerConstructor.reset());
 			dispatch(actions.burgerIngredients.reset());
 			dispatch(actions.orderDetails.reset());
@@ -74,6 +77,7 @@ export const App = () => {
 	function handleOnClickOrder() {
 		if (user) {
 			if (orderDetailsStatus !== 'loading') {
+				// @ts-expect-error "sprint4"
 				dispatch(fetchAddOrder(orderDetails));
 			}
 			dispatch(actions.orderDetails.visible(true));

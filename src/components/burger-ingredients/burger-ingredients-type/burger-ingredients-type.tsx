@@ -6,7 +6,15 @@ import { string } from 'prop-types';
 import block from './burger-ingredients-type.module.scss';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 
-export function BurgerIngredientsType({ type, name }) {
+interface IBurgerIngredientsTypeProps {
+	type: string;
+	name: string;
+}
+
+export function BurgerIngredientsType({
+	type,
+	name,
+}: IBurgerIngredientsTypeProps) {
 	const blockData = useSelector((state) =>
 		selectors.burgerIngredients.get_byType(state, type)
 	);
@@ -15,7 +23,7 @@ export function BurgerIngredientsType({ type, name }) {
 		<section className={block.group}>
 			<div className={block.title}>{name}</div>
 			<div className={block.list}>
-				{blockData.map((item) => (
+				{blockData.map((item: any) => (
 					<div key={item._id}>
 						<BurgerIngredientsItem item={item} />
 					</div>

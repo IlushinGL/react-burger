@@ -1,18 +1,28 @@
 import { useSelector } from 'react-redux';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
-
-// import { useDrag } from 'react-dnd';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
-
 import conteiner from './burger-components.module.scss';
 import {
 	ConstructorElement,
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerDraggableComponent({ item, onDelete, onDrop }) {
+type TItem = {
+	key: string;
+	id: string;
+};
+
+interface IBurgerDraggableComponentProps {
+	item: TItem;
+	onDelete: (item: TItem) => void;
+	onDrop: (item: { resiver: string; source: string }) => void;
+}
+
+export function BurgerDraggableComponent({
+	item,
+	onDelete,
+	onDrop,
+}: IBurgerDraggableComponentProps) {
 	const itemData = useSelector((state) =>
 		selectors.burgerConstructor.get_byId(state, item.id)
 	);
@@ -25,8 +35,8 @@ export function BurgerDraggableComponent({ item, onDelete, onDrop }) {
 	});
 	const [{ isHoverMe }, dropItemRef] = useDrop({
 		accept: 'filling',
-		drop(itemId) {
-			handlerOnDrop(itemId);
+		drop(item) {
+			handlerOnDrop(item);
 		},
 		collect: (monitor) => ({
 			isHoverMe: monitor.isOver(),
@@ -39,7 +49,7 @@ export function BurgerDraggableComponent({ item, onDelete, onDrop }) {
 		onDelete(item);
 	}
 
-	function handlerOnDrop(data) {
+	function handlerOnDrop(data: any) {
 		onDrop({ resiver: item.key, source: data.id });
 	}
 

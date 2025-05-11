@@ -1,4 +1,3 @@
-import { string } from 'prop-types';
 import conteiner from './app-header-item.module.scss';
 import { NavLink } from 'react-router-dom';
 import {
@@ -7,8 +6,17 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function HeaderItem({ name, text, link }) {
-	function Icon({ active }) {
+interface IHiderItemProps {
+	name: string;
+	text: string;
+	link: string;
+}
+interface IactiveProps {
+	active: boolean;
+}
+
+export function HeaderItem({ name, text, link }: IHiderItemProps) {
+	function Icon({ active }: IactiveProps) {
 		const type = active ? 'primary' : 'secondary';
 		if (name === 'burger') {
 			return <BurgerIcon type={type} />;
@@ -37,9 +45,3 @@ export function HeaderItem({ name, text, link }) {
 		</NavLink>
 	);
 }
-
-HeaderItem.propTypes = {
-	name: string,
-	text: string,
-	link: string,
-};

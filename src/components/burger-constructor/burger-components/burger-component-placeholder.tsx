@@ -1,7 +1,16 @@
-import { string, number } from 'prop-types';
 import conteiner from './burger-components.module.scss';
 
-export function BurgerComponentPlaceholder({ text, type, dropColor }) {
+interface IBurgerComponentPlaceholderProps {
+	text: string;
+	type: number;
+	dropColor: string;
+}
+
+export function BurgerComponentPlaceholder({
+	text,
+	type,
+	dropColor,
+}: IBurgerComponentPlaceholderProps) {
 	const view =
 		type < 0 ? conteiner.holder_botton : type === 0 ? '' : conteiner.holder_top;
 	return (
@@ -10,9 +19,3 @@ export function BurgerComponentPlaceholder({ text, type, dropColor }) {
 		</div>
 	);
 }
-
-BurgerComponentPlaceholder.propTypes = {
-	text: string,
-	type: number,
-	dropColor: string,
-};

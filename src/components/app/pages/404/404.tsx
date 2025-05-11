@@ -15,7 +15,3 @@ export function NotFound() {
 		</main>
 	);
 }
-
-// Home.propTypes = {
-// 	onSubmit: func,
-// };

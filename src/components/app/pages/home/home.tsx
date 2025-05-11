@@ -1,13 +1,16 @@
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { func } from 'prop-types';
 
 import conteiner from './home.module.scss';
 
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 
-export function Home({ onSubmit }) {
+interface IHomeProps {
+	onSubmit: () => void;
+}
+
+export function Home({ onSubmit }: IHomeProps) {
 	return (
 		<main className={conteiner.data}>
 			<DndProvider backend={HTML5Backend}>
@@ -17,7 +20,3 @@ export function Home({ onSubmit }) {
 		</main>
 	);
 }
-
-Home.propTypes = {
-	onSubmit: func,
-};

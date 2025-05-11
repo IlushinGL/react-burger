@@ -1,4 +1,3 @@
-import { object } from 'prop-types';
 import block from './burger-ingredients-item.module.scss';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import { actions } from '@services/actions';
@@ -10,7 +9,7 @@ import {
 	Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function BurgerIngredientsItem({ item }) {
+export function BurgerIngredientsItem({ item }: { item: any }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -55,7 +54,3 @@ export function BurgerIngredientsItem({ item }) {
 		</section>
 	);
 }
-
-BurgerIngredientsItem.propTypes = {
-	item: object,
-};
