@@ -3,13 +3,14 @@ import { selectors } from '@services/selectors';
 import { useLocation, Navigate } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 import Preloader from '@components/preloader/preloader';
+import { ReactElement } from 'react';
 
 const Protected = ({
 	onlyUnAuth = false,
 	component,
 }: {
 	onlyUnAuth?: boolean;
-	component: any;
+	component: ReactElement;
 }) => {
 	const user = useSelector(selectors.currentUser.get_user);
 	const isAuth = useSelector(selectors.currentUser.isAuth);
@@ -32,6 +33,6 @@ const Protected = ({
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }: { component: any }) => (
+export const OnlyUnAuth = ({ component }: { component: ReactElement }) => (
 	<Protected onlyUnAuth component={component} />
 );

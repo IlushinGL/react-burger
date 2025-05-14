@@ -28,7 +28,7 @@ export function ProfileForm() {
 		useFormAndValidation(initValues, { name: '', email: '', password: '' });
 
 	useEffect(() => {
-		resetForm();
+		resetForm(initValues);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userData]);
 

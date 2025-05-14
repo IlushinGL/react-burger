@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { ModalOverlay } from './modal-overlay/modal-overlay';
 import conteiner from './modal.module.scss';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -5,7 +6,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 interface IModalProps {
 	text: string;
 	onClose: () => void;
-	children: any;
+	children: ReactElement;
 }
 
 export function Modal({ text, onClose, children }: IModalProps) {

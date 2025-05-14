@@ -17,9 +17,9 @@
 	composes: section;
 	max-height: calc(116.5 * var(--offset-base-size));
 	min-height: calc(20 * var(--offset-base-size));
-	scrollbar-color: var(--text-inactive-color) var(--background-element);
 	border: 1px transparent solid;
 	border-radius: calc(10 * var(--offset-base-size));
+	scrollbar-color: var(--text-inactive-color) var(--background-element);
 	scrollbar-width: auto;
 	overflow-y: scroll;
 }

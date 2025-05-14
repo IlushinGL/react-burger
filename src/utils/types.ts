@@ -13,6 +13,8 @@ export type TIngredient = {
 	__v: number;
 };
 
+export type TIngredientWithCount = TIngredient & { count: number };
+
 type TUser = {
 	name: string;
 	email: string;

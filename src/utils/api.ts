@@ -22,8 +22,16 @@ import {
 } from './types';
 
 const getResponce = <T>(res: Response): Promise<T> => {
-	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-	// return Promise.reject(`Ошибка ${res.status}`);
+	if (res instanceof Error) {
+		return Promise.reject(res);
+	} else if (typeof res.ok === 'undefined') {
+		return Promise.resolve(res as T);
+	} else if (res.ok) {
+		return res.json();
+	} else {
+		return res.json().then((err) => Promise.reject(err));
+		// return Promise.reject(`Ошибка ${res.status}`);
+	}
 };
 
 const getIngredients = (): Promise<TIngredient[]> => {
@@ -189,10 +197,10 @@ const fetchWithRefresh = async (
 ): Promise<Response> => {
 	try {
 		const res = await fetch(url, options);
-		return await getResponce(res);
-	} catch (err) {
-		const isErr = err instanceof Error;
-		if (isErr && err.message === 'jwt expired') {
+		return await getResponce<Response>(res);
+	} catch (error) {
+		const err = error as Error;
+		if (err.message === 'jwt expired') {
 			const freshData = await refreshToken();
 			options.headers.authorization = freshData.accessToken;
 			const res = await fetch(url, options);

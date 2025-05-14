@@ -4,7 +4,7 @@ export function useEscapeAndClick(onClose: () => void) {
 	const handleEscKey = useCallback(
 		(evt: any) => {
 			if (evt.key === 'Escape' || evt.target.classList.contains('overlay')) {
-				onClose;
+				onClose();
 			}
 		},
 		[onClose]
