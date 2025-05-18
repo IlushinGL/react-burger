@@ -21,7 +21,7 @@ export function BurgerIngredients() {
 			setTypeId(0);
 			return;
 		}
-		const top = refList.current.getBoundingClientRect().top + 88;
+		const top = refList.current.getBoundingClientRect().top + 180;
 		const bun = refBun.current.getBoundingClientRect();
 		const sause = refSause.current.getBoundingClientRect();
 		let index: number;
@@ -38,15 +38,27 @@ export function BurgerIngredients() {
 
 	const Tabs = ({ id }: { id: number }) => {
 		const [current, setCurrent] = useState(val[id]);
+		function handlerClick(value: string) {
+			setCurrent(value);
+			const behavior: ScrollIntoViewOptions = { behavior: 'smooth' };
+			if (value === val[0]) {
+				refBun.current?.scrollIntoView(behavior);
+			} else if (value === val[1]) {
+				refSause.current?.scrollIntoView(behavior);
+			} else {
+				refMain.current?.scrollIntoView(behavior);
+			}
+		}
+
 		return (
 			<div className={conteiner.tab}>
-				<Tab value={val[0]} active={current === val[0]} onClick={setCurrent}>
+				<Tab value={val[0]} active={current === val[0]} onClick={handlerClick}>
 					{val[0]}
 				</Tab>
-				<Tab value={val[1]} active={current === val[1]} onClick={setCurrent}>
+				<Tab value={val[1]} active={current === val[1]} onClick={handlerClick}>
 					{val[1]}
 				</Tab>
-				<Tab value={val[2]} active={current === val[2]} onClick={setCurrent}>
+				<Tab value={val[2]} active={current === val[2]} onClick={handlerClick}>
 					{val[2]}
 				</Tab>
 			</div>
