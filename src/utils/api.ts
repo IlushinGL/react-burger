@@ -138,21 +138,21 @@ const setUser = (data: TUserReg): Promise<TAnsAuth> => {
 		});
 };
 
-const addOrder = (ingredientsArr: []): Promise<TAnsInfo> => {
-	return fetchWithRefresh(BASE_URL + ORDERS_EP, {
+const addOrder = (ingredientsArr: []) => {
+	return fetchWithRefresh<TAnsInfo>(BASE_URL + ORDERS_EP, {
 		method: 'POST',
-		headers: {
+		headers: <HeadersInit>{
 			'Content-Type': 'application/json;charset=utf-8',
 			authorization: localStorage.getItem('accessToken'),
 		},
 		body: JSON.stringify({ ingredients: ingredientsArr }),
-	}).then((res) => getResponce<TAnsInfo>(res));
+	});
 };
 
-const updateUser = (data: TUserReg): Promise<TAnsUser> => {
-	return fetchWithRefresh(BASE_URL + AUTH_USER_EP, {
+const updateUser = (data: TUserReg) => {
+	return fetchWithRefresh<TAnsUser>(BASE_URL + AUTH_USER_EP, {
 		method: 'PATCH',
-		headers: {
+		headers: <HeadersInit>{
 			'Content-Type': 'application/json;charset=utf-8',
 			authorization: localStorage.getItem('accessToken'),
 		},
@@ -161,17 +161,17 @@ const updateUser = (data: TUserReg): Promise<TAnsUser> => {
 			password: data.password,
 			name: data.name,
 		}),
-	}).then((res) => getResponce<TAnsUser>(res));
+	});
 };
 
-const getUser = (): Promise<TAnsUser> => {
-	return fetchWithRefresh(BASE_URL + AUTH_USER_EP, {
+const getUser = () => {
+	return fetchWithRefresh<TAnsUser>(BASE_URL + AUTH_USER_EP, {
 		method: 'GET',
-		headers: {
+		headers: <HeadersInit>{
 			'Content-Type': 'application/json;charset=utf-8',
 			authorization: localStorage.getItem('accessToken'),
 		},
-	}).then((res) => getResponce<TAnsUser>(res));
+	});
 };
 
 const refreshToken = (): Promise<TAnsToken> => {
@@ -191,22 +191,21 @@ const refreshToken = (): Promise<TAnsToken> => {
 		});
 };
 
-const fetchWithRefresh = async (
-	url: string,
-	options: any
-): Promise<Response> => {
+const fetchWithRefresh = async <T>(url: string, options: RequestInit) => {
 	try {
 		const res = await fetch(url, options);
-		return await getResponce<Response>(res);
+		return await getResponce<T>(res);
 	} catch (error) {
-		const err = error as Error;
-		if (err.message === 'jwt expired') {
+		if ((error as { message: string }).message === 'jwt expired') {
 			const freshData = await refreshToken();
-			options.headers.authorization = freshData.accessToken;
-			const res = await fetch(url, options);
-			return await getResponce<Response>(res);
+			if (options.headers) {
+				(options.headers as { [key: string]: string }).authorization =
+					freshData.accessToken;
+				const res = await fetch(url, options);
+				return await getResponce<T>(res);
+			}
 		} else {
-			return Promise.reject(err);
+			return Promise.reject(error);
 		}
 	}
 };
