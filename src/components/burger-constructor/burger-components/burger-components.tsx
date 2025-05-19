@@ -10,11 +10,7 @@ import conteiner from './burger-components.module.scss';
 import { BurgerDraggableComponent } from './burger-component-draggable';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerComponentPlaceholder } from './burger-component-placeholder';
-
-type TburgerComponent = {
-	key: string;
-	id: string;
-};
+import { TIngredientLink } from '@utils/types';
 
 type TDnDdata = {
 	source: string;
@@ -25,7 +21,7 @@ export function BurgerComponents() {
 	const [{ isHoverFilling }, dropFillingsTag] = useDrop({
 		accept: 'filling',
 		drop(item) {
-			onDropFillingHandler(item);
+			onDropFillingHandler(item as TIngredientLink);
 		},
 		collect: (monitor) => ({
 			isHoverFilling: monitor.isOver(),
@@ -34,7 +30,7 @@ export function BurgerComponents() {
 	const [{ isHoverBunTop }, dropBunTagTop] = useDrop({
 		accept: 'bun',
 		drop(item) {
-			onDropBunHandler(item);
+			onDropBunHandler(item as TIngredientLink);
 		},
 		collect: (monitor) => ({
 			isHoverBunTop: monitor.isOver(),
@@ -43,7 +39,7 @@ export function BurgerComponents() {
 	const [{ isHoverBunBottom }, dropBunTagBottom] = useDrop({
 		accept: 'bun',
 		drop(item) {
-			onDropBunHandler(item);
+			onDropBunHandler(item as TIngredientLink);
 		},
 		collect: (monitor) => ({
 			isHoverBunBottom: monitor.isOver(),
@@ -63,7 +59,7 @@ export function BurgerComponents() {
 	const bunBottomBorderColor = isHoverBunBottom ? 'accept' : 'transparent';
 
 	// console.log(order_list_empty);
-	function onDropFillingHandler(item: any) {
+	function onDropFillingHandler(item: TIngredientLink) {
 		// добавляем в пустой список
 		if (order_list_empty) {
 			const data = { resiver: '', source: item.id };
@@ -72,7 +68,7 @@ export function BurgerComponents() {
 		}
 	}
 
-	function onDropBunHandler(data: any) {
+	function onDropBunHandler(data: TIngredientLink) {
 		// изменяем булку
 		if (bunId) {
 			dispatch(actions.burgerIngredients.set_count({ id: bunId, shift: -2 }));
@@ -81,7 +77,7 @@ export function BurgerComponents() {
 		dispatch(actions.burgerConstructor.set_bun(data.id));
 	}
 
-	function handlerOnDel(data: TburgerComponent) {
+	function handlerOnDel(data: TIngredientLink) {
 		// удаляем из списка
 		dispatch(actions.burgerConstructor.del_ingredient(data.key));
 		dispatch(actions.burgerIngredients.set_count({ id: data.id, shift: -1 }));
@@ -133,7 +129,7 @@ export function BurgerComponents() {
 						dropColor={fillingBorderColor}
 					/>
 				) : (
-					order_list.map((item: TburgerComponent) => (
+					order_list.map((item: TIngredientLink) => (
 						<div key={item.key}>
 							<BurgerDraggableComponent
 								item={item}

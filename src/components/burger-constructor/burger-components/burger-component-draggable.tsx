@@ -6,15 +6,11 @@ import {
 	ConstructorElement,
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-
-type TItem = {
-	key: string;
-	id: string;
-};
+import { TIngredientLink } from '@utils/types';
 
 interface IBurgerDraggableComponentProps {
-	item: TItem;
-	onDelete: (item: TItem) => void;
+	item: TIngredientLink;
+	onDelete: (item: TIngredientLink) => void;
 	onDrop: (item: { resiver: string; source: string }) => void;
 }
 
@@ -36,7 +32,7 @@ export function BurgerDraggableComponent({
 	const [{ isHoverMe }, dropItemRef] = useDrop({
 		accept: 'filling',
 		drop(item) {
-			handlerOnDrop(item);
+			handlerOnDrop(item as TIngredientLink);
 		},
 		collect: (monitor) => ({
 			isHoverMe: monitor.isOver(),
@@ -49,7 +45,7 @@ export function BurgerDraggableComponent({
 		onDelete(item);
 	}
 
-	function handlerOnDrop(data: any) {
+	function handlerOnDrop(data: TIngredientLink) {
 		onDrop({ resiver: item.key, source: data.id });
 	}
 

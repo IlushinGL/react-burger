@@ -14,6 +14,10 @@ export type TIngredient = {
 };
 
 export type TIngredientWithCount = TIngredient & { count: number };
+export type TIngredientLink = {
+	key: string;
+	id: string;
+};
 
 type TUser = {
 	name: string;
