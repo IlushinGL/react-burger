@@ -1,5 +1,5 @@
 import conteiner from './modal-overlay.module.scss';
-import { useEscapeAndClick } from '@utils/hooks/useEscapeAndClick';
+import { useEscapeKey, useOutsideClick } from '@utils/hooks/useEscapeAndClick';
 import { ReactElement } from 'react';
 
 interface IModalOverlayProps {
@@ -8,6 +8,7 @@ interface IModalOverlayProps {
 }
 
 export function ModalOverlay({ onClose, children }: IModalOverlayProps) {
-	useEscapeAndClick(onClose);
+	useEscapeKey(onClose);
+	useOutsideClick(onClose);
 	return <div className={conteiner.overlay + ' overlay '}>{children}</div>;
 }

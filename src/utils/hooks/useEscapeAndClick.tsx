@@ -1,9 +1,9 @@
 import { useEffect, useCallback } from 'react';
 
-export function useEscapeAndClick(onClose: () => void) {
+export function useEscapeKey(onClose: () => void) {
 	const handleEscKey = useCallback(
-		(evt: any) => {
-			if (evt.key === 'Escape' || evt.target.classList.contains('overlay')) {
+		(event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
 				onClose();
 			}
 		},
@@ -12,10 +12,26 @@ export function useEscapeAndClick(onClose: () => void) {
 
 	useEffect(() => {
 		document.addEventListener('keyup', handleEscKey);
-		document.addEventListener('mouseup', handleEscKey);
 		return () => {
 			document.removeEventListener('keyup', handleEscKey);
-			document.removeEventListener('mouseup', handleEscKey);
 		};
-	}, [handleEscKey]);
+	});
+}
+
+export function useOutsideClick(onClose: () => void) {
+	const handleClick = useCallback(
+		(event: MouseEvent) => {
+			if ((event.target as HTMLElement).classList.contains('overlay')) {
+				onClose();
+			}
+		},
+		[onClose]
+	);
+
+	useEffect(() => {
+		document.addEventListener('mouseup', handleClick);
+		return () => {
+			document.removeEventListener('mouseup', handleClick);
+		};
+	});
 }
