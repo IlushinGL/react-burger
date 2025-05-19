@@ -1,9 +1,9 @@
 .data {
 	display: grid;
 	box-sizing: border-box;
-	margin: calc(30 * var(--offset-base-size)) auto 0;
+	margin: calc(10 * var(--offset-base-size)) auto 0;
 	padding: 0;
-	max-height: calc(100vh - 52 * var(--offset-base-size));
+	max-height: calc(100vh - 37 * var(--offset-base-size));
 	width: calc(310 * var(--offset-base-size));
 	background-color: transparent;
 	grid-template-columns: calc(80 * var(--offset-base-size)) 1fr;
@@ -13,12 +13,14 @@
 
 .nav {
 	display: flex;
+	margin-top: calc(30 * var(--offset-base-size));
 	flex-direction: column;
 	box-sizing: border-box;
 }
 
 .form {
 	display: flex;
+	margin-top: calc(30 * var(--offset-base-size));
 	flex-direction: column;
 	box-sizing: border-box;
 	row-gap: calc(6 * var(--offset-base-size));
