@@ -1,7 +1,7 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	row-gap: calc(3.5 * var(--offset-base-size));
+	row-gap: calc(4 * var(--offset-base-size));
 }
 .bun {
 	composes: ml-8 from global;
@@ -9,13 +9,12 @@
 }
 
 .bun:hover {
-	// border: 1px var(--colors-interface-accent) solid;
 	cursor: pointer;
 }
 
 .filling {
 	composes: section;
-	max-height: calc(116.5 * var(--offset-base-size));
+	max-height: calc(118.5 * var(--offset-base-size));
 	min-height: calc(20 * var(--offset-base-size));
 	border: 1px transparent solid;
 	border-radius: calc(10 * var(--offset-base-size));
@@ -33,10 +32,10 @@
 .ingredient {
 	display: flex;
 	composes: mr-4 from global;
-	// width: calc(100% - 8 * var(--offset-base-size));
+	max-height: calc(20 * var(--offset-base-size));
 	flex-direction: row;
 	column-gap: calc(2 * var(--offset-base-size));
-	box-sizing: border-box;
+	box-sizing: content-box;
 	justify-content: space-between;
 	align-items: center;
 	border: 1px transparent solid;
@@ -44,7 +43,6 @@
 }
 
 .ingredient:hover {
-	// border: 1px var(--colors-interface-accent) solid;
 	cursor: pointer;
 }
 
@@ -57,7 +55,6 @@
 	width: calc(134 * var(--offset-base-size));
 	background-color: var(--background-element);
 	border-radius: calc(10 * var(--offset-base-size));
-	// border: 1px transparent solid;
 	align-content: center;
 	text-align: center;
 }

@@ -30,8 +30,6 @@ const userSlice = createSlice({
 					state.status = 'idle';
 					state.error = '';
 					state.user = action.payload.user;
-					// localStorage.setItem('refreshToken', action.payload.refreshToken);
-					// localStorage.setItem('accessToken', action.payload.accessToken);
 				} else {
 					state.status = 'error';
 					state.error = action.payload.message;

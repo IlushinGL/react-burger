@@ -1,3 +1,18 @@
+export type TOrderCard = {
+	_id: string;
+	number: number;
+	status: string;
+	createdAt: string;
+	updatedAt: string;
+	ingredients: string[];
+};
+
+export type TOrders = {
+	orders: TOrderCard[];
+	total: number;
+	totalToday: number;
+};
+
 export type TIngredient = {
 	_id: string;
 	name: string;

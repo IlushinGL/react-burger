@@ -74,6 +74,7 @@ export const checkUserAuth = createAsyncThunk(
 			api
 				.getUser()
 				.then((res) => dispatch(setUser(res.user)))
+				// тут нужно оюработать возможную ошибку
 				.finally(() => dispatch(setIsAuth(true)));
 		} else {
 			dispatch(setIsAuth(true));
