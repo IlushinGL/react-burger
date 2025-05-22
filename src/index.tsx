@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { App } from '@components/app/app';
 import { Provider } from 'react-redux';
-import { store } from '@services/store';
+import store from '@services/store';
 import './styles.css';
 
 const domNode = document.getElementById('root') as HTMLDivElement;

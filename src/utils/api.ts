@@ -30,7 +30,6 @@ const getResponce = <T>(res: Response): Promise<T> => {
 		return res.json();
 	} else {
 		return res.json().then((err) => Promise.reject(err));
-		// return Promise.reject(`Ошибка ${res.status}`);
 	}
 };
 

@@ -1,15 +1,15 @@
 .img {
 	position: absolute;
-  display: block;
+	display: block;
 	box-sizing: content-box;
-  margin: auto;
-  padding: 0;
-  width: calc(16 * var(--offset-base-size));
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  border: 1px var(--colors-interface-accent) solid;
+	margin: auto;
+	padding: 0;
+	width: calc(16 * var(--offset-base-size));
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
+	border: 1px var(--colors-interface-accent) solid;
 }
 .img_0 {
 	left: calc(0 * var(--offset-base-size));
@@ -44,16 +44,16 @@
 .more {
 	composes: text text_type_main-small from global;
 	position: absolute;
-  display: block;
-  margin: auto;
+	display: block;
+	margin: auto;
 	box-sizing: content-box;
 	left: calc(60 * var(--offset-base-size));
-  width: calc(16 * var(--offset-base-size));
+	width: calc(16 * var(--offset-base-size));
 	height: calc(16 * var(--offset-base-size));
 	align-content: center;
 	text-align: center;
-  border-radius: 50%;
+	border-radius: 50%;
 	background-color: transparent;
-  border: none;
+	border: none;
 	z-index: 2;
 }

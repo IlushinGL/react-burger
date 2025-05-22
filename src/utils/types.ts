@@ -40,7 +40,7 @@ type TUser = {
 	password: string;
 	code: string;
 };
-type TUserData = Pick<TUser, 'name' | 'email'>;
+export type TUserData = Pick<TUser, 'name' | 'email'>;
 
 export type TUserReg = Omit<TUser, 'code'>;
 export type TUserLogIn = Omit<TUser, 'name' | 'code'>;
