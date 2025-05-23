@@ -66,7 +66,6 @@ export const App = () => {
 
 	function handleOnCloseOrder() {
 		if (orderDetailsStatus === 'idle') {
-			// @ts-expect-error "sprint4"
 			dispatch(actions.burgerConstructor.reset());
 			dispatch(actions.burgerIngredients.reset());
 			dispatch(actions.orderDetails.reset());

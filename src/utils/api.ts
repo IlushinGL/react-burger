@@ -18,7 +18,8 @@ import {
 	TUserEmail,
 	TUserLogIn,
 	TUserReg,
-	TIngredient,
+	TAnsIngrediets,
+	TAnsNewOrder,
 } from './types';
 
 const getResponce = <T>(res: Response): Promise<T> => {
@@ -33,9 +34,9 @@ const getResponce = <T>(res: Response): Promise<T> => {
 	}
 };
 
-const getIngredients = (): Promise<TIngredient[]> => {
+const getIngredients = (): Promise<TAnsIngrediets> => {
 	return fetch(BASE_URL + INGREDIENTS_EP).then((res) =>
-		getResponce<TIngredient[]>(res)
+		getResponce<TAnsIngrediets>(res)
 	);
 };
 
@@ -138,7 +139,7 @@ const setUser = (data: TUserReg): Promise<TAnsAuth> => {
 };
 
 const addOrder = (ingredientsArr: []) => {
-	return fetchWithRefresh<TAnsInfo>(BASE_URL + ORDERS_EP, {
+	return fetchWithRefresh<TAnsNewOrder>(BASE_URL + ORDERS_EP, {
 		method: 'POST',
 		headers: <HeadersInit>{
 			'Content-Type': 'application/json;charset=utf-8',

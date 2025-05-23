@@ -1,3 +1,11 @@
+export type TAnsNewOrder = {
+	name: string;
+	order: {
+		number: number;
+	};
+	success: true;
+};
+
 export type TOrderCard = {
 	_id: string;
 	number: number;
@@ -32,6 +40,10 @@ export type TIngredientWithCount = TIngredient & { count: number };
 export type TIngredientLink = {
 	key: string;
 	id: string;
+};
+export type TAnsIngrediets = {
+	data: TIngredient[];
+	success: true;
 };
 
 type TUser = {
