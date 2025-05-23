@@ -59,7 +59,7 @@ export async function resetPswd(data: TUserConfirm) {
 
 export const fetchAddOrder = createAsyncThunk(
 	'order/add',
-	async (ingredientsArr: []) => {
+	async (ingredientsArr: string[]) => {
 		return api.addOrder(ingredientsArr);
 	}
 );

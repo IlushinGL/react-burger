@@ -138,7 +138,7 @@ const setUser = (data: TUserReg): Promise<TAnsAuth> => {
 		});
 };
 
-const addOrder = (ingredientsArr: []) => {
+const addOrder = (ingredientsArr: string[]) => {
 	return fetchWithRefresh<TAnsNewOrder>(BASE_URL + ORDERS_EP, {
 		method: 'POST',
 		headers: <HeadersInit>{

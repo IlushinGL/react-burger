@@ -5,7 +5,7 @@ import { TIngredientLink, TIngredientWithCount } from '@utils/types';
 export const list = (state: RootState) => state.burgerConstructor.filling;
 
 export const all = createSelector(
-	(state) => state.burgerConstructor,
+	(state: RootState) => state.burgerConstructor,
 	(data) => {
 		const filling = data.filling.map((item: TIngredientLink) => item.id);
 		return [data.bun, ...filling, data.bun];

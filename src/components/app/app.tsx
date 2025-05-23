@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 
@@ -33,9 +33,10 @@ import { Login } from './pages/auth/pageLogin';
 import { Register } from './pages/auth/pageRegister';
 import { ForgotPassword } from '@components/app/pages/auth/pageForgotPassword';
 import { ResetPassword } from './pages/auth/pageResetPassword';
+import { useAppDispatch } from '@services/store';
 
 export const App = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const background = location.state && location.state.background;
@@ -47,15 +48,12 @@ export const App = () => {
 	const user = useSelector(selectors.currentUser.get_user);
 
 	useEffect(() => {
-		// @ts-expect-error "sprint4"
 		dispatch(fetchAllIngedients());
-		// @ts-expect-error "sprint4"
 		dispatch(checkUserAuth());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	function handleOnCloseErr() {
-		// @ts-expect-error "sprint4"
 		dispatch(fetchAllIngedients());
 	}
 
@@ -76,7 +74,6 @@ export const App = () => {
 	function handleOnClickOrder() {
 		if (user) {
 			if (orderDetailsStatus !== 'loading') {
-				// @ts-expect-error "sprint4"
 				dispatch(fetchAddOrder(orderDetails));
 			}
 			dispatch(actions.orderDetails.visible(true));
