@@ -1,5 +1,5 @@
 import styles from './order-stack-imgs.module.scss';
-import tstimg from '../../../utils/blank_user.jpg';
+import tstimg from '../../../utils/blank_user.png';
 
 interface IOrderIngredientImgProps {
 	len: number;
