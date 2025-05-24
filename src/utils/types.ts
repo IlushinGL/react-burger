@@ -9,6 +9,7 @@ export type TAnsNewOrder = {
 export type TOrderCard = {
 	_id: string;
 	number: number;
+	name: string;
 	status: string;
 	createdAt: string;
 	updatedAt: string;

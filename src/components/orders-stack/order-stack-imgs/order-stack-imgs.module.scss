@@ -1,10 +1,10 @@
 .img {
 	position: absolute;
+	top: -1px;
 	display: block;
 	box-sizing: content-box;
-	margin: auto;
-	padding: 0;
-	width: calc(16 * var(--offset-base-size));
+	padding: calc(2 * var(--offset-base-size));
+	width: calc(12 * var(--offset-base-size));
 	aspect-ratio: 1 / 1;
 	border-radius: 50%;
 	object-fit: cover;

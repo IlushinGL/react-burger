@@ -1,12 +1,16 @@
 import styles from './order-stack-imgs.module.scss';
-import tstimg from '../../../utils/blank_user.png';
 
 interface IOrderIngredientImgProps {
 	len: number;
 	column: number;
+	img: string;
 }
 
-export function OrderIngredientImg({ len, column }: IOrderIngredientImgProps) {
+export function OrderIngredientImg({
+	len,
+	column,
+	img,
+}: IOrderIngredientImgProps) {
 	if (column > 5) {
 		return null;
 	} else if (column === 5 && len > column + 1) {
@@ -15,7 +19,7 @@ export function OrderIngredientImg({ len, column }: IOrderIngredientImgProps) {
 			<div>
 				<img
 					className={styles.img + ' ' + styles.img_6}
-					src={tstimg}
+					src={img}
 					alt={'img' + column}
 				/>
 				<div className={styles.more}>{'+' + extra_len}</div>
@@ -25,7 +29,7 @@ export function OrderIngredientImg({ len, column }: IOrderIngredientImgProps) {
 	return (
 		<img
 			className={styles.img + ' ' + styles['img_' + column]}
-			src={tstimg}
+			src={img}
 			alt={'img' + column}
 		/>
 	);

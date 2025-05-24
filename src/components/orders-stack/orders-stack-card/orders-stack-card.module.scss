@@ -3,10 +3,14 @@
 	position: relative;
 	box-sizing: border-box;
 	width: 100%;
-	// min-height: calc(54 * var(--offset-base-size));
+	border: 1px transparent solid;
 	padding: calc(6 * var(--offset-base-size));
 	background-color: var(--background);
 	border-radius: calc(10 * var(--offset-base-size));
+}
+.card:hover {
+	cursor: pointer;
+	border: 1px var(--colors-interface-accent) solid;
 }
 
 .card_id {
