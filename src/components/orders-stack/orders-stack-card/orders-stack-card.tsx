@@ -1,16 +1,23 @@
 import styles from './orders-stack-card.module.scss';
+import { useSelector } from 'react-redux';
+
 import { selectors } from '@services/selectors';
 import { TOrderCard } from '@utils/types';
+import imgUnknouwn from '@utils/images/unknown.png';
 import {
 	CurrencyIcon,
 	FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { OrderIngredientImg } from '../order-stack-imgs/order-stack-img';
-import imgUnknouwn from '../../../utils/unknown.png';
-import { useSelector } from 'react-redux';
+import { OrderIngredientImg } from '@components/orders-stack/order-stack-imgs/order-stack-img';
 
+const statusText: { [key: string]: string } = {
+	pending: 'Готовится',
+	done: 'Выполнен',
+	created: 'Создан',
+};
 interface IOrderCardProps {
 	item: TOrderCard;
+	statusVisible: boolean;
 }
 interface IOrderTotalProps {
 	list: string[];
@@ -48,21 +55,28 @@ function OrderTotal({ list }: IOrderTotalProps) {
 	);
 }
 
-export function OrderCard({ item }: IOrderCardProps) {
-	console.log(item);
+export function OrderCard({ item, statusVisible }: IOrderCardProps) {
+	console.log(item, statusVisible);
 }
 
-export function OrderItem({ item }: IOrderCardProps) {
+export function OrderItem({ item, statusVisible }: IOrderCardProps) {
 	return (
 		<section className={styles.card}>
 			<div className={styles.card_id}>
-				<div className={styles.card_id_num}>#{item.number}</div>
+				<div className={styles.card_id_num}>#0{item.number}</div>
 				<div className={styles.card_id_date}>
 					<FormattedDate date={new Date(item.updatedAt)} />
 				</div>
 			</div>
 			<div className={styles.card_name}>{item.name}</div>
-			<div className={styles.card_status}>{item.status}</div>
+			{statusVisible && (
+				<div
+					className={
+						styles.card_status + ' ' + styles['card_status_' + item.status]
+					}>
+					{statusText[item.status]}
+				</div>
+			)}
 			<OrderTotal list={item.ingredients} />
 		</section>
 	);

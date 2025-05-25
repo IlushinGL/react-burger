@@ -50,7 +50,7 @@ export function Profile() {
 				</div>
 				<div className={conteiner.caption}>{captions[item]}</div>
 			</nav>
-			{item === 0 ? <ProfileForm /> : <OrdersStack />}
+			{item === 0 ? <ProfileForm /> : <OrdersStack statusVisible={true} />}
 		</main>
 	);
 }

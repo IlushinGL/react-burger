@@ -9,7 +9,11 @@ export function AppHeader() {
 			<div className={header.content}>
 				<nav className={header.navigation}>
 					<HeaderItem name='burger' text='Конструктор' link={APP_PATH.home} />
-					<HeaderItem name='list' text='Лента заказов' link={APP_PATH.list} />
+					<HeaderItem
+						name='list'
+						text='Лента заказов'
+						link={APP_PATH.ordersStack}
+					/>
 				</nav>
 				<Logo />
 				<div className={header.right}>

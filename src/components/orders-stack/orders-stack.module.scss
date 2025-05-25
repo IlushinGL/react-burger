@@ -7,6 +7,7 @@
 	background-color: transparent;
 	row-gap: calc(4 * var(--offset-base-size));
 	scrollbar-color: var(--text-inactive-color) var(--background-element);
+	max-height: 100%;
 	scrollbar-width: auto;
 	overflow-y: scroll;
 	// border: 1px red solid;

@@ -1,0 +1,67 @@
+import { TOrders } from '@utils/types';
+
+export const TST_STREAM: TOrders = {
+	success: true,
+	total: 3091,
+	totalToday: 5,
+	orders: [
+		{
+			_id: 'num1A',
+			number: 2379,
+			name: 'Устрично-крабовый-Кисло-сладко-кардамонно-куропачий-Зайце-поросятино-телячий Бургер.',
+			status: 'done',
+			createdAt: '2024-10-10T17:33:32.877Z',
+			updatedAt: '2025-05-24T16:05:32.877Z',
+			ingredients: [
+				'643d69a5c3f7b9001cfa093c',
+				'643d69a5c3f7b9001cfa0945',
+				'643d69a5c3f7b9001cfa094a',
+				'643d69a5c3f7b9001cfa0948',
+				'643d69a5c3f7b9001cfa0946',
+				'643d69a5c3f7b9001cfa0942',
+				'643d69a5c3f7b9001cfa0949',
+				'643d69a5c3f7b9001cfa0945',
+			],
+		},
+		{
+			_id: 'num1B',
+			number: 2381,
+			name: 'Зайце-поросятино-телячий Бургер.',
+			status: 'created',
+			createdAt: '2024-12-10T17:33:32.877Z',
+			updatedAt: '2025-05-23T13:11:32.877Z',
+			ingredients: ['643d69a5c3f7b9001cfa093d', '643d69a5c3f7b9001cfa093f'],
+		},
+		{
+			_id: 'num1C',
+			number: 2380,
+			name: 'Сладко-кардамонно-куропачий-Зайце Бургер.',
+			status: 'done',
+			createdAt: '2024-10-10T17:33:32.877Z',
+			updatedAt: '2025-05-23T10:45:32.877Z',
+			ingredients: [
+				'643d69a5c3f7b9001cfa093c',
+				'643d69a5c3f7b9001cfa0945',
+				'643d69a5c3f7b9001cfa0946',
+				'643d69a5c3f7b9001cfa0942',
+				'643d69a5c3f7b9001cfa0949',
+				'643d69a5c3f7b9001cfa0945',
+			],
+		},
+		{
+			_id: 'num1D',
+			number: 3301,
+			name: 'Кисло-сладко-кардамонно-крабово-куриный Бургер.',
+			status: 'pending',
+			createdAt: '2024-10-10T17:33:32.877Z',
+			updatedAt: '2025-05-22T17:55:32.877Z',
+			ingredients: [
+				'643d69a5c3f7b9001cfa093c',
+				'643d69a5c3f7b9001cfa0945',
+				'643d69a5c3f7b9001cfa0946',
+				'643d69a5c3f7b9001cfa0949',
+				'643d69a5c3f7b9001cfa0945',
+			],
+		},
+	],
+};

@@ -1,6 +1,6 @@
 import conteiner from './pagesUserAuth.module.scss';
 import { FormEvent, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@services/store';
 import { NavLink } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 import { fetchUserSet } from '@services/actionsThunk';
@@ -14,7 +14,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Register() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
 		useFormAndValidation(
 			{ name: '', email: '', password: '' },
@@ -28,7 +28,6 @@ export function Register() {
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid) {
-			// @ts-expect-error "sprint4"
 			dispatch(fetchUserSet(values));
 		}
 	}

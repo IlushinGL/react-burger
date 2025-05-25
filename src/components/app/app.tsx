@@ -16,24 +16,24 @@ import {
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
+import { useAppDispatch } from '@services/store';
 
 import { OnlyAuth, OnlyUnAuth } from '@components/protectedRout';
 
 import { AppHeader } from '@components/app-header/app-header';
-
-import { Home } from '@components/app/pages/home/home';
-import { Profile } from './pages/profile/profile';
-import { NotFound } from '@components/app/pages/404/404';
 import { Modal } from '@components/modal/modal';
-import { ErrDetailes } from '@components/err-details/err-details';
 import { IngredientDetailes } from '@components/ingredient-details/ingredient-details';
 import { OrderDetailes } from '@components/order-details/order-details';
+import { ErrDetailes } from '@components/err-details/err-details';
 
-import { Login } from './pages/auth/pageLogin';
-import { Register } from './pages/auth/pageRegister';
+import { Home } from '@components/app/pages/home/home';
+import { OrdersPage } from '@components/app/pages/orders/orders';
+import { Profile } from '@components/app/pages/profile/profile';
+import { NotFound } from '@components/app/pages/404/404';
+import { Login } from '@components/app/pages/auth/pageLogin';
+import { Register } from '@components/app/pages/auth/pageRegister';
 import { ForgotPassword } from '@components/app/pages/auth/pageForgotPassword';
-import { ResetPassword } from './pages/auth/pageResetPassword';
-import { useAppDispatch } from '@services/store';
+import { ResetPassword } from '@components/app/pages/auth/pageResetPassword';
 
 export const App = () => {
 	const dispatch = useAppDispatch();
@@ -107,6 +107,7 @@ export const App = () => {
 							path={APP_PATH.ingredientPattern}
 							element={<IngredientDetailes />}
 						/>
+						<Route path={APP_PATH.ordersStack} element={<OrdersPage />} />
 						<Route
 							path={APP_PATH.login}
 							element={<OnlyUnAuth component={<Login />} />}
@@ -126,6 +127,10 @@ export const App = () => {
 						<Route
 							path={APP_PATH.profile}
 							element={<OnlyAuth component={<Profile />} />}
+						/>
+						<Route
+							path={APP_PATH.ordersUserStack}
+							element={<OnlyAuth component={<OrdersPage />} />}
 						/>
 						<Route path='*' element={<NotFound />} />
 					</Routes>

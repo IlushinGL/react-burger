@@ -9,4 +9,6 @@ export const APP_PATH = {
 	profile: '/profile',
 	ingredientsPath: '/ingredients',
 	ingredientPattern: '/ingredients/:id',
+	ordersStack: '/feed',
+	ordersUserStack: '/profile/orders',
 };
