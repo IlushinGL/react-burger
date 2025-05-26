@@ -64,6 +64,13 @@ export const fetchAddOrder = createAsyncThunk(
 	}
 );
 
+export const fetchGetOrder = createAsyncThunk(
+	'order/getByNumber',
+	async (orderNumber: number) => {
+		return api.getOrder(orderNumber);
+	}
+);
+
 export const fetchAllIngedients = createAsyncThunk(
 	'ingrediens/getAll',
 	async () => {

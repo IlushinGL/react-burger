@@ -34,6 +34,7 @@ import { Login } from '@components/app/pages/auth/pageLogin';
 import { Register } from '@components/app/pages/auth/pageRegister';
 import { ForgotPassword } from '@components/app/pages/auth/pageForgotPassword';
 import { ResetPassword } from '@components/app/pages/auth/pageResetPassword';
+import { OrderCardPage } from '@components/app/pages/order-card/orders-card';
 
 export const App = () => {
 	const dispatch = useAppDispatch();
@@ -109,6 +110,10 @@ export const App = () => {
 						/>
 						<Route path={APP_PATH.ordersStack} element={<OrdersPage />} />
 						<Route
+							path={APP_PATH.ordersStackPattern}
+							element={<OrderCardPage />}
+						/>
+						<Route
 							path={APP_PATH.login}
 							element={<OnlyUnAuth component={<Login />} />}
 						/>
@@ -131,6 +136,10 @@ export const App = () => {
 						<Route
 							path={APP_PATH.ordersUserStack}
 							element={<OnlyAuth component={<OrdersPage />} />}
+						/>
+						<Route
+							path={APP_PATH.ordersUserStackPattern}
+							element={<OnlyAuth component={<OrderCardPage />} />}
 						/>
 						<Route path='*' element={<NotFound />} />
 					</Routes>

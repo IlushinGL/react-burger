@@ -1,4 +1,5 @@
 import styles from './orders-stack-card.module.scss';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectors } from '@services/selectors';
@@ -9,12 +10,8 @@ import {
 	FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OrderIngredientImg } from '@components/orders-stack/order-stack-imgs/order-stack-img';
+import { APP_PATH, ORDER_STATUS_TXT } from '@utils/customConfig';
 
-const statusText: { [key: string]: string } = {
-	pending: 'Готовится',
-	done: 'Выполнен',
-	created: 'Создан',
-};
 interface IOrderCardProps {
 	item: TOrderCard;
 	statusVisible: boolean;
@@ -60,8 +57,17 @@ export function OrderCard({ item, statusVisible }: IOrderCardProps) {
 }
 
 export function OrderItem({ item, statusVisible }: IOrderCardProps) {
+	const navigate = useNavigate();
+	function handlerClick() {
+		if (statusVisible) {
+			navigate(APP_PATH.ordersUserStack + '/' + item.number);
+		} else {
+			navigate(APP_PATH.ordersStack + '/' + item.number);
+		}
+	}
 	return (
-		<section className={styles.card}>
+		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+		<section className={styles.card} onClick={handlerClick}>
 			<div className={styles.card_id}>
 				<div className={styles.card_id_num}>#0{item.number}</div>
 				<div className={styles.card_id_date}>
@@ -74,7 +80,7 @@ export function OrderItem({ item, statusVisible }: IOrderCardProps) {
 					className={
 						styles.card_status + ' ' + styles['card_status_' + item.status]
 					}>
-					{statusText[item.status]}
+					{ORDER_STATUS_TXT[item.status]}
 				</div>
 			)}
 			<OrderTotal list={item.ingredients} />

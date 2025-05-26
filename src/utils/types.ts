@@ -23,6 +23,11 @@ export type TOrders = {
 	totalToday: number;
 };
 
+export type TAnsOrderCard = {
+	success: boolean;
+	order: TOrderCard;
+};
+
 export type TIngredient = {
 	_id: string;
 	name: string;

@@ -1,0 +1,107 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	margin-top: calc(30 * var(--offset-base-size));
+	width: calc(160 * var(--offset-base-size));
+	// border: 1px red solid;
+}
+
+.number {
+	composes: text text_type_digits-default from global;
+	width: 100%;
+	text-align: center;
+
+}
+
+.name {
+	composes: text text_type_main-medium from global;
+	composes: mt-10 from global;
+	display: block;
+	width: 100%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.status {
+	composes: text text_type_main-default from global;
+	composes: mt-3 from global;
+	display: block;
+	width: 100%;
+}
+.status_done {
+	color: var(--colors-interface-success);
+}
+
+.title {
+	composes: text text_type_main-medium from global;
+	composes: mt-15 from global;
+	display: block;
+	width: 100%;
+}
+
+.total {
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	composes: mt-10 from global;
+	width: 100%;
+	min-height: calc(6 * var(--offset-base-size));
+	justify-content: space-between;
+}
+.total_date {
+	composes: text text_type_main-default text_color_inactive from global;
+}
+.cost {
+	display: flex;
+	flex-direction: row;
+	composes: text text_type_digits-default from global;
+	column-gap: calc(2 * var(--offset-base-size));
+	box-sizing: border-box;
+	white-space: nowrap;
+	align-items: center;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	composes: mt-6 pr-5 from global;
+	row-gap: calc(4 * var(--offset-base-size));
+	height: calc(78 * var(--offset-base-size));
+	scrollbar-color: var(--text-inactive-color) var(--background-element);
+	scrollbar-width: auto;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.list_row {
+	display: flex;
+	flex-direction: row;
+	box-sizing: content-box;
+	width: 100%;
+	min-height: calc(16 * var(--offset-base-size));
+	column-gap: calc(4 * var(--offset-base-size));
+	// border: 1px red solid;
+}
+.list_row_img {
+	display: block;
+	box-sizing: content-box;
+	padding: calc(2 * var(--offset-base-size));
+	width: calc(12 * var(--offset-base-size));
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
+	background-color: var(--background-alt);
+	border: 1px var(--colors-interface-accent) solid;
+}
+.list_row_info {
+	composes: text text_type_main-default from global;
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+	width: 100%;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+}

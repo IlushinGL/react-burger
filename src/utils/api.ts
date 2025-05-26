@@ -20,6 +20,7 @@ import {
 	TUserReg,
 	TAnsIngrediets,
 	TAnsNewOrder,
+	TAnsOrderCard,
 } from './types';
 
 const getResponce = <T>(res: Response): Promise<T> => {
@@ -149,6 +150,13 @@ const addOrder = (ingredientsArr: string[]) => {
 	});
 };
 
+const getOrder = (orderNumber: number): Promise<TAnsOrderCard> => {
+	return fetch(BASE_URL + INGREDIENTS_EP + '/' + orderNumber, {
+		method: 'GET',
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+	}).then((res) => getResponce<TAnsOrderCard>(res));
+};
+
 const updateUser = (data: TUserReg) => {
 	return fetchWithRefresh<TAnsUser>(BASE_URL + AUTH_USER_EP, {
 		method: 'PATCH',
@@ -215,6 +223,7 @@ export const api = {
 	pswdForgot,
 	pswdReset,
 	addOrder,
+	getOrder,
 	updateUser,
 	getUser,
 	logOut,
