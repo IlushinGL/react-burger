@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { APP_PATH } from '@utils/customConfig';
 
 import { useEffect } from 'react';
 
-import viewPort from './app.module.scss';
+import styles from './app.module.scss';
 
 import Preloader from '@components/preloader/preloader';
 
@@ -16,7 +15,7 @@ import {
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
-import { useAppDispatch } from '@services/store';
+import { useAppDispatch, useAppSelector } from '@services/store';
 
 import { OnlyAuth, OnlyUnAuth } from '@components/protectedRout';
 
@@ -41,12 +40,14 @@ export const App = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const background = location.state && location.state.background;
-	const loadingState = useSelector(selectors.burgerIngredients.get_status);
-	const errorState = useSelector(selectors.burgerIngredients.get_error);
-	const orderDetails = useSelector(selectors.burgerConstructor.get_data);
-	const orderDetailsStatus = useSelector(selectors.orderDetails.get_status);
-	const orderDetailsVisible = useSelector(selectors.orderDetails.get_visible);
-	const user = useSelector(selectors.currentUser.get_user);
+	const loadingState = useAppSelector(selectors.burgerIngredients.get_status);
+	const errorState = useAppSelector(selectors.burgerIngredients.get_error);
+	const orderDetails = useAppSelector(selectors.burgerConstructor.get_data);
+	const orderDetailsStatus = useAppSelector(selectors.orderDetails.get_status);
+	const orderDetailsVisible = useAppSelector(
+		selectors.orderDetails.get_visible
+	);
+	const user = useAppSelector(selectors.currentUser.get_user);
 
 	useEffect(() => {
 		dispatch(fetchAllIngedients());
@@ -94,8 +95,8 @@ export const App = () => {
 	}
 
 	return (
-		<div className={viewPort.win}>
-			<div className={viewPort.app}>
+		<div className={styles.win}>
+			<div className={styles.app}>
 				<>
 					<AppHeader />
 

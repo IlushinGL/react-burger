@@ -2,12 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllIngedients } from '@services/actionsThunk';
 import { TIngredientWithCount } from '@utils/types';
 
-export interface IburgerIngredientsSlice {
+export interface IburgerIngredientsStore {
 	data: TIngredientWithCount[];
 	status: string;
 	error: string;
 }
-const initialState: IburgerIngredientsSlice = {
+
+const initialState: IburgerIngredientsStore = {
 	data: [],
 	status: 'loading',
 	error: '',

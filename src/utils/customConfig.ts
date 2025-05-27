@@ -1,3 +1,4 @@
+export const LIVE_ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
 export const C_PREFIX = 'igl_';
 export const APP_PATH = {
 	home: '/',
