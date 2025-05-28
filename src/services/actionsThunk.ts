@@ -57,6 +57,14 @@ export async function resetPswd(data: TUserConfirm) {
 	}
 }
 
+export async function refreshToken() {
+	try {
+		return await api.refreshToken();
+	} catch (err) {
+		return Promise.reject(err);
+	}
+}
+
 export const fetchAddOrder = createAsyncThunk(
 	'order/add',
 	async (ingredientsArr: string[]) => {

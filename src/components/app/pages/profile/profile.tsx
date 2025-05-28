@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import conteiner from './profile.module.scss';
 import { ProfileForm } from './profile-form';
-import { OrdersStack } from '@components/orders-stack/orders-stack';
+import { MyOrdersStack } from '@components/orders-stack/orders-stack';
 import { fetchLogOut } from '@services/actionsThunk';
 
 export function Profile() {
@@ -50,7 +50,7 @@ export function Profile() {
 				</div>
 				<div className={conteiner.caption}>{captions[item]}</div>
 			</nav>
-			{item === 0 ? <ProfileForm /> : <OrdersStack statusVisible={true} />}
+			{item === 0 ? <ProfileForm /> : <MyOrdersStack statusVisible={true} />}
 		</main>
 	);
 }

@@ -44,7 +44,7 @@
 	display: flex;
 	flex-direction: row;
 	box-sizing: border-box;
-	composes: mt-10 from global;
+	composes: mt-10 mb-5 from global;
 	width: 100%;
 	min-height: calc(6 * var(--offset-base-size));
 	justify-content: space-between;

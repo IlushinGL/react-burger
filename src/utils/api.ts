@@ -182,7 +182,7 @@ const getUser = () => {
 	});
 };
 
-const refreshToken = (): Promise<TAnsToken> => {
+const refreshToken = () => {
 	return fetch(BASE_URL + AUTH_TOKEN_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },

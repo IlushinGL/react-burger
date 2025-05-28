@@ -1,4 +1,7 @@
 export const LIVE_ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
+export const LIVE_MY_ORDERS_URL =
+	'wss://norma.nomoreparties.space/orders?token=' +
+	String(localStorage.getItem('accessToken')).replace('Bearer ', '');
 export const RECONNECT_PERIOD = 3000;
 export const C_PREFIX = 'igl_';
 export const APP_PATH = {

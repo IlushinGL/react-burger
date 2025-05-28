@@ -22,3 +22,20 @@ export function OrdersStack({ statusVisible }: IOrdersStackProps) {
 		);
 	}
 }
+
+export function MyOrdersStack({ statusVisible }: IOrdersStackProps) {
+	const ordersStream = useAppSelector(selectors.liveMyOrders.get_orders);
+	if (ordersStream) {
+		return (
+			<div className={styles.content}>
+				{ordersStream.orders.map((order) => (
+					<OrderItem
+						key={order._id}
+						item={order}
+						statusVisible={statusVisible}
+					/>
+				))}
+			</div>
+		);
+	}
+}

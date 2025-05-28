@@ -27,10 +27,16 @@ function OrderTotal({ list }: IOrderTotalProps) {
 	let sum = 0;
 	list.forEach((element: string) => {
 		const igredient = allIngredients.find((item) => item._id === element);
-		if (igredient && igredient.type === 'bun') {
-			sum += 2 * igredient.price;
-			imgs.push(igredient.image);
-		} else if (igredient) {
+		// if (igredient && igredient.type === 'bun') {
+		// 	sum += 2 * igredient.price;
+		// 	imgs.push(igredient.image);
+		// } else if (igredient) {
+		// 	sum += igredient.price;
+		// 	imgs.push(igredient.image);
+		// } else {
+		// 	imgs.push(imgUnknouwn);
+		// } else
+		if (igredient) {
 			sum += igredient.price;
 			imgs.push(igredient.image);
 		} else {
@@ -50,10 +56,6 @@ function OrderTotal({ list }: IOrderTotalProps) {
 			</div>
 		</div>
 	);
-}
-
-export function OrderCard({ item, statusVisible }: IOrderCardProps) {
-	console.log(item, statusVisible);
 }
 
 export function OrderItem({ item, statusVisible }: IOrderCardProps) {

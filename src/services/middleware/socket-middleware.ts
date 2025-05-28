@@ -1,5 +1,5 @@
 import { RECONNECT_PERIOD } from '@utils/customConfig';
-import { api } from '@utils/api';
+import { refreshToken } from '@services/actionsThunk';
 import {
 	ActionCreatorWithoutPayload,
 	ActionCreatorWithPayload,
@@ -67,21 +67,23 @@ export const socketMiddleware = <R, S>(
 					const { data } = event;
 					try {
 						const parseData = JSON.parse(data);
-						if (withToken && parseData.message === 'Invalid or missing token') {
-							api
-								.refreshToken()
+						if (withToken && !parseData.success) {
+							refreshToken()
 								.then((freshData) => {
+									console.log(withToken, parseData);
 									const wssUrl = new URL(url);
 									wssUrl.searchParams.set(
 										'token',
-										freshData.accessToken.replace('Bearer', '')
+										freshData.accessToken.replace('Bearer ', '')
 									);
-									dispatch(connect(wssUrl.toString()));
+									url = wssUrl.toString();
+									dispatch(connect(url));
 								})
 								.catch((error) => {
+									console.log(withToken, parseData);
 									dispatch(onError((error as Error).message));
 								});
-
+							console.log(withToken, parseData);
 							dispatch(disconnect());
 							return;
 						}
@@ -92,7 +94,7 @@ export const socketMiddleware = <R, S>(
 				};
 				return;
 			}
-			if (sendMessage?.match(action)) {
+			if (sendMessage?.match(action) && socket) {
 				try {
 					socket?.send(JSON.stringify(action.payload));
 				} catch (error) {
@@ -102,7 +104,6 @@ export const socketMiddleware = <R, S>(
 			}
 			if (disconnect.match(action)) {
 				clearTimeout(timeOutId);
-				console.log(action);
 				// timeOutId = 0;
 				isConnected = false;
 				socket?.close();

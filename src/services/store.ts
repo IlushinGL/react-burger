@@ -7,6 +7,7 @@ import burgerIngredientsDetailsReducer from './ingredientDetails/ingredientDetai
 import orderDetailsReducer from './orderDetails/orderDetailsSlice';
 import userReducer from './user/userSlice';
 import liveOrdersReducer from './liveOrders/liveOrdersSlice';
+import liveMyOrdersReducer from './liveMyOrders/liveMyOrdersSlice';
 import { socketMiddleware } from './middleware/socket-middleware';
 import {
 	connect,
@@ -15,6 +16,13 @@ import {
 	onError,
 	onMessage,
 } from './liveOrders/liveOrdersActions';
+import {
+	connectMy,
+	disconnectMy,
+	onConnectingMy,
+	onErrorMy,
+	onMessageMy,
+} from './liveMyOrders/liveMyOrdersActions';
 
 const rootReducer = combineReducers({
 	burgerIngredients: burgerIngrediensReducer,
@@ -22,17 +30,9 @@ const rootReducer = combineReducers({
 	ingredientDetails: burgerIngredientsDetailsReducer,
 	orderDetails: orderDetailsReducer,
 	currentUser: userReducer,
-	lifeOrders: liveOrdersReducer,
+	liveOrders: liveOrdersReducer,
+	liveMyOrders: liveMyOrdersReducer,
 });
-
-// const rootReducer = {
-// 	burgerIngredients: burgerIngrediensReducer,
-// 	burgerConstructor: burgerConstructorReducer,
-// 	ingredientDetails: burgerIngredientsDetailsReducer,
-// 	orderDetails: orderDetailsReducer,
-// 	currentUser: userReducer,
-// 	lifeOrders: liveOrdersReducer,
-// };
 
 const liveOrdersMiddleware = socketMiddleware({
 	connect: connect,
@@ -41,11 +41,21 @@ const liveOrdersMiddleware = socketMiddleware({
 	onError: onError,
 	onMessage: onMessage,
 });
+const liveMyOrdersMiddleware = socketMiddleware(
+	{
+		connect: connectMy,
+		disconnect: disconnectMy,
+		onConnecting: onConnectingMy,
+		onError: onErrorMy,
+		onMessage: onMessageMy,
+	},
+	true
+);
 
 const store = configureStore({
 	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(liveOrdersMiddleware),
+		getDefaultMiddleware().concat(liveOrdersMiddleware, liveMyOrdersMiddleware),
 	// preloadedState: preloadedState,
 	// enhancers: [customEnhancer],
 	devTools: process.env.NODE_ENV !== 'production',

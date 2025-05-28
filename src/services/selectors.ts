@@ -30,6 +30,11 @@ import {
 	status as getStatus,
 	error as getError,
 } from './liveOrders/liveOrdersSelectors';
+import {
+	orders as getMyOrders,
+	status as getMyStatus,
+	error as getMyError,
+} from './liveMyOrders/liveMyOrdersSelectors';
 
 export const selectors = {
 	ingredientDetails: {
@@ -65,5 +70,10 @@ export const selectors = {
 		get_orders: getOrders,
 		get_status: getStatus,
 		get_error: getError,
+	},
+	liveMyOrders: {
+		get_orders: getMyOrders,
+		get_status: getMyStatus,
+		get_error: getMyError,
 	},
 };
