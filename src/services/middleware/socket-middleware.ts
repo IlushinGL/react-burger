@@ -1,3 +1,5 @@
+import { RECONNECT_PERIOD } from '@utils/customConfig';
+import { api } from '@utils/api';
 import {
 	ActionCreatorWithoutPayload,
 	ActionCreatorWithPayload,
@@ -17,7 +19,8 @@ export type TwsActions<R, S> = {
 };
 
 export const socketMiddleware = <R, S>(
-	wsAction: TwsActions<R, S>
+	wsAction: TwsActions<R, S>,
+	withToken = false
 ): Middleware<object, RootState> => {
 	return (store) => {
 		let socket: WebSocket | null = null;
@@ -32,9 +35,15 @@ export const socketMiddleware = <R, S>(
 			onMessage,
 		} = wsAction;
 		const { dispatch } = store;
+		let isConnected = false;
+		let url = '';
+		let timeOutId: NodeJS.Timeout;
+
 		return (next) => (action) => {
 			if (connect.match(action)) {
 				socket = new WebSocket(action.payload);
+				url = action.payload;
+				isConnected = true;
 				onConnecting && dispatch(onConnecting());
 
 				socket.onopen = () => {
@@ -47,11 +56,35 @@ export const socketMiddleware = <R, S>(
 
 				socket.onclose = () => {
 					onClose && dispatch(onClose());
+					if (isConnected) {
+						timeOutId = setTimeout(() => {
+							dispatch(connect(url));
+						}, RECONNECT_PERIOD);
+					}
 				};
+
 				socket.onmessage = (event) => {
 					const { data } = event;
 					try {
 						const parseData = JSON.parse(data);
+						if (withToken && parseData.message === 'Invalid or missing token') {
+							api
+								.refreshToken()
+								.then((freshData) => {
+									const wssUrl = new URL(url);
+									wssUrl.searchParams.set(
+										'token',
+										freshData.accessToken.replace('Bearer', '')
+									);
+									dispatch(connect(wssUrl.toString()));
+								})
+								.catch((error) => {
+									dispatch(onError((error as Error).message));
+								});
+
+							dispatch(disconnect());
+							return;
+						}
 						dispatch(onMessage(parseData));
 					} catch (error) {
 						dispatch(onError((error as Error).message));
@@ -67,7 +100,11 @@ export const socketMiddleware = <R, S>(
 				}
 				return;
 			}
-			if (disconnect?.match(action)) {
+			if (disconnect.match(action)) {
+				clearTimeout(timeOutId);
+				console.log(action);
+				// timeOutId = 0;
+				isConnected = false;
 				socket?.close();
 				socket = null;
 				return;

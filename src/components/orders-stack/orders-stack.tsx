@@ -1,16 +1,24 @@
 import styles from './orders-stack.module.scss';
 import { OrderItem } from './orders-stack-card/orders-stack-card';
-import { TST_STREAM } from '@utils/tst-data';
+import { useAppSelector } from '@services/store';
+import { selectors } from '@services/selectors';
 interface IOrdersStackProps {
 	statusVisible: boolean;
 }
 
 export function OrdersStack({ statusVisible }: IOrdersStackProps) {
-	return (
-		<div className={styles.content}>
-			{TST_STREAM.orders.map((order) => (
-				<OrderItem key={order._id} item={order} statusVisible={statusVisible} />
-			))}
-		</div>
-	);
+	const ordersStream = useAppSelector(selectors.liveOrders.get_orders);
+	if (ordersStream) {
+		return (
+			<div className={styles.content}>
+				{ordersStream.orders.map((order) => (
+					<OrderItem
+						key={order._id}
+						item={order}
+						statusVisible={statusVisible}
+					/>
+				))}
+			</div>
+		);
+	}
 }

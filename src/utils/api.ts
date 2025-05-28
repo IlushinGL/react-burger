@@ -229,4 +229,5 @@ export const api = {
 	logOut,
 	logIn,
 	setUser,
+	refreshToken,
 };

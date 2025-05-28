@@ -7,11 +7,11 @@ type TnewItem = {
 	source: string;
 	resiver: string;
 };
-export interface IburgerConsructorSlice {
+export interface IburgerConsructorStore {
 	filling: TIngredientLink[];
 	bun: string;
 }
-const initialState: IburgerConsructorSlice = {
+const initialState: IburgerConsructorStore = {
 	bun: '',
 	filling: [],
 };

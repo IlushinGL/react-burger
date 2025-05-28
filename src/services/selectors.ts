@@ -25,6 +25,11 @@ import {
 	error as getUserError,
 	isAuth as getUserAuth,
 } from './user/userSelectors';
+import {
+	orders as getOrders,
+	status as getStatus,
+	error as getError,
+} from './liveOrders/liveOrdersSelectors';
 
 export const selectors = {
 	ingredientDetails: {
@@ -55,5 +60,10 @@ export const selectors = {
 		get_data: getBurgerConstructorData,
 		get_list: getBurgerConstructorlist,
 		get_byId: getBurgerConstructorById,
+	},
+	liveOrders: {
+		get_orders: getOrders,
+		get_status: getStatus,
+		get_error: getError,
 	},
 };

@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAddOrder } from '@services/actionsThunk';
 
-export interface IorderDetailsSlice {
+export interface IorderDetailsStore {
 	name: string;
 	number: string | number;
 	status: string;
 	error: string;
 	visible: boolean;
 }
-const initialState: IorderDetailsSlice = {
+const initialState: IorderDetailsStore = {
 	name: 'новый заказ',
 	number: '...',
 	status: 'idle',

@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TIngredientWithCount } from '@utils/types';
 
-export interface IingredientDetails {
+export interface IingredientDetailsStore {
 	data: TIngredientWithCount[] | null;
 }
-const initialState: IingredientDetails = {
+const initialState: IingredientDetailsStore = {
 	data: null,
 };
 

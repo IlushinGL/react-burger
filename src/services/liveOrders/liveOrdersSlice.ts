@@ -9,13 +9,13 @@ import {
 	onOpen,
 } from './liveOrdersActions';
 
-export type TordersStore = {
+export interface IordersStore {
 	status: WebSocketStatus;
 	orders: TOrders | null;
 	error: string | null;
-};
+}
 
-const initialState: TordersStore = {
+const initialState: IordersStore = {
 	status: WebSocketStatus.OFFLINE,
 	orders: null,
 	error: null,
@@ -40,15 +40,9 @@ const liveOrdersSlice = createSlice({
 				state.error = action.payload;
 			})
 			.addCase(onMessage, (state, action) => {
-				state.orders = action.payload.data;
+				state.orders = action.payload as unknown as TOrders;
 			});
-	},
-	selectors: {
-		getOrders: (state: TordersStore) => state.orders,
-		getStatus: (state: TordersStore) => state.status,
-		getError: (state: TordersStore) => state.error,
 	},
 });
 
-export const { getOrders, getStatus, getError } = liveOrdersSlice.selectors; // селекторы
 export default liveOrdersSlice.reducer;

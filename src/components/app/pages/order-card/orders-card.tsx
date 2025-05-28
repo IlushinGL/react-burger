@@ -1,9 +1,9 @@
 import styles from './order-card.module.scss';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@services/store';
 import { selectors } from '@services/selectors';
 import { useParams } from 'react-router-dom';
 
-import { TST_STREAM } from '@utils/tst-data';
+// import { TST_STREAM } from '@utils/tst-data';
 import { ORDER_STATUS_TXT } from '@utils/customConfig';
 import {
 	FormattedDate,
@@ -22,7 +22,7 @@ type TOrderComposition = {
 };
 
 function OrderComposition({ item }: IOrderCompositionProps) {
-	const allIngredients = useSelector(selectors.burgerIngredients.get_all);
+	const allIngredients = useAppSelector(selectors.burgerIngredients.get_all);
 	const ingredients = item.ingredients;
 	const composition: TOrderComposition[] = [];
 	let sum = 0;
@@ -81,7 +81,11 @@ function OrderComposition({ item }: IOrderCompositionProps) {
 
 export function OrderCardPage() {
 	const { number } = useParams();
-	const item = TST_STREAM.orders.find(
+	const ordersStream = useAppSelector(selectors.liveOrders.get_orders);
+	if (!ordersStream) {
+		return null;
+	}
+	const item = ordersStream.orders.find(
 		(order) => order.number === Number(number)
 	);
 	if (item) {
