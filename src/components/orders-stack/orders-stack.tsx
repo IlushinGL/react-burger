@@ -28,7 +28,7 @@ export function MyOrdersStack({ statusVisible }: IOrdersStackProps) {
 	if (ordersStream) {
 		return (
 			<div className={styles.content}>
-				{ordersStream.orders.map((order) => (
+				{ordersStream.orders.toReversed().map((order) => (
 					<OrderItem
 						key={order._id}
 						item={order}

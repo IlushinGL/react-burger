@@ -96,29 +96,43 @@ function OrderCardInfo({ item }: IOrderCompositionProps) {
 export function OrderCardPage() {
 	const isModal = false;
 	const { number } = useParams();
-	const ordersStream = useAppSelector(selectors.liveOrders.get_orders);
-	if (!ordersStream) {
+	const orderData = useAppSelector((state) => {
+		let order = state.liveOrders.orders?.orders.find(
+			(item) => item.number === Number(number)
+		);
+		if (order) {
+			return order;
+		}
+		order = state.liveMyOrders.orders?.orders.find(
+			(item) => item.number === Number(number)
+		);
+		if (order) {
+			return order;
+		}
+		//todo: сделать непосредственный запрос
+		return null;
+	});
+
+	if (!orderData) {
 		return null;
 	}
-	const item = ordersStream.orders.find(
-		(order) => order.number === Number(number)
-	);
-	if (item && isModal) {
+
+	if (orderData && isModal) {
 		return (
 			<Modal
-				text={'#0' + item.number}
+				text={'#0' + orderData.number}
 				style='digits'
 				onClose={() => {
 					return;
 				}}>
-				<OrderCardInfo item={item} />
+				<OrderCardInfo item={orderData} />
 			</Modal>
 		);
-	} else if (item) {
+	} else if (orderData) {
 		return (
 			<main className={styles.content}>
-				<div className={styles.number}>#0{item.number}</div>
-				<OrderCardInfo item={item} />
+				<div className={styles.number}>#0{orderData.number}</div>
+				<OrderCardInfo item={orderData} />
 			</main>
 		);
 	}
