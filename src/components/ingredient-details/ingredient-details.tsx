@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { selectors } from '@services/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@services/store';
 import conteiner from './ingredient-details.module.scss';
 
 export function IngredientDetailes() {
 	const { id } = useParams();
-	const item = useSelector((state) =>
+	const item = useAppSelector((state) =>
 		selectors.burgerIngredients.get_byId(state, id)
 	);
 

@@ -70,7 +70,7 @@ export const socketMiddleware = <R, S>(
 						if (withToken && !parseData.success) {
 							refreshToken()
 								.then((freshData) => {
-									console.log(withToken, parseData);
+									// console.log(withToken, parseData);
 									const wssUrl = new URL(url);
 									wssUrl.searchParams.set(
 										'token',
@@ -83,7 +83,7 @@ export const socketMiddleware = <R, S>(
 									console.log(withToken, parseData);
 									dispatch(onError((error as Error).message));
 								});
-							console.log(withToken, parseData);
+							// console.log(withToken, parseData);
 							dispatch(disconnect());
 							return;
 						}

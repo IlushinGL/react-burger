@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@services/store';
 import { selectors } from '@services/selectors';
 import { TIngredientWithCount } from '@utils/types';
 
@@ -15,7 +15,7 @@ export function BurgerIngredientsType({
 	type,
 	name,
 }: IBurgerIngredientsTypeProps) {
-	const blockData = useSelector((state) =>
+	const blockData = useAppSelector((state) =>
 		selectors.burgerIngredients.get_byType(state, type)
 	);
 

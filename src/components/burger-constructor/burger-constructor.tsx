@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@services/store';
 import { func } from 'prop-types';
 import { selectors } from '@services/selectors';
 
@@ -14,8 +14,9 @@ interface IBurgerConstructorProps {
 }
 
 export function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
-	const orderTotal = useSelector(selectors.burgerIngredients.get_total);
-	const isValid = useSelector(selectors.burgerConstructor.get_data)[0] !== '';
+	const orderTotal = useAppSelector(selectors.burgerIngredients.get_total);
+	const isValid =
+		useAppSelector(selectors.burgerConstructor.get_data)[0] !== '';
 	return (
 		<div className={conteiner.section}>
 			<section className={conteiner.components}>
