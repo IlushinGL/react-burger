@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '@services/store';
+import { useAppDispatch, useAppSelector } from '@services/store';
 import { selectors } from '@services/selectors';
 import { fetchUserUpdate } from '@services/actionsThunk';
 import conteiner from './profile.module.scss';
@@ -18,7 +17,7 @@ interface IuserData {
 
 export function ProfileForm() {
 	const dispatch = useAppDispatch();
-	const userData = useSelector(selectors.currentUser.get_user);
+	const userData = useAppSelector(selectors.currentUser.get_user);
 	const initValues: IuserData = {
 		name: userData ? userData.name : '',
 		email: userData ? userData.email : '',
