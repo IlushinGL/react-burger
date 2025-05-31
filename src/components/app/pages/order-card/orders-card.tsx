@@ -1,7 +1,8 @@
 import styles from './order-card.module.scss';
 import { useAppSelector } from '@services/store';
 import { selectors } from '@services/selectors';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import { ORDER_STATUS_TXT } from '@utils/customConfig';
 import {
@@ -10,7 +11,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import imgUnknouwn from '@utils/images/unknown.png';
 import { TOrderCard } from '@utils/types';
+import { getOrderByNum } from '@services/actionsThunk';
 import { Modal } from '@components/modal/modal';
+import { ErrDetailes } from '@components/err-details/err-details';
+import Preloader from '@components/preloader/preloader';
 
 interface IOrderCompositionProps {
 	item: TOrderCard;
@@ -20,6 +24,9 @@ type TOrderComposition = {
 	name: string;
 	price: string;
 };
+interface IOrderPageProps {
+	isModal?: boolean;
+}
 
 function OrderComposition({ item }: IOrderCompositionProps) {
 	const allIngredients = useAppSelector(selectors.burgerIngredients.get_all);
@@ -93,48 +100,77 @@ function OrderCardInfo({ item }: IOrderCompositionProps) {
 	);
 }
 
-export function OrderCardPage() {
-	const isModal = false;
+export function OrderCardPage({ isModal = false }: IOrderPageProps) {
 	const { number } = useParams();
-	const orderData = useAppSelector((state) => {
-		let order = state.liveOrders.orders?.orders.find(
-			(item) => item.number === Number(number)
-		);
-		if (order) {
-			return order;
-		}
-		order = state.liveMyOrders.orders?.orders.find(
-			(item) => item.number === Number(number)
-		);
-		if (order) {
-			return order;
-		}
-		//todo: сделать непосредственный запрос
-		return null;
-	});
+	const num = Number(number);
+	const isValidNumber = !isNaN(Number(num));
+	const navigate = useNavigate();
+	const [order, setOrder] = useState(
+		useAppSelector((state) => {
+			if (!isValidNumber) {
+				return undefined;
+			}
+			let order = state.liveOrders.orders?.orders.find(
+				(item) => item.number === num
+			);
+			if (order) {
+				return order;
+			}
+			order = state.liveMyOrders.orders?.orders.find(
+				(item) => item.number === num
+			);
+			if (order) {
+				return order;
+			}
+			return undefined;
+		})
+	);
 
-	if (!orderData) {
-		return null;
+	useEffect(() => {
+		if (!order && isValidNumber) {
+			getOrderByNum(num)
+				.then((card) => {
+					setOrder(card.orders[0]);
+				})
+				.catch(() => {
+					setOrder(undefined);
+				});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	if (!order && isValidNumber) {
+		return <Preloader box={120} visible={true} />;
 	}
 
-	if (orderData && isModal) {
+	if (order && isModal) {
 		return (
 			<Modal
-				text={'#0' + orderData.number}
+				text={'#0' + order.number}
 				style='digits'
 				onClose={() => {
-					return;
+					navigate(-1);
 				}}>
-				<OrderCardInfo item={orderData} />
+				<OrderCardInfo item={order} />
 			</Modal>
 		);
-	} else if (orderData) {
+	} else if (order) {
 		return (
 			<main className={styles.content}>
-				<div className={styles.number}>#0{orderData.number}</div>
-				<OrderCardInfo item={orderData} />
+				<div className={styles.number}>#0{order.number}</div>
+				<OrderCardInfo item={order} />
 			</main>
 		);
+	} else {
+		return (
+			<Modal
+				text={'#0' + number}
+				style='digits'
+				onClose={() => {
+					navigate(-1);
+				}}>
+				<ErrDetailes item='Заказ с указанным номером не найден.' />
+			</Modal>
+		);
 	}
-	return null;
 }

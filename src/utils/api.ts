@@ -151,7 +151,7 @@ const addOrder = (ingredientsArr: string[]) => {
 };
 
 const getOrder = (orderNumber: number): Promise<TAnsOrderCard> => {
-	return fetch(BASE_URL + INGREDIENTS_EP + '/' + orderNumber, {
+	return fetch(BASE_URL + ORDERS_EP + '/' + orderNumber, {
 		method: 'GET',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
 	}).then((res) => getResponce<TAnsOrderCard>(res));

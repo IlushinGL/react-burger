@@ -25,7 +25,7 @@ export type TOrders = {
 
 export type TAnsOrderCard = {
 	success: boolean;
-	orders: TOrderCard;
+	orders: TOrderCard[];
 };
 
 export type TIngredient = {

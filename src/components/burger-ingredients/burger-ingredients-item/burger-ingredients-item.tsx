@@ -2,7 +2,7 @@ import block from './burger-ingredients-item.module.scss';
 import { TIngredientWithCount } from '@utils/types';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import { actions } from '@services/actions';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@services/store';
 import { APP_PATH } from '@utils/customConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -15,7 +15,7 @@ export function BurgerIngredientsItem({
 }: {
 	item: TIngredientWithCount;
 }) {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
 

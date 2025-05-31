@@ -193,6 +193,16 @@ export const App = () => {
 									</Modal>
 								}
 							/>
+							<Route
+								path={APP_PATH.ordersStackPattern}
+								element={<OrderCardPage isModal={true} />}
+							/>
+							<Route
+								path={APP_PATH.ordersUserStackPattern}
+								element={
+									<OnlyAuth component={<OrderCardPage isModal={true} />} />
+								}
+							/>
 						</Routes>
 					)}
 				</>

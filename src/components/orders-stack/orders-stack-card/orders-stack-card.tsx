@@ -1,6 +1,6 @@
 import styles from './orders-stack-card.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@services/store';
 
 import { selectors } from '@services/selectors';
 import { TOrderCard } from '@utils/types';
@@ -21,7 +21,7 @@ interface IOrderTotalProps {
 }
 
 function OrderTotal({ list }: IOrderTotalProps) {
-	const allIngredients = useSelector(selectors.burgerIngredients.get_all);
+	const allIngredients = useAppSelector(selectors.burgerIngredients.get_all);
 	const len = list.length;
 	const imgs: string[] = [];
 	let sum = 0;
@@ -60,11 +60,18 @@ function OrderTotal({ list }: IOrderTotalProps) {
 
 export function OrderItem({ item, statusVisible }: IOrderCardProps) {
 	const navigate = useNavigate();
+	const location = useLocation();
 	function handlerClick() {
 		if (statusVisible) {
-			navigate(APP_PATH.ordersUserStack + '/' + item.number);
+			navigate(`${APP_PATH.ordersUserStack}/${item.number}`, {
+				state: { background: location },
+			});
+			// navigate(APP_PATH.ordersUserStack + '/' + item.number);
 		} else {
-			navigate(APP_PATH.ordersStack + '/' + item.number);
+			navigate(`${APP_PATH.ordersStack}/${item.number}`, {
+				state: { background: location },
+			});
+			// navigate(APP_PATH.ordersStack + '/' + item.number);
 		}
 	}
 	return (

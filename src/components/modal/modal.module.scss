@@ -7,7 +7,7 @@
 	align-items: center;
 	justify-content: center;
 	min-height: calc(36 * var(--offset-base-size));
-	// width: calc(180 * var(--offset-base-size));
+	// max-width: calc(180 * var(--offset-base-size));
 	background-color: var(--background);
 	border-radius: calc(10 * var(--offset-base-size));
 }
@@ -19,7 +19,7 @@
 	align-items: center;
 	justify-content: space-between;
 	height: calc(16 * var(--offset-base-size));
-	width: calc(160 * var(--offset-base-size));
+	width: calc(130 * var(--offset-base-size));
 	cursor: default;
 
 	background-color: transparent;
@@ -50,6 +50,7 @@
 	box-sizing: border-box;
 	flex-direction: column;
 	width: calc(130 * var(--offset-base-size));
+
 	align-items: center;
 	justify-content: center;
 	background-color: transparent;
