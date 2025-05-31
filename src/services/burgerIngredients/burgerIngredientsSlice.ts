@@ -1,9 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllIngedients } from '@services/actionsThunk';
+import { TIngredientWithCount } from '@utils/types';
+
+export interface IburgerIngredientsStore {
+	data: TIngredientWithCount[];
+	status: string;
+	error: string;
+}
+
+const initialState: IburgerIngredientsStore = {
+	data: [],
+	status: 'loading',
+	error: '',
+};
 
 const burgerIngredientsSlice = createSlice({
 	name: 'burgerIngredients',
-	initialState: { data: [], status: 'loading', error: '' },
+	initialState,
 	reducers: {
 		clear_counts(state) {
 			state.data
@@ -28,7 +41,7 @@ const burgerIngredientsSlice = createSlice({
 				state.error = '';
 			})
 			.addCase(fetchAllIngedients.fulfilled, (state, action) => {
-				if (action.payload.success) {
+				if (action.payload && action.payload.data) {
 					state.status = 'idle';
 					state.error = '';
 					state.data = action.payload.data.map((element) => {
@@ -36,13 +49,13 @@ const burgerIngredientsSlice = createSlice({
 					});
 				} else {
 					state.status = 'error';
-					state.error = 'Что-то пошло не так. Сервер вернул success=false.';
+					state.error = 'Не удалось загрузить список ингредиентов';
 				}
 			})
 			.addCase(fetchAllIngedients.rejected, (state, action) => {
 				console.log(action.error);
 				state.status = 'error';
-				state.error = action.error.message;
+				state.error = 'Не удалось загрузить список ингредиентов';
 			});
 	},
 });

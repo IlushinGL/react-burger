@@ -5,16 +5,22 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 interface IModalProps {
 	text: string;
+	style?: string;
 	onClose: () => void;
 	children: ReactElement;
 }
 
-export function Modal({ text, onClose, children }: IModalProps) {
+export function Modal({
+	text,
+	style = 'text',
+	onClose,
+	children,
+}: IModalProps) {
 	return (
 		<ModalOverlay onClose={onClose}>
 			<div className={conteiner.box}>
 				<div className={conteiner.header}>
-					<div className={conteiner.text}>{text}</div>
+					<div className={conteiner[style]}>{text}</div>
 					<button className={conteiner.close} onClick={onClose}>
 						<CloseIcon type='primary' />
 					</button>

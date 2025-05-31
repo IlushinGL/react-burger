@@ -1,11 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TIngredientWithCount } from '@utils/types';
+
+export interface IingredientDetailsStore {
+	data: TIngredientWithCount[] | null;
+}
+const initialState: IingredientDetailsStore = {
+	data: null,
+};
 
 const ingredientDetails = createSlice({
 	name: 'ingredientDetails',
-	initialState: { data: null },
+	initialState,
 	reducers: {
 		set(state, action) {
-			// console.log('ingredientDetails.set');
 			state.data = action.payload;
 		},
 	},

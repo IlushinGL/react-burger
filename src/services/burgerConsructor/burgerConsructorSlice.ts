@@ -1,12 +1,24 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { C_PREFIX } from '@utils/customConfig';
+import { TIngredientLink } from '@utils/types';
+
+type TnewItem = {
+	uniqueId: string;
+	source: string;
+	resiver: string;
+};
+export interface IburgerConsructorStore {
+	filling: TIngredientLink[];
+	bun: string;
+}
+const initialState: IburgerConsructorStore = {
+	bun: '',
+	filling: [],
+};
 
 const burgerConsructorSlice = createSlice({
 	name: 'burgerConsructor',
-	initialState: {
-		bun: '',
-		filling: [],
-	},
+	initialState,
 	reducers: {
 		clear(state) {
 			state.bun = '';
@@ -16,7 +28,7 @@ const burgerConsructorSlice = createSlice({
 			state.bun = action.payload;
 		},
 		add_ingredient: {
-			reducer: (state, action) => {
+			reducer: (state, action: PayloadAction<TnewItem>) => {
 				// payload = {key: уникальное значение, source: id ингредиента, resiver: key строки заказа }
 				// помещает над ресивером
 				const currentFilling = state.filling;

@@ -1,0 +1,29 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	box-sizing: border-box;
+	padding-right: calc(5 * var(--offset-base-size));
+	background-color: transparent;
+	row-gap: calc(4 * var(--offset-base-size));
+	scrollbar-color: var(--text-inactive-color) var(--background-element);
+	max-height: 100%;
+	scrollbar-width: auto;
+	overflow-y: scroll;
+	// border: 1px red solid;
+}
+
+.item {
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px transparent solid;
+	padding: calc(6 * var(--offset-base-size));
+	background-color: var(--background);
+	border-radius: calc(10 * var(--offset-base-size));
+}
+.item:hover {
+	cursor: pointer;
+	border: 1px var(--colors-interface-accent) solid;
+}

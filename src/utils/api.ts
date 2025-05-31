@@ -18,7 +18,9 @@ import {
 	TUserEmail,
 	TUserLogIn,
 	TUserReg,
-	TIngredient,
+	TAnsIngrediets,
+	TAnsNewOrder,
+	TAnsOrderCard,
 } from './types';
 
 const getResponce = <T>(res: Response): Promise<T> => {
@@ -30,13 +32,12 @@ const getResponce = <T>(res: Response): Promise<T> => {
 		return res.json();
 	} else {
 		return res.json().then((err) => Promise.reject(err));
-		// return Promise.reject(`Ошибка ${res.status}`);
 	}
 };
 
-const getIngredients = (): Promise<TIngredient[]> => {
+const getIngredients = (): Promise<TAnsIngrediets> => {
 	return fetch(BASE_URL + INGREDIENTS_EP).then((res) =>
-		getResponce<TIngredient[]>(res)
+		getResponce<TAnsIngrediets>(res)
 	);
 };
 
@@ -138,8 +139,8 @@ const setUser = (data: TUserReg): Promise<TAnsAuth> => {
 		});
 };
 
-const addOrder = (ingredientsArr: []) => {
-	return fetchWithRefresh<TAnsInfo>(BASE_URL + ORDERS_EP, {
+const addOrder = (ingredientsArr: string[]) => {
+	return fetchWithRefresh<TAnsNewOrder>(BASE_URL + ORDERS_EP, {
 		method: 'POST',
 		headers: <HeadersInit>{
 			'Content-Type': 'application/json;charset=utf-8',
@@ -147,6 +148,13 @@ const addOrder = (ingredientsArr: []) => {
 		},
 		body: JSON.stringify({ ingredients: ingredientsArr }),
 	});
+};
+
+const getOrder = (orderNumber: number): Promise<TAnsOrderCard> => {
+	return fetch(BASE_URL + ORDERS_EP + '/' + orderNumber, {
+		method: 'GET',
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+	}).then((res) => getResponce<TAnsOrderCard>(res));
 };
 
 const updateUser = (data: TUserReg) => {
@@ -174,7 +182,7 @@ const getUser = () => {
 	});
 };
 
-const refreshToken = (): Promise<TAnsToken> => {
+const refreshToken = () => {
 	return fetch(BASE_URL + AUTH_TOKEN_EP, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -215,9 +223,11 @@ export const api = {
 	pswdForgot,
 	pswdReset,
 	addOrder,
+	getOrder,
 	updateUser,
 	getUser,
 	logOut,
 	logIn,
 	setUser,
+	refreshToken,
 };

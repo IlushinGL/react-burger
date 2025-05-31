@@ -1,3 +1,33 @@
+export type TAnsNewOrder = {
+	name: string;
+	order: {
+		number: number;
+	};
+	success: true;
+};
+
+export type TOrderCard = {
+	_id: string;
+	number: number;
+	name: string;
+	status: string;
+	createdAt: string;
+	updatedAt: string;
+	ingredients: string[];
+};
+
+export type TOrders = {
+	success: boolean;
+	orders: TOrderCard[];
+	total: number;
+	totalToday: number;
+};
+
+export type TAnsOrderCard = {
+	success: boolean;
+	orders: TOrderCard[];
+};
+
 export type TIngredient = {
 	_id: string;
 	name: string;
@@ -18,6 +48,10 @@ export type TIngredientLink = {
 	key: string;
 	id: string;
 };
+export type TAnsIngrediets = {
+	data: TIngredient[];
+	success: true;
+};
 
 type TUser = {
 	name: string;
@@ -25,7 +59,7 @@ type TUser = {
 	password: string;
 	code: string;
 };
-type TUserData = Pick<TUser, 'name' | 'email'>;
+export type TUserData = Pick<TUser, 'name' | 'email'>;
 
 export type TUserReg = Omit<TUser, 'code'>;
 export type TUserLogIn = Omit<TUser, 'name' | 'code'>;

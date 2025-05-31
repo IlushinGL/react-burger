@@ -2,14 +2,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@services/store';
 import conteiner from './profile.module.scss';
 import { ProfileForm } from './profile-form';
-import { ProfileOrders } from './profile-orders';
+import { MyOrdersStack } from '@components/orders-stack/orders-stack';
 import { fetchLogOut } from '@services/actionsThunk';
 
 export function Profile() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const captions = [
 		'В этом разделе вы можете изменить свои персональные данные',
 		'В этом разделе вы можете посмотреть свои заказы',
@@ -25,7 +25,6 @@ export function Profile() {
 	}
 
 	function handlerExitClick() {
-		// @ts-expect-error "sprint4"
 		dispatch(fetchLogOut());
 	}
 	return (
@@ -50,7 +49,7 @@ export function Profile() {
 				</div>
 				<div className={conteiner.caption}>{captions[item]}</div>
 			</nav>
-			{item === 0 ? <ProfileForm /> : <ProfileOrders />}
+			{item === 0 ? <ProfileForm /> : <MyOrdersStack statusVisible={true} />}
 		</main>
 	);
 }

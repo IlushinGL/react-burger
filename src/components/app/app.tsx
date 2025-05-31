@@ -1,10 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import { APP_PATH } from '@utils/customConfig';
+import {
+	APP_PATH,
+	LIVE_ORDERS_URL,
+	LIVE_MY_ORDERS_URL,
+} from '@utils/customConfig';
+import { WebSocketStatus } from '@utils/type-orders-stack';
 
 import { useEffect } from 'react';
 
-import viewPort from './app.module.scss';
+import styles from './app.module.scss';
 
 import Preloader from '@components/preloader/preloader';
 
@@ -13,49 +17,81 @@ import {
 	fetchAddOrder,
 	checkUserAuth,
 } from '@services/actionsThunk';
+import { connect, disconnect } from '@services/liveOrders/liveOrdersActions';
+import {
+	connectMy,
+	disconnectMy,
+} from '@services/liveMyOrders/liveMyOrdersActions';
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
+import { useAppDispatch, useAppSelector } from '@services/store';
 
 import { OnlyAuth, OnlyUnAuth } from '@components/protectedRout';
 
 import { AppHeader } from '@components/app-header/app-header';
-
-import { Home } from '@components/app/pages/home/home';
-import { Profile } from './pages/profile/profile';
-import { NotFound } from '@components/app/pages/404/404';
 import { Modal } from '@components/modal/modal';
-import { ErrDetailes } from '@components/err-details/err-details';
 import { IngredientDetailes } from '@components/ingredient-details/ingredient-details';
 import { OrderDetailes } from '@components/order-details/order-details';
+import { ErrDetailes } from '@components/err-details/err-details';
 
-import { Login } from './pages/auth/pageLogin';
-import { Register } from './pages/auth/pageRegister';
+import { Home } from '@components/app/pages/home/home';
+import { OrdersPage } from '@components/app/pages/orders/orders';
+import { Profile } from '@components/app/pages/profile/profile';
+import { NotFound } from '@components/app/pages/404/404';
+import { Login } from '@components/app/pages/auth/pageLogin';
+import { Register } from '@components/app/pages/auth/pageRegister';
 import { ForgotPassword } from '@components/app/pages/auth/pageForgotPassword';
-import { ResetPassword } from './pages/auth/pageResetPassword';
+import { ResetPassword } from '@components/app/pages/auth/pageResetPassword';
+import { OrderCardPage } from '@components/app/pages/order-card/orders-card';
 
 export const App = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const background = location.state && location.state.background;
-	const loadingState = useSelector(selectors.burgerIngredients.get_status);
-	const errorState = useSelector(selectors.burgerIngredients.get_error);
-	const orderDetails = useSelector(selectors.burgerConstructor.get_data);
-	const orderDetailsStatus = useSelector(selectors.orderDetails.get_status);
-	const orderDetailsVisible = useSelector(selectors.orderDetails.get_visible);
-	const user = useSelector(selectors.currentUser.get_user);
+
+	const wsOrdersIsOnline =
+		useAppSelector(selectors.liveOrders.get_status) === WebSocketStatus.ONLINE;
+	const wsConnect = () => dispatch(connect(LIVE_ORDERS_URL));
+	const wsDisconnect = () => dispatch(disconnect());
+
+	const wsMyOrdersIsOnline =
+		useAppSelector(selectors.liveMyOrders.get_status) ===
+		WebSocketStatus.ONLINE;
+	const wsMyConnect = () => dispatch(connectMy(LIVE_MY_ORDERS_URL));
+	const wsMyDisconnect = () => dispatch(disconnectMy());
+
+	const loadingState = useAppSelector(selectors.burgerIngredients.get_status);
+	const errorState = useAppSelector(selectors.burgerIngredients.get_error);
+	const orderDetails = useAppSelector(selectors.burgerConstructor.get_data);
+	const orderDetailsStatus = useAppSelector(selectors.orderDetails.get_status);
+	const orderDetailsVisible = useAppSelector(
+		selectors.orderDetails.get_visible
+	);
+	const user = useAppSelector(selectors.currentUser.get_user);
 
 	useEffect(() => {
-		// @ts-expect-error "sprint4"
 		dispatch(fetchAllIngedients());
-		// @ts-expect-error "sprint4"
 		dispatch(checkUserAuth());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		wsConnect();
+		wsMyConnect();
+		return () => {
+			if (wsOrdersIsOnline) {
+				wsDisconnect();
+			}
+			if (wsMyOrdersIsOnline) {
+				wsMyDisconnect();
+			}
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	function handleOnCloseErr() {
-		// @ts-expect-error "sprint4"
 		dispatch(fetchAllIngedients());
 	}
 
@@ -66,7 +102,6 @@ export const App = () => {
 
 	function handleOnCloseOrder() {
 		if (orderDetailsStatus === 'idle') {
-			// @ts-expect-error "sprint4"
 			dispatch(actions.burgerConstructor.reset());
 			dispatch(actions.burgerIngredients.reset());
 			dispatch(actions.orderDetails.reset());
@@ -77,7 +112,6 @@ export const App = () => {
 	function handleOnClickOrder() {
 		if (user) {
 			if (orderDetailsStatus !== 'loading') {
-				// @ts-expect-error "sprint4"
 				dispatch(fetchAddOrder(orderDetails));
 			}
 			dispatch(actions.orderDetails.visible(true));
@@ -97,8 +131,8 @@ export const App = () => {
 	}
 
 	return (
-		<div className={viewPort.win}>
-			<div className={viewPort.app}>
+		<div className={styles.win}>
+			<div className={styles.app}>
 				<>
 					<AppHeader />
 
@@ -110,6 +144,11 @@ export const App = () => {
 						<Route
 							path={APP_PATH.ingredientPattern}
 							element={<IngredientDetailes />}
+						/>
+						<Route path={APP_PATH.ordersStack} element={<OrdersPage />} />
+						<Route
+							path={APP_PATH.ordersStackPattern}
+							element={<OrderCardPage />}
 						/>
 						<Route
 							path={APP_PATH.login}
@@ -131,6 +170,14 @@ export const App = () => {
 							path={APP_PATH.profile}
 							element={<OnlyAuth component={<Profile />} />}
 						/>
+						<Route
+							path={APP_PATH.ordersUserStack}
+							element={<OnlyAuth component={<OrdersPage />} />}
+						/>
+						<Route
+							path={APP_PATH.ordersUserStackPattern}
+							element={<OnlyAuth component={<OrderCardPage />} />}
+						/>
 						<Route path='*' element={<NotFound />} />
 					</Routes>
 
@@ -144,6 +191,16 @@ export const App = () => {
 										onClose={handleOnCloseIngredient}>
 										<IngredientDetailes />
 									</Modal>
+								}
+							/>
+							<Route
+								path={APP_PATH.ordersStackPattern}
+								element={<OrderCardPage isModal={true} />}
+							/>
+							<Route
+								path={APP_PATH.ordersUserStackPattern}
+								element={
+									<OnlyAuth component={<OrderCardPage isModal={true} />} />
 								}
 							/>
 						</Routes>

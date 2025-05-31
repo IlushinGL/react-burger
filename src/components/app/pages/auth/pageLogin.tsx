@@ -1,5 +1,5 @@
 import conteiner from './pagesUserAuth.module.scss';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@services/store';
 import { FormEvent, useEffect } from 'react';
 import { APP_PATH } from '@utils/customConfig';
 import { NavLink } from 'react-router-dom';
@@ -13,7 +13,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export function Login() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const { values, handleChange, errors, isValid, resetForm } =
 		useFormAndValidation(
 			{ email: '', password: '' },
@@ -27,7 +27,6 @@ export function Login() {
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid) {
-			// @ts-expect-error "sprint4"
 			dispatch(fetchLogIn(values));
 		}
 	}

@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@services/store';
 import { selectors } from '@services/selectors';
 import { fetchUserUpdate } from '@services/actionsThunk';
 import conteiner from './profile.module.scss';
@@ -16,8 +16,8 @@ interface IuserData {
 }
 
 export function ProfileForm() {
-	const dispatch = useDispatch();
-	const userData = useSelector(selectors.currentUser.get_user);
+	const dispatch = useAppDispatch();
+	const userData = useAppSelector(selectors.currentUser.get_user);
 	const initValues: IuserData = {
 		name: userData ? userData.name : '',
 		email: userData ? userData.email : '',
@@ -50,7 +50,6 @@ export function ProfileForm() {
 	function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (isValid && isChanged) {
-			// @ts-expect-error "sprint4"
 			dispatch(fetchUserUpdate(values));
 		}
 	}

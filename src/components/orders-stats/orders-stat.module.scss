@@ -1,0 +1,43 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	row-gap: calc(15 * var(--offset-base-size));
+	width: calc(145 * var(--offset-base-size));
+}
+
+.header {
+	display: block;
+	composes: text text_type_main-medium from global;
+	width: 100%;
+}
+
+.item {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+.item_data {
+	display: block;
+	composes: text text_type_digits-large from global;
+	width: 100%;
+}
+
+.lists_data {
+	display: flex;
+	flex-direction: row;
+	column-gap: calc(9 * var(--offset-base-size));
+	width: 100%;
+}
+.list {
+	display: flex;
+	composes: mt-6 from global;
+	flex-direction: column;
+	row-gap: calc(2 * var(--offset-base-size));
+	flex-wrap: wrap;
+	composes: text text_type_digits-default from global;
+	width: 100%;
+	height: calc(39 * var(--offset-base-size));
+}
+.list_done {
+	color: var(--colors-interface-success);
+}

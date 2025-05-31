@@ -9,7 +9,6 @@
 	justify-items: center;
 	align-content: center;
 	background-color: var(--background);
-	// border: 1px red solid;
 }
 
 .content {
@@ -22,7 +21,6 @@
 	align-items: center;
 	justify-items: center;
 	background-color: transparent;
-	// border: 1px red solid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr;
 }
@@ -36,7 +34,6 @@
 	box-sizing: border-box;
 	border: 1px transparent solid;
 	justify-self: left;
-	// border: 1px red solid;
 	column-gap: calc(2 * var(--offset-base-size));
 	align-items: center;
 }
