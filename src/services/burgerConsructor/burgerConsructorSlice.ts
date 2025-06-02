@@ -29,7 +29,7 @@ const burgerConsructorSlice = createSlice({
 		},
 		add_ingredient: {
 			reducer: (state, action: PayloadAction<TnewItem>) => {
-				// payload = {key: уникальное значение, source: id ингредиента, resiver: key строки заказа }
+				// payload = {source: id ингредиента, resiver: key строки заказа }
 				// помещает над ресивером
 				const currentFilling = state.filling;
 				let index = currentFilling.findIndex(
