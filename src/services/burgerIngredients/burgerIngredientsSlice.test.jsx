@@ -16,6 +16,14 @@ const itemTst = {
 	count: 0,
 	__v: 0,
 };
+const ingredientsTst = {
+	data: [
+		{ ...itemTst, _id: 'item1', count: 1 },
+		{ ...itemTst, _id: 'item2', count: 2 },
+	],
+	status: 'loading',
+	error: '',
+};
 
 describe('срез burgerIngredients в хранилище', () => {
 	it('должен иметь начальное состояние', () => {
@@ -28,34 +36,18 @@ describe('срез burgerIngredients в хранилище', () => {
 	});
 
 	it('clear_counts должен обнулять все счетчики', () => {
-		let testState = {
-			data: [
-				{ ...itemTst, _id: 'item1', count: 1 },
-				{ ...itemTst, _id: 'item2', count: 2 },
-			],
-			status: 'loading',
-			error: '',
-		};
 		const action = { type: 'burgerIngredients/clear_counts' };
-		const state = burgerIngredientsReducer(testState, action);
+		const state = burgerIngredientsReducer(ingredientsTst, action);
 		expect(state.data[0].count).toBe(0);
 		expect(state.data[1].count).toBe(0);
 	});
 
 	it('set_count должен изменять заданный счетчик на указанную величину', () => {
-		let testState = {
-			data: [
-				{ ...itemTst, _id: 'item1', count: 1 },
-				{ ...itemTst, _id: 'item2', count: 2 },
-			],
-			status: 'loading',
-			error: '',
-		};
 		const action = {
 			type: 'burgerIngredients/set_count',
 			payload: { id: 'item2', shift: 2 },
 		};
-		const state = burgerIngredientsReducer(testState, action);
+		const state = burgerIngredientsReducer(ingredientsTst, action);
 		expect(state.data[0].count).toBe(1);
 		expect(state.data[1].count).toBe(4);
 	});

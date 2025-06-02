@@ -22,8 +22,9 @@ describe('срез burgerConsructor в хранилище', () => {
 
 	it('set_bun должен обновлять свойство bun', () => {
 		const action = { type: 'burgerConsructor/set_bun', payload: 'bun01' };
-		const state = burgerConsructorReducer(undefined, action);
+		const state = burgerConsructorReducer(burgerTst, action);
 		expect(state.bun).toBe('bun01');
+		expect(state.filling).toEqual(burgerTst.filling);
 	});
 
 	it('clear должен правильно обновлять хранилище', () => {
