@@ -11,7 +11,7 @@ export interface IburgerConsructorStore {
 	filling: TIngredientLink[];
 	bun: string;
 }
-const initialState: IburgerConsructorStore = {
+export const initialState: IburgerConsructorStore = {
 	bun: '',
 	filling: [],
 };

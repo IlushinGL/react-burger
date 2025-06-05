@@ -8,7 +8,7 @@ export interface IorderDetailsStore {
 	error: string;
 	visible: boolean;
 }
-const initialState: IorderDetailsStore = {
+export const initialState: IorderDetailsStore = {
 	name: 'новый заказ',
 	number: '...',
 	status: 'idle',

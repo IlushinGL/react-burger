@@ -1,5 +1,9 @@
-import burgerIngredientsReducer from './burgerIngredientsSlice';
 import { describe, expect } from '@jest/globals';
+import burgerIngredientsReducer, {
+	initialState,
+	clear_counts,
+	set_count,
+} from './burgerIngredientsSlice';
 
 const itemTst = {
 	_id: '',
@@ -25,18 +29,14 @@ const ingredientsTst = {
 	error: '',
 };
 
-describe('срез burgerIngredients в хранилище', () => {
-	it('должен иметь начальное состояние', () => {
-		const initialState = burgerIngredientsReducer(undefined, {});
-		expect(initialState).toEqual({
-			data: [],
-			status: 'loading',
-			error: '',
-		});
+describe('срез burgerIngredients', () => {
+	it('должен иметь заданное начальное состояние', () => {
+		const state = burgerIngredientsReducer(undefined, { type: '' });
+		expect(state).toEqual(initialState);
 	});
 
 	it('clear_counts должен обнулять все счетчики', () => {
-		const action = { type: 'burgerIngredients/clear_counts' };
+		const action = { type: clear_counts.type };
 		const state = burgerIngredientsReducer(ingredientsTst, action);
 		expect(state.data[0].count).toBe(0);
 		expect(state.data[1].count).toBe(0);
@@ -44,7 +44,7 @@ describe('срез burgerIngredients в хранилище', () => {
 
 	it('set_count должен изменять заданный счетчик на указанную величину', () => {
 		const action = {
-			type: 'burgerIngredients/set_count',
+			type: set_count.type,
 			payload: { id: 'item2', shift: 2 },
 		};
 		const state = burgerIngredientsReducer(ingredientsTst, action);

@@ -8,7 +8,7 @@ export interface IburgerIngredientsStore {
 	error: string;
 }
 
-const initialState: IburgerIngredientsStore = {
+export const initialState: IburgerIngredientsStore = {
 	data: [],
 	status: 'loading',
 	error: '',

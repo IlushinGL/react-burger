@@ -1,28 +1,32 @@
-import orderDetailsReducer from './orderDetailsSlice';
 import { describe, expect } from '@jest/globals';
+import orderDetailsReducer, {
+	initialState,
+	clear,
+	set_visible,
+} from './orderDetailsSlice';
 
-describe('срез orderDetails в хранилище', () => {
-	it('должен иметь начальное состояние', () => {
-		const initialState = orderDetailsReducer(undefined, {});
-		expect(initialState).toEqual({
-			name: 'новый заказ',
-			number: '...',
-			status: 'idle',
-			error: '',
-			visible: false,
-		});
+const prevState = {
+	...initialState,
+	name: 'название',
+	number: 123321,
+	visible: true,
+};
+
+describe('срез orderDetails', () => {
+	it('должен иметь заданное начальное состояние', () => {
+		const state = orderDetailsReducer(undefined, { type: '' });
+		expect(state).toEqual(initialState);
 	});
 
-	it('должен правильно обновляться при очистке', () => {
-		const action = { type: 'orderDetails/clear' };
-		const state = orderDetailsReducer(undefined, action);
-		expect(state.name).toBe('новый заказ');
-		expect(state.number).toBe('...');
+	it('clear должен правильно обнулять заказ', () => {
+		const action = { type: clear.type };
+		const state = orderDetailsReducer(prevState, action);
+		expect(state).toEqual({ ...initialState, visible: prevState.visible });
 	});
 
-	it('должен обновлять свойство visible', () => {
-		const action = { type: 'orderDetails/set_visible', payload: true };
-		const state = orderDetailsReducer(undefined, action);
-		expect(state.visible).toBe(true);
+	it('set_visible должен обновлять свойство visible', () => {
+		const action = { type: set_visible.type, payload: false };
+		const state = orderDetailsReducer(prevState, action);
+		expect(state).toEqual({ ...prevState, visible: false });
 	});
 });

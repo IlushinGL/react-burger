@@ -4,7 +4,7 @@ import { TIngredientWithCount } from '@utils/types';
 export interface IingredientDetailsStore {
 	data: TIngredientWithCount[] | null;
 }
-const initialState: IingredientDetailsStore = {
+export const initialState: IingredientDetailsStore = {
 	data: null,
 };
 

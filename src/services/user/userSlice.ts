@@ -8,7 +8,7 @@ export interface IuserSlice {
 	error: string;
 	isAuth: boolean;
 }
-const initialState: IuserSlice = {
+export const initialState: IuserSlice = {
 	user: null,
 	status: 'idle',
 	error: '',

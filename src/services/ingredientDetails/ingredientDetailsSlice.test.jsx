@@ -1,15 +1,16 @@
-import ingredientDetailsReducer from './ingredientDetailsSlice';
 import { describe, expect } from '@jest/globals';
+import ingredientDetailsReducer, {
+	initialState,
+	set,
+} from './ingredientDetailsSlice';
 
-describe('срез ingredientDetails в хранилище', () => {
-	it('должен иметь начальное состояние', () => {
-		const initialState = ingredientDetailsReducer(undefined, {});
-		expect(initialState).toEqual({
-			data: null,
-		});
+describe('срез ingredientDetails', () => {
+	it('должен иметь заданное начальное состояние', () => {
+		const state = ingredientDetailsReducer(undefined, { type: '' });
+		expect(state).toEqual(initialState);
 	});
 
-	it('должен обновлять свойство data', () => {
+	it('set должен обновлять свойство data', () => {
 		const data = [
 			{
 				_id: 'idtst',
@@ -27,8 +28,8 @@ describe('срез ingredientDetails в хранилище', () => {
 				__v: 0,
 			},
 		];
-		const action = { type: 'ingredientDetails/set', payload: data };
-		const state = ingredientDetailsReducer(undefined, action);
+		const action = { type: set.type, payload: data };
+		const state = ingredientDetailsReducer(initialState, action);
 		expect(state.data).toEqual(data);
 	});
 });

@@ -1,29 +1,34 @@
-import userReducer from './userSlice';
 import { describe, expect } from '@jest/globals';
+import userReducer, { initialState, setUser, setIsAuth } from './userSlice';
 
-describe('срез user в хранилище', () => {
-	it('должен иметь начальное состояние', () => {
-		const initialState = userReducer(undefined, {});
-		expect(initialState).toEqual({
-			user: null,
-			status: 'idle',
-			error: '',
-			isAuth: false,
-		});
+// import { fetchUserUpdate } from '@services/actionsThunk';
+// import thunkMiddleware from 'redux-thunk';
+// import { configureStore } from 'redux-mock-store';
+// const mockStore = configureStore([thunkMiddleware]);
+// it('должен обновляться асинхронно', () => {
+// 		const store = mockStore(initialState);
+// 		const userReg = { ...user, password: '654321' };
+// 		store.dispatch(fetchUserUpdate(userReg));
+// 		expect(state).toEqual({ ...initialState, status: 'loading', error: '' });
+// 	});
+
+const user = { name: 'tstName', email: 'tstA@tstB.tstC' };
+
+describe('срез user', () => {
+	it('должен иметь заданное начальное состояние', () => {
+		const state = userReducer(undefined, { type: '' });
+		expect(state).toEqual(initialState);
 	});
 
-	it('должен правильно обновляться при изменении user', () => {
-		const user = { name: 'tstName', email: 'tstA@tstB.tstC' };
-		const action = { type: 'currentUser/setUser', payload: user };
-		const state = userReducer(undefined, action);
-		expect(state.user).toEqual(user);
-		expect(state.status).toBe('idle');
-		expect(state.error).toBe('');
+	it('setUser должен обновлять поле user', () => {
+		const action = { type: setUser.type, payload: user };
+		const state = userReducer(initialState, action);
+		expect(state).toEqual({ ...initialState, user: user });
 	});
 
-	it('должен обновлять свойство isAuth', () => {
-		const action = { type: 'currentUser/setIsAuth', payload: true };
-		const state = userReducer(undefined, action);
-		expect(state.isAuth).toBe(true);
+	it('setIsAuth должен обновлять поле isAuth', () => {
+		const action = { type: setIsAuth.type, payload: true };
+		const state = userReducer(initialState, action);
+		expect(state).toEqual({ ...initialState, isAuth: true });
 	});
 });
