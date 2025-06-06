@@ -1,7 +1,15 @@
+import { useEffect } from 'react';
 import styles from './orders-stack.module.scss';
 import { OrderItem } from './orders-stack-card/orders-stack-card';
-import { useAppSelector } from '@services/store';
+import { useAppDispatch, useAppSelector } from '@services/store';
 import { selectors } from '@services/selectors';
+import { LIVE_MY_ORDERS_URL } from '@utils/customConfig';
+
+import {
+	connectMy,
+	disconnectMy,
+} from '@services/liveMyOrders/liveMyOrdersActions';
+
 interface IOrdersStackProps {
 	statusVisible: boolean;
 }
@@ -24,7 +32,15 @@ export function OrdersStack({ statusVisible }: IOrdersStackProps) {
 }
 
 export function MyOrdersStack({ statusVisible }: IOrdersStackProps) {
+	const dispatch = useAppDispatch();
 	const ordersStream = useAppSelector(selectors.liveMyOrders.get_orders);
+	useEffect(() => {
+		dispatch(connectMy(LIVE_MY_ORDERS_URL));
+		return () => {
+			dispatch(disconnectMy());
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	if (ordersStream) {
 		return (
 			<div className={styles.content}>

@@ -1,10 +1,5 @@
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import {
-	APP_PATH,
-	LIVE_ORDERS_URL,
-	LIVE_MY_ORDERS_URL,
-} from '@utils/customConfig';
-import { WebSocketStatus } from '@utils/type-orders-stack';
+import { APP_PATH } from '@utils/customConfig';
 
 import { useEffect } from 'react';
 
@@ -17,11 +12,6 @@ import {
 	fetchAddOrder,
 	checkUserAuth,
 } from '@services/actionsThunk';
-import { connect, disconnect } from '@services/liveOrders/liveOrdersActions';
-import {
-	connectMy,
-	disconnectMy,
-} from '@services/liveMyOrders/liveMyOrdersActions';
 
 import { actions } from '@services/actions';
 import { selectors } from '@services/selectors';
@@ -51,17 +41,6 @@ export const App = () => {
 	const location = useLocation();
 	const background = location.state && location.state.background;
 
-	const wsOrdersIsOnline =
-		useAppSelector(selectors.liveOrders.get_status) === WebSocketStatus.ONLINE;
-	const wsConnect = () => dispatch(connect(LIVE_ORDERS_URL));
-	const wsDisconnect = () => dispatch(disconnect());
-
-	const wsMyOrdersIsOnline =
-		useAppSelector(selectors.liveMyOrders.get_status) ===
-		WebSocketStatus.ONLINE;
-	const wsMyConnect = () => dispatch(connectMy(LIVE_MY_ORDERS_URL));
-	const wsMyDisconnect = () => dispatch(disconnectMy());
-
 	const loadingState = useAppSelector(selectors.burgerIngredients.get_status);
 	const errorState = useAppSelector(selectors.burgerIngredients.get_error);
 	const orderDetails = useAppSelector(selectors.burgerConstructor.get_data);
@@ -74,20 +53,6 @@ export const App = () => {
 	useEffect(() => {
 		dispatch(fetchAllIngedients());
 		dispatch(checkUserAuth());
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		wsConnect();
-		wsMyConnect();
-		return () => {
-			if (wsOrdersIsOnline) {
-				wsDisconnect();
-			}
-			if (wsMyOrdersIsOnline) {
-				wsMyDisconnect();
-			}
-		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
