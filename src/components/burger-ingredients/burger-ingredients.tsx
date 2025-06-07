@@ -66,7 +66,7 @@ export function BurgerIngredients() {
 	};
 
 	return (
-		<section className={conteiner.section}>
+		<section className={conteiner.section} data-testid='burger-constructor'>
 			<p className='text text_type_main-large mt-10 mb-5'>Соберите бургер</p>
 			<Tabs id={typeId} />
 			<div
