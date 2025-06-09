@@ -1,5 +1,7 @@
 # ЯндексПрактикум 2025. REACT-BURGER. Покрытие тестами и Деплой. 
 
-### SPRINT6/STEP1.
-### burgers.iknow.studio
-### Автор: Григорий Илюшин
+## SPRINT6/STEP1.
+
+### Ссылка на проект: https://burgers.iknow.studio
+
+## Автор: Григорий Илюшин

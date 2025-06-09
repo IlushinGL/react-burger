@@ -46,7 +46,7 @@ export function MyOrdersStack({ statusVisible }: IOrdersStackProps) {
 	if (!!!ordersStream) {
 		return (
 			<div className={styles.content}>
-				<div className={styles.preload}>соединение...</div>
+				<div className={styles.preload}>соединение и обновление данных...</div>
 			</div>
 		);
 	}

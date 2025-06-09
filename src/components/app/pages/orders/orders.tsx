@@ -22,7 +22,7 @@ export function OrdersPage() {
 		return (
 			<main className={styles.content}>
 				<div className={styles.title}>Лента заказов</div>
-				<div className={styles.data}>соединение...</div>
+				<div className={styles.data}>соединение и обновление данных...</div>
 			</main>
 		);
 	}
