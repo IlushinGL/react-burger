@@ -13,7 +13,7 @@ export function IngredientDetailes() {
 		return null;
 	}
 	return (
-		<section className={conteiner.content}>
+		<section className={conteiner.content} data-testid='ingredient-detailes'>
 			<img className={conteiner.image} src={item.image_large} alt={item.name} />
 			<div className={conteiner.name}>{item.name}</div>
 			<div className={conteiner.nutrition}>

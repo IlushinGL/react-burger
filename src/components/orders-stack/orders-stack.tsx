@@ -34,6 +34,7 @@ export function OrdersStack({ statusVisible }: IOrdersStackProps) {
 export function MyOrdersStack({ statusVisible }: IOrdersStackProps) {
 	const dispatch = useAppDispatch();
 	const ordersStream = useAppSelector(selectors.liveMyOrders.get_orders);
+
 	useEffect(() => {
 		dispatch(connectMy(LIVE_MY_ORDERS_URL));
 		return () => {
@@ -41,17 +42,20 @@ export function MyOrdersStack({ statusVisible }: IOrdersStackProps) {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	if (ordersStream) {
+
+	if (!!!ordersStream) {
 		return (
 			<div className={styles.content}>
-				{ordersStream.orders.toReversed().map((order) => (
-					<OrderItem
-						key={order._id}
-						item={order}
-						statusVisible={statusVisible}
-					/>
-				))}
+				<div className={styles.preload}>соединение...</div>
 			</div>
 		);
 	}
+
+	return (
+		<div className={styles.content}>
+			{ordersStream.orders.toReversed().map((order) => (
+				<OrderItem key={order._id} item={order} statusVisible={statusVisible} />
+			))}
+		</div>
+	);
 }

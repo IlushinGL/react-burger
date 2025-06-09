@@ -10,14 +10,11 @@
 	height: 100%;
 	align-items: center;
 	justify-content: center;
+	visibility: visible;
+	// border: 1px red solid;
 	z-index: 10;
 }
-.container_hidden {
-	visibility: hidden;
-}
-.container_visible {
-	visibility: visible;
-}
+
 .preloader {
 	position: relative;
 	background-color: transparent;
