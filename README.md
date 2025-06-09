@@ -2,6 +2,6 @@
 
 ## SPRINT6/STEP1.
 
-### Ссылка на проект: https://burgers.iknow.studio
+### Ссылка на проект: http://burgers.iknow.studio
 
 ## Автор: Григорий Илюшин
