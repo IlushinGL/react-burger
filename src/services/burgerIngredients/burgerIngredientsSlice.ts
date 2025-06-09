@@ -52,8 +52,7 @@ const burgerIngredientsSlice = createSlice({
 					state.error = 'Не удалось загрузить список ингредиентов';
 				}
 			})
-			.addCase(fetchAllIngedients.rejected, (state, action) => {
-				console.log(action.error);
+			.addCase(fetchAllIngedients.rejected, (state) => {
 				state.status = 'error';
 				state.error = 'Не удалось загрузить список ингредиентов';
 			});

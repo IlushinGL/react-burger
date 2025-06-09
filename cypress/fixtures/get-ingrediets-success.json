@@ -3,7 +3,7 @@
   "data": [
     {
       "_id": "bun01",
-      "name": "Краторная булка N-200i",
+      "name": "Булка",
       "type": "bun",
       "proteins": 80,
       "fat": 24,
@@ -17,7 +17,7 @@
     },
     {
       "_id": "main01",
-      "name": "Биокотлета из марсианской Магнолии",
+      "name": "Котлета",
       "type": "main",
       "proteins": 420,
       "fat": 142,
@@ -31,7 +31,7 @@
     },
     {
       "_id": "sauce01",
-      "name": "Соус Spicy-X",
+      "name": "Соус",
       "type": "sauce",
       "proteins": 30,
       "fat": 20,
