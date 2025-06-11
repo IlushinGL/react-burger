@@ -1,19 +1,9 @@
-const apiIngredients = 'api/ingredients';
+import type {} from '../support/cypress';
 
 describe('App открывается так, что', () => {
 	beforeEach(() => {
-		cy.intercept('GET', apiIngredients, {
-			fixture: 'get-ingrediets-success',
-		}).as('getIngrediets');
-
-		cy.visit('/');
-		// cy.wait(['@getIngrediets']);
-		cy.get('[data-testid=constructor-bun-top]').as('burgerTopBun');
-		cy.get('[data-testid=constructor-filling]').as('burgerFilling');
-		cy.get('[data-testid=constructor-bun-bottom]').as('burgerBottomBun');
-		cy.get('[data-testid=ingredient_bun01]').as('sourceBun');
-		cy.get('[data-testid=ingredient_main01]').as('sourceMain');
-		cy.get('[data-testid=ingredient_sauce01]').as('sourceSauce');
+		cy.prepareIngredients();
+		cy.visitHome();
 	});
 	it('Домашней страницей App является конструктор бургера.', () => {
 		cy.get('[data-testid=burger-constructor]').should('be.visible');
@@ -26,7 +16,7 @@ describe('App открывается так, что', () => {
 		cy.get('@sourceMain').should('exist');
 		cy.get('@sourceSauce').should('exist');
 	});
-	it('Клик на элементе списка открывает модальное окно свойств соответствующего игредиента. Модальное окно закрывается при нажатии Х.', () => {
+	it('Клик на элементе списка: открывается модальное окно свойств соответствующего игредиента > модальное окно закрывается при нажатии Х.', () => {
 		cy.get('@sourceBun').click();
 		cy.get('[data-testid=modal-detailes]').as('modalDetales');
 		cy.get('@modalDetales').should('be.visible');
@@ -67,5 +57,41 @@ describe('App открывается так, что', () => {
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@burgerTopBun').should('not.contain', 'Котлета');
 		cy.get('@burgerBottomBun').should('not.contain', 'Котлета');
+	});
+});
+
+describe('Кнопка Оформить заказ', () => {
+	beforeEach(() => {
+		cy.prepareIngredients();
+		cy.prepareUser();
+		cy.visitHome();
+	});
+	it('Недоступна, если булка не указана.', () => {
+		cy.get('@sourceMain').trigger('dragstart');
+		cy.get('@burgerFilling').trigger('drop');
+		cy.get('@sourceSauce').trigger('dragstart');
+		cy.get('@burgerFilling').trigger('drop');
+		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', true);
+	});
+	it('Доступна, если булка указана (даже без соусов и начинок).', () => {
+		cy.get('@sourceBun').trigger('dragstart');
+		cy.get('@burgerBottomBun').trigger('drop');
+		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', false);
+	});
+	it('Клик: заказ отправляется на сервер > открывается модальное окно состояния заказа > окно закрывается при нажатии Х > текущий заказ обнуляется.', () => {
+		cy.get('@sourceBun').trigger('dragstart');
+		cy.get('@burgerBottomBun').trigger('drop');
+		cy.get('@sourceMain').trigger('dragstart');
+		cy.get('@burgerFilling').trigger('drop');
+		cy.get('@sourceSauce').trigger('dragstart');
+		cy.get('@burgerFilling').trigger('drop');
+		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', false);
+		cy.get('@buttonOrder').click();
+		cy.get('[data-testid=modal-detailes]').as('modalDetales');
+		cy.get('@modalDetales').should('be.visible');
+		cy.get('@modalDetales').contains('Тестовый бургер');
+		cy.get('[data-testid=modal-detailes-x]').click();
+		cy.get('@modalDetales').should('not.exist');
+		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', true);
 	});
 });
