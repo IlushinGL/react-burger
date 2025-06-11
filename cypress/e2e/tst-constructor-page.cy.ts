@@ -1,6 +1,6 @@
 import type {} from '../support/cypress';
 
-describe('App открывается так, что', () => {
+describe('App открывается так, что:', () => {
 	beforeEach(() => {
 		cy.prepareIngredients();
 		cy.visitHome();
@@ -60,13 +60,10 @@ describe('App открывается так, что', () => {
 	});
 });
 
-describe('Кнопка Оформить заказ', () => {
-	beforeEach(() => {
-		cy.prepareIngredients();
-		cy.prepareUser();
-		cy.visitHome();
-	});
+describe('Кнопка Оформить заказ:', () => {
 	it('Недоступна, если булка не указана.', () => {
+		cy.prepareIngredients();
+		cy.visitHome();
 		cy.get('@sourceMain').trigger('dragstart');
 		cy.get('@burgerFilling').trigger('drop');
 		cy.get('@sourceSauce').trigger('dragstart');
@@ -74,11 +71,16 @@ describe('Кнопка Оформить заказ', () => {
 		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', true);
 	});
 	it('Доступна, если булка указана (даже без соусов и начинок).', () => {
+		cy.prepareIngredients();
+		cy.visitHome();
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', false);
 	});
-	it('Клик: заказ отправляется на сервер > открывается модальное окно состояния заказа > окно закрывается при нажатии Х > текущий заказ обнуляется.', () => {
+	it('Клик для опознанного юзера: заказ отправляется на сервер > открывается модальное окно состояния заказа > окно закрывается при нажатии Х > текущий заказ обнуляется.', () => {
+		cy.prepareIngredients();
+		cy.prepareUser();
+		cy.visitHome();
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@sourceMain').trigger('dragstart');
