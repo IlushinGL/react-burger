@@ -1,12 +1,29 @@
 const apiIngredients_x = 'api/ingredients';
+const apiUser = 'api/auth/user';
+const apiToken = 'api/auth/token';
+const apiOrder = 'api/orders';
 
 describe('Кнопка Оформить заказ', () => {
 	beforeEach(() => {
 		cy.intercept('GET', apiIngredients_x, {
 			fixture: 'get-ingrediets-success',
 		}).as('getIngrediets');
+		window.localStorage.setItem(
+			'accessToken',
+			JSON.stringify('tst-accessToken')
+		);
+		cy.intercept('POST', apiToken, {
+			fixture: 'get-token-success',
+		});
+		cy.intercept('GET', apiUser, {
+			fixture: 'get-user-success',
+		}).as('getUser');
+		cy.intercept('POST', apiOrder, {
+			fixture: 'get-order-success',
+		});
 		cy.visit('/');
-		cy.wait(['@getIngrediets']);
+		// cy.wait(['@getIngrediets']);
+		// cy.wait('@getUser');
 		cy.get('[data-testid=burger-constructor-info]')
 			.contains('Оформить заказ')
 			.as('buttonOrder');
@@ -24,12 +41,12 @@ describe('Кнопка Оформить заказ', () => {
 		cy.get('@burgerFilling').trigger('drop');
 		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', true);
 	});
-	it('Если булка указана, кнопка доступна даже без соусов и начинок.', () => {
+	it('Если булка указана, доступна даже без соусов и начинок.', () => {
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', false);
 	});
-	it('При нажатии отправляет заказ на сервер и открывает модальное окно состояния заказа.', () => {
+	it('При нажатии заказ отправляется на сервер и открывается модальное окно состояния заказа. Модальное окно закрывается при нажатии Х. Текущий заказ обнуляется.', () => {
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@sourceMain').trigger('dragstart');
@@ -37,5 +54,12 @@ describe('Кнопка Оформить заказ', () => {
 		cy.get('@sourceSauce').trigger('dragstart');
 		cy.get('@burgerFilling').trigger('drop');
 		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', false);
+		cy.get('@buttonOrder').click();
+		cy.get('[data-testid=modal-detailes]').as('modalDetales');
+		cy.get('@modalDetales').should('be.visible');
+		cy.get('@modalDetales').contains('Тестовый бургер');
+		cy.get('[data-testid=modal-detailes-x]').click();
+		cy.get('@modalDetales').should('not.exist');
+		cy.get('@buttonOrder').invoke('prop', 'disabled').should('eq', true);
 	});
 });

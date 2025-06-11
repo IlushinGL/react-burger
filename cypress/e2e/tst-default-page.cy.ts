@@ -5,8 +5,9 @@ describe('App открывается так, что', () => {
 		cy.intercept('GET', apiIngredients, {
 			fixture: 'get-ingrediets-success',
 		}).as('getIngrediets');
+
 		cy.visit('/');
-		cy.wait(['@getIngrediets']);
+		// cy.wait(['@getIngrediets']);
 		cy.get('[data-testid=constructor-bun-top]').as('burgerTopBun');
 		cy.get('[data-testid=constructor-filling]').as('burgerFilling');
 		cy.get('[data-testid=constructor-bun-bottom]').as('burgerBottomBun');
@@ -27,50 +28,44 @@ describe('App открывается так, что', () => {
 	});
 	it('Клик на элементе списка открывает модальное окно свойств соответствующего игредиента. Модальное окно закрывается при нажатии Х.', () => {
 		cy.get('@sourceBun').click();
-		cy.get('[data-testid=ingredient-detailes]').as('modalDetales');
+		cy.get('[data-testid=modal-detailes]').as('modalDetales');
 		cy.get('@modalDetales').should('be.visible');
 		cy.get('@modalDetales').contains('Булка');
-		cy.get('[data-testid=ingredient-detailes-x]').click();
+		cy.get('[data-testid=modal-detailes-x]').click();
 		cy.get('@modalDetales').should('not.exist');
 	});
-	it('Булки можно перетащить на верх.', () => {
+	it('Булки можно перетащить на верх заказа.', () => {
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerTopBun').trigger('drop');
 		cy.get('@burgerTopBun').contains('Булка');
 		cy.get('@burgerBottomBun').contains('Булка');
 	});
-	it('Булки можно перетащить в низ.', () => {
+	it('Булки можно перетащить в низ заказа.', () => {
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@burgerTopBun').contains('Булка');
 		cy.get('@burgerBottomBun').contains('Булка');
 	});
-	it('Булки нельзя перетащить в середину.', () => {
+	it('Булки нельзя перетащить в середину заказа.', () => {
 		cy.get('@sourceBun').trigger('dragstart');
 		cy.get('@burgerFilling').trigger('drop');
 		cy.get('@burgerFilling').should('not.contain', 'Булка');
 	});
-	it('Другие ингредиенты можно перетащить в середину.', () => {
+	it('Другие ингредиенты можно перетащить в середину заказа.', () => {
 		cy.get('@sourceMain').trigger('dragstart');
 		cy.get('@burgerFilling').trigger('drop');
 		cy.get('@burgerFilling').contains('Котлета');
 	});
-	it('Другие ингредиенты нельзя перетащить на верх.', () => {
+	it('Другие ингредиенты нельзя перетащить на верх заказа.', () => {
 		cy.get('@sourceMain').trigger('dragstart');
 		cy.get('@burgerTopBun').trigger('drop');
 		cy.get('@burgerTopBun').should('not.contain', 'Котлета');
 		cy.get('@burgerBottomBun').should('not.contain', 'Котлета');
 	});
-	it('Другие ингредиенты нельзя перетащить в низ.', () => {
+	it('Другие ингредиенты нельзя перетащить в низ заказа.', () => {
 		cy.get('@sourceMain').trigger('dragstart');
 		cy.get('@burgerBottomBun').trigger('drop');
 		cy.get('@burgerTopBun').should('not.contain', 'Котлета');
 		cy.get('@burgerBottomBun').should('not.contain', 'Котлета');
 	});
-	// it('Сделать заказ без булки нельзя.', () => {
-	// 	cy.get('@sourceMain').trigger('dragstart');
-	// 	cy.get('@burgerFilling').trigger('drop');
-	// 	cy.get('@sourceSauce').trigger('dragstart');
-	// 	cy.get('@burgerFilling').trigger('drop');
-	// });
 });

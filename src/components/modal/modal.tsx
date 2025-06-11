@@ -18,13 +18,13 @@ export function Modal({
 }: IModalProps) {
 	return (
 		<ModalOverlay onClose={onClose}>
-			<div className={conteiner.box} data-testid='ingredient-detailes'>
+			<div className={conteiner.box} data-testid='modal-detailes'>
 				<div className={conteiner.header}>
 					<div className={conteiner[style]}>{text}</div>
 					<button
 						className={conteiner.close}
 						onClick={onClose}
-						data-testid='ingredient-detailes-x'>
+						data-testid='modal-detailes-x'>
 						<CloseIcon type='primary' />
 					</button>
 				</div>
