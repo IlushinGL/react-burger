@@ -22,7 +22,7 @@ export function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
 			<section className={conteiner.components}>
 				<BurgerComponents />
 			</section>
-			<section className={conteiner.info}>
+			<section className={conteiner.info} data-testid='burger-constructor-info'>
 				<div className={conteiner.total}>
 					{orderTotal}
 					<CurrencyIcon type='primary' />

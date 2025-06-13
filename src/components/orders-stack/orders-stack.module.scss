@@ -27,3 +27,13 @@
 	cursor: pointer;
 	border: 1px var(--colors-interface-accent) solid;
 }
+
+.preload {
+	display: block;
+	position: relative;
+	padding: auto 0;
+	composes: text text_type_main-medium from global;
+	box-sizing: border-box;
+	min-height: calc(50 * var(--offset-base-size));
+	background-color: transparent;
+}

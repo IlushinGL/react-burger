@@ -103,7 +103,7 @@ export function BurgerComponents() {
 
 	return (
 		<section className={conteiner.section}>
-			<div ref={dropBunTagTop}>
+			<div ref={dropBunTagTop} data-testid='constructor-bun-top'>
 				{bunId === '' ? (
 					<BurgerComponentPlaceholder
 						text='сюда перетащите булку...'
@@ -121,7 +121,10 @@ export function BurgerComponents() {
 					/>
 				)}
 			</div>
-			<div className={conteiner.filling} ref={dropFillingsTag}>
+			<div
+				className={conteiner.filling}
+				ref={dropFillingsTag}
+				data-testid='constructor-filling'>
 				{order_list_empty ? (
 					<BurgerComponentPlaceholder
 						text='сюда тащите ингредиенты...'
@@ -140,7 +143,7 @@ export function BurgerComponents() {
 					))
 				)}
 			</div>
-			<div ref={dropBunTagBottom}>
+			<div ref={dropBunTagBottom} data-testid='constructor-bun-bottom'>
 				{bunId === '' ? (
 					<BurgerComponentPlaceholder
 						text='булку можно перетащить и сюда...'

@@ -1,5 +1,5 @@
 const BASE_URL = 'https://norma.nomoreparties.space/api';
-const INGREDIENTS_EP = '/ingredients';
+export const INGREDIENTS_EP = '/ingredients';
 const ORDERS_EP = '/orders';
 const AUTH_USER_EP = '/auth/user';
 const AUTH_LOGIN_EP = '/auth/login';

@@ -36,7 +36,11 @@ export function BurgerIngredientsItem({
 
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-		<section key={item._id} className={block.item} onClick={handleOnClick}>
+		<section
+			key={item._id}
+			className={block.item}
+			onClick={handleOnClick}
+			data-testid={'ingredient_' + item._id}>
 			{isDrag ? null : (
 				<DragPreviewImage connect={dragPreviewRef} src={item.image} />
 			)}

@@ -13,6 +13,8 @@ import {
 	connect,
 	disconnect,
 	onConnecting,
+	onClose,
+	onOpen,
 	onError,
 	onMessage,
 } from './liveOrders/liveOrdersActions';
@@ -20,6 +22,8 @@ import {
 	connectMy,
 	disconnectMy,
 	onConnectingMy,
+	onCloseMy,
+	onOpenMy,
 	onErrorMy,
 	onMessageMy,
 } from './liveMyOrders/liveMyOrdersActions';
@@ -38,6 +42,8 @@ const liveOrdersMiddleware = socketMiddleware({
 	connect: connect,
 	disconnect: disconnect,
 	onConnecting: onConnecting,
+	onClose: onClose,
+	onOpen: onOpen,
 	onError: onError,
 	onMessage: onMessage,
 });
@@ -46,6 +52,8 @@ const liveMyOrdersMiddleware = socketMiddleware(
 		connect: connectMy,
 		disconnect: disconnectMy,
 		onConnecting: onConnectingMy,
+		onClose: onCloseMy,
+		onOpen: onOpenMy,
 		onError: onErrorMy,
 		onMessage: onMessageMy,
 	},

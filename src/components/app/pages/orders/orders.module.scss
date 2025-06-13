@@ -12,13 +12,13 @@
 
 .data {
 	display: grid;
+	composes: text text_type_main-medium from global;
 	box-sizing: border-box;
 	margin: 0 auto;
 	margin-top: calc(5 * var(--offset-base-size));
 	padding: 0;
 	max-height: calc(100vh - 48 * var(--offset-base-size));
 	background-color: transparent;
-	// border: 1px red solid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 1fr;
 	column-gap: calc(15 * var(--offset-base-size));

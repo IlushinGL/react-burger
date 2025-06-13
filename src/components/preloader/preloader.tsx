@@ -10,13 +10,12 @@ function Preloader({ box, visible }: IPreloader) {
 		transform: `scale(${box / 80})`,
 	};
 
+	if (!visible) {
+		return null;
+	}
+
 	return (
-		<div
-			className={
-				view.conteiner +
-				' ' +
-				(visible ? view.conteiner_visible : view.conteiner_hidden)
-			}>
+		<div className={view.conteiner}>
 			<div className={view.preloader} style={cssPreloader}>
 				<div></div>
 				<div></div>
